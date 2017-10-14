@@ -21,9 +21,17 @@ public class Game {
 					return;
 				}
 				if(Grid[pos1+1][pos2].orbs==Grid[pos1+1][pos2].criticalMass)
+				{
+					Grid[pos1+1][pos2].orbs = 0;
+					Grid[pos1+1][pos2].Owner = 0;
 					func(pos1+1,pos2,owner);
+				}
 				if(Grid[pos1][pos2+1].orbs==Grid[pos1][pos2+1].criticalMass)
+				{
+					Grid[pos1][pos2+1].orbs = 0;
+					Grid[pos1][pos2+1].Owner = 0;
 					func(pos1,pos2+1,owner);
+				}
 			}
 			else if(pos1==m&&pos2==1)
 			{
@@ -37,9 +45,17 @@ public class Game {
 					return;
 				}
 				if(Grid[pos1-1][pos2].orbs==Grid[pos1-1][pos2].criticalMass)
+				{
 					func(pos1-1,pos2,owner);
+					Grid[pos1-1][pos2].orbs = 0;
+					Grid[pos1-1][pos2].Owner = 0;
+				}
 				if(Grid[pos1][pos2+1].orbs==Grid[pos1][pos2+1].criticalMass)
+				{
+					Grid[pos1][pos2+1].orbs = 0;
+					Grid[pos1][pos2+1].Owner = 0;
 					func(pos1,pos2+1,owner);
+				}
 			}
 			else if(pos1==1&&pos2==n)
 			{
@@ -53,9 +69,18 @@ public class Game {
 					return;
 				}
 				if(Grid[pos1+1][pos2].orbs==Grid[pos1+1][pos2].criticalMass)
+				{
+					Grid[pos1+1][pos2].orbs = 0;
+					Grid[pos1+1][pos2].Owner = 0;
 					func(pos1+1,pos2,owner);
+					
+				}
 				if(Grid[pos1][pos2-1].orbs==Grid[pos1][pos2-1].criticalMass)
+				{
+					Grid[pos1][pos2-1].orbs = 0;
+					Grid[pos1][pos2-1].Owner = 0;
 					func(pos1,pos2-1,owner);
+				}
 			}
 			else
 			{
@@ -69,9 +94,17 @@ public class Game {
 					return;
 				}
 				if(Grid[pos1][pos2-1].orbs==Grid[pos1][pos2-1].criticalMass)
+				{
+					Grid[pos1][pos2-1].orbs = 0;
+					Grid[pos1][pos2-1].Owner = 0;
 					func(pos1,pos2-1,owner);
+				}
 				if(Grid[pos1-1][pos2].orbs==Grid[pos1-1][pos2].criticalMass)
+				{
+					Grid[pos1-1][pos2].orbs = 0;
+					Grid[pos1-1][pos2].Owner = 0;
 					func(pos1-1,pos2,owner);
+				}
 			}
 		}
 		else if(cm==3)
@@ -90,11 +123,23 @@ public class Game {
 					return;
 				}
 				if(Grid[pos1][pos2-1].orbs==Grid[pos1][pos2-1].criticalMass)
+				{
+					Grid[pos1][pos2-1].orbs = 0;
+					Grid[pos1][pos2-1].Owner = 0;
 					func(pos1,pos2-1,owner);
+				}
 				if(Grid[pos1][pos2+1].orbs==Grid[pos1][pos2+1].criticalMass)
+				{
+					Grid[pos1][pos2+1].orbs = 0;
+					Grid[pos1][pos2+1].Owner = 0;
 					func(pos1,pos2+1,owner);
+				}
 				if(Grid[pos1+1][pos2].orbs==Grid[pos1+1][pos2].criticalMass)
+				{
+					Grid[pos1+1][pos2].orbs = 0;
+					Grid[pos1+1][pos2].Owner = 0;
 					func(pos1+1,pos2,owner);
+				}
 			}
 			else if(pos1==n)
 			{
@@ -110,11 +155,23 @@ public class Game {
 					return;
 				}
 				if(Grid[pos1][pos2-1].orbs==Grid[pos1][pos2-1].criticalMass)
+				{
+					Grid[pos1][pos2-1].orbs = 0;
+					Grid[pos1][pos2-1].Owner = 0;
 					func(pos1,pos2-1,owner);
+				}
 				if(Grid[pos1][pos2+1].orbs==Grid[pos1][pos2+1].criticalMass)
+				{
+					Grid[pos1][pos2+1].orbs = 0;
+					Grid[pos1][pos2+1].Owner = 0;
 					func(pos1,pos2+1,owner);
+				}
 				if(Grid[pos1-1][pos2].orbs==Grid[pos1-1][pos2].criticalMass)
+				{
+					Grid[pos1-1][pos2].orbs = 0;
+					Grid[pos1-1][pos2].Owner = 0;
 					func(pos1-1,pos2,owner);
+				}
 			}
 			else if(pos2==1)
 			{
@@ -130,11 +187,23 @@ public class Game {
 					return;
 				}
 				if(Grid[pos1-1][pos2].orbs==Grid[pos1-1][pos2].criticalMass)
+				{
+					Grid[pos1-1][pos2].orbs = 0;
+					Grid[pos1-1][pos2].Owner = 0;
 					func(pos1-1,pos2,owner);
+				}
 				if(Grid[pos1+1][pos2].orbs==Grid[pos1+1][pos2].criticalMass)
+				{
+					Grid[pos1+1][pos2].orbs = 0;
+					Grid[pos1+1][pos2].Owner = 0;
 					func(pos1+1,pos2,owner);
+				}
 				if(Grid[pos1][pos2+1].orbs==Grid[pos1][pos2+1].criticalMass)
+				{
+					Grid[pos1][pos2+1].orbs = 0;
+					Grid[pos1][pos2+1].Owner = 0;
 					func(pos1,pos2+1,owner);
+				}
 			}
 			else if(pos2==m)
 			{
@@ -150,11 +219,23 @@ public class Game {
 					return;
 				}
 				if(Grid[pos1-1][pos2].orbs==Grid[pos1-1][pos2].criticalMass)
+				{
+					Grid[pos1-1][pos2].orbs = 0;
+					Grid[pos1-1][pos2].Owner = 0;
 					func(pos1-1,pos2,owner);
+				}
 				if(Grid[pos1+1][pos2].orbs==Grid[pos1+1][pos2].criticalMass)
+				{
+					Grid[pos1+1][pos2].orbs = 0;
+					Grid[pos1+1][pos2].Owner = 0;
 					func(pos1+1,pos2,owner);
+				}
 				if(Grid[pos1][pos2-1].orbs==Grid[pos1][pos2-1].criticalMass)
+				{
+					Grid[pos1][pos2-1].orbs = 0;
+					Grid[pos1][pos2-1].Owner = 0;
 					func(pos1,pos2-1,owner);
+				}
 			}
 		}
 		else
@@ -173,13 +254,29 @@ public class Game {
 				return;
 			}
 			if(Grid[pos1][pos2+1].orbs==Grid[pos1][pos2+1].criticalMass)
+			{
+				Grid[pos1][pos2+1].orbs = 0;
+				Grid[pos1][pos2+1].Owner = 0;
 				func(pos1,pos2+1,owner);
+			}
 			if(Grid[pos1][pos2-1].orbs==Grid[pos1][pos2-1].criticalMass)
+			{
+				Grid[pos1][pos2-1].orbs = 0;
+				Grid[pos1][pos2-1].Owner = 0;
 				func(pos1,pos2-1,owner);
+			}
 			if(Grid[pos1+1][pos2].orbs==Grid[pos1+1][pos2].criticalMass)
+			{
+				Grid[pos1+1][pos2].orbs = 0;
+				Grid[pos1+1][pos2].Owner = 0;
 				func(pos1+1,pos2,owner);
+			}
 			if(Grid[pos1-1][pos2].orbs==Grid[pos1-1][pos2].criticalMass)
+			{
+				Grid[pos1-1][pos2].orbs = 0;
+				Grid[pos1-1][pos2].Owner = 0;
 				func(pos1-1,pos2,owner);
+			}
 		}
 		
 	}
@@ -205,7 +302,11 @@ public class Game {
 			Grid[pos1][pos2].orbs++;
 			arr[Player]++;
 			if(Grid[pos1][pos2].orbs==Grid[pos1][pos2].criticalMass)
+			{
+				Grid[pos1][pos2].orbs = 0;
+				Grid[pos1][pos2].Owner = 0;
 				func(pos1,pos2,Player);
+			}
 		}
 	}
 	public static int chkWinner()
