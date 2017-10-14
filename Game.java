@@ -25,7 +25,7 @@ public class Game {
 				if(Grid[pos1][pos2+1].orbs==Grid[pos1][pos2+1].criticalMass)
 					func(pos1,pos2+1,owner);
 			}
-			else if(pos1==n&&pos2==1)
+			else if(pos1==m&&pos2==1)
 			{
 				Grid[pos1-1][pos2].orbs++;
 				Grid[pos1-1][pos2].Owner = owner;
@@ -41,7 +41,7 @@ public class Game {
 				if(Grid[pos1][pos2+1].orbs==Grid[pos1][pos2+1].criticalMass)
 					func(pos1,pos2+1,owner);
 			}
-			else if(pos1==1&&pos2==m)
+			else if(pos1==1&&pos2==n)
 			{
 				Grid[pos1+1][pos2].orbs++;
 				Grid[pos1+1][pos2].Owner = owner;
