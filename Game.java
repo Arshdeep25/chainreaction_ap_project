@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -283,12 +284,15 @@ public class Game {
 	public static void taketurn(int Player)
 	{
 		Scanner sc = new Scanner(System.in);
+
+		Random rand = new Random();
 		int pos1,pos2;
 		do
 		{
 			System.out.println("Enter the Position of the orb of player  :"+Player);
-			pos1 = sc.nextInt();
-			pos2 = sc.nextInt();
+			pos1 = rand.nextInt(m) + 1;
+			pos2 = rand.nextInt(n) + 1;
+			System.out.println(pos1+" "+pos2);
 		}while(Grid[pos1][pos2].Owner!=0&&Grid[pos1][pos2].Owner!=Player);
 		System.out.println("Position is valid");
 		if(Grid[pos1][pos2].Owner==0)
@@ -354,7 +358,7 @@ public class Game {
 					Grid[i][j].orbs = 0;
 					Grid[i][j].Owner = 0;
 				}
-				else if(i==1 || i==n || j==1 || j==m)
+				else if(i==1 || i==m || j==1 || j==n)
 				{
 					Grid[i][j].criticalMass = 3;
 					Grid[i][j].orbs = 0;
@@ -367,6 +371,14 @@ public class Game {
 					Grid[i][j].Owner = 0;
 				}		
 			}
+		}
+		for(int i=1;i<=m;i++)
+		{
+			for(int j=1;j<=n;j++)
+			{
+				System.out.print(Grid[i][j].criticalMass+" ");	
+			}
+			System.out.println();
 		}
 		int P = 1;
 		taketurn(1);
