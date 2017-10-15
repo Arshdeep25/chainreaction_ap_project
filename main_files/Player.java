@@ -17,6 +17,10 @@ public class Player
 	{
 		return this.name;
 	}
+	public int getPlayerID()
+	{
+		return this.playerID;
+	}
 	public String getOrbColor()
 	{
 		return this.orbColor;

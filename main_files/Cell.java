@@ -36,5 +36,18 @@ public class Cell
 		this.owner = owner;
 	}
 
+	public boolean isStable()
+	{
+		if(this.orbCount>=this.criticalMass)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	public void getinfo(int i, int j)
+	{
+		System.out.println(i+" "+j+" "+this.orbCount+" "+this.owner+" "+this.criticalMass);
+	} 
 
 }
