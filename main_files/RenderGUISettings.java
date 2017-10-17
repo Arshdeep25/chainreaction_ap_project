@@ -23,14 +23,17 @@ import javafx.geometry.*;
 public class RenderGUISettings extends Application{
 
 	private Color[] playerColors;
+	private Color[] orbColors;
 
-	public RenderGUISettings()
+	public RenderGUISettings(Color[] orbColors)
 	{
 		playerColors = new Color[8];
+		this.orbColors = orbColors;
 	}
-	public RenderGUISettings(int players)
+	public RenderGUISettings(int players, Color[] orbColors)
 	{
 		playerColors = new Color[players];
+		this.orbColors = orbColors;
 	}
 
 	@Override
@@ -46,16 +49,6 @@ public class RenderGUISettings extends Application{
 		subHeading.setY(70);
 		subHeading.getStyleClass().add("subText");
 		root.getChildren().add(subHeading);
-
-		Color[] orbColors = new Color[8];
-		orbColors[0] = Color.rgb(216, 221, 115);
-		orbColors[1] = Color.rgb(32, 86, 173);
-		orbColors[2] = Color.rgb(31, 130, 42);
-		orbColors[3] = Color.rgb(186, 26, 14);
-		orbColors[4] = Color.rgb(150, 121, 16);
-		orbColors[5] = Color.rgb(16, 129, 150);
-		orbColors[6] = Color.rgb(96, 16, 150);
-		orbColors[7] = Color.rgb(150, 16, 94);
 		
 		GridPane orbPane = new GridPane();
 		orbPane.setMinSize(400, 400);
@@ -78,52 +71,7 @@ public class RenderGUISettings extends Application{
 				PhongMaterial material = new PhongMaterial();  
 				material.setDiffuseColor(orbColors[j]); 
 				orb.setMaterial(material);
-				EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() { 
-					@Override 
-						public void handle(MouseEvent e) { 
-						System.out.println("Selected");
-						for(Node orbs: orbPane.getChildren())
-						{
-							if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere") && orbPane.getColumnIndex(orbs)==orbPane.getColumnIndex(orb))
-							{
-								Sphere orbs_s = (Sphere)orbs;
-								PhongMaterial x = (PhongMaterial)orbs_s.getMaterial();
-								if(x.getDiffuseColor().equals(Color.rgb(180, 180, 180)))
-								{
-									System.out.print("nahi ho paega");
-									return;
-								}
-								
-							}
-						}
-						for(Node orbs: orbPane.getChildren())
-						{
-							if(orbPane.getRowIndex(orbs)==orbPane.getRowIndex(orb))
-							{
-								if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere"))
-								{
-									Sphere orbs_s = (Sphere)orbs;
-									PhongMaterial setOrigMat = new PhongMaterial();
-									setOrigMat.setDiffuseColor(orbColors[orbPane.getColumnIndex(orbs_s)-2]); 
-									orbs_s.setMaterial(setOrigMat);
-									//System.out.println(orbs_s.getClass().getName().equals("javafx.scene.text.Text"));
-								}
-								if(orbs.getClass().getName().equals("javafx.scene.text.Text")&&orbPane.getColumnIndex(orbs)>1)
-								{
-									Text text = (Text)orbs;
-									text.setText("SELECTED");
-									PhongMaterial x = (PhongMaterial)orb.getMaterial();
-									text.setFill(x.getDiffuseColor());
-								}
-							}
-						}
-						PhongMaterial newMaterial = new PhongMaterial();
-						material.setDiffuseColor(Color.rgb(180, 180, 180));
-						orb.setMaterial(material);
-					} 
-				};
-				//Registering the event filter 
-				orb.setOnMousePressed(eventHandler);
+				orb.setOnMousePressed(new orbColorChangeEvent(orb, orbPane, orbColors));
 				orbPane.add(orb, 2+j, i);
 			}
 			Text colorText = new Text("N/A");
@@ -136,6 +84,7 @@ public class RenderGUISettings extends Application{
 		doneButton.getStyleClass().add("donebtn");
 		doneButton.setTranslateX(400);
 		doneButton.setTranslateY(600);
+		doneButton.setOnAction(new doneButtonEvent(orbPane, orbColors));
 		root.getChildren().add(doneButton);
 		Scene scene = new Scene(root, 700, 700);
 		scene.getStylesheets().add("style/Settings.css");
@@ -149,4 +98,96 @@ public class RenderGUISettings extends Application{
 		launch();
 	}
 	
+}
+
+class doneButtonEvent implements EventHandler<ActionEvent>
+{
+	GridPane orbPane;
+	Color[] selectedColors;
+	public doneButtonEvent(GridPane orbPane, Color[] orbColors)
+	{
+		this.orbPane = orbPane;
+		selectedColors = new Color[8];
+	}
+	@Override
+	public void handle(ActionEvent event) 
+	{
+	    int cntr = 0;
+	    boolean[] selected = new boolean[8];
+	    for(Node orbs: orbPane.getChildren())
+	    {
+	    	if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere"))
+	    	{
+    			Sphere orbs_s = (Sphere)orbs;
+    			PhongMaterial x = (PhongMaterial)orbs.getMaterial();
+				if(x.getDiffuseColor().equals(Color.rgb(180, 180, 180)))
+				{
+					selected[i] = true;
+				}
+	    		i++;
+	    		i%=8;
+	    	}
+	    	else
+	    	{
+	    		if(orbs.getClass().getName().equals("javafx.scene.text.Text"))
+	    	}
+	    }
+	}
+}
+
+class orbColorChangeEvent implements EventHandler<MouseEvent> 
+{
+	private Sphere orb;
+	private GridPane orbPane;
+	private Color[] orbColors;
+	public orbColorChangeEvent(Sphere orb, GridPane orbPane, Color[] orbColors)
+	{
+		this.orb = orb;
+		this.orbPane = orbPane;
+		this.orbColors = orbColors;
+	}
+
+	@Override 
+	public void handle(MouseEvent e) 
+	{ 
+		//System.out.println("Selected");
+		for(Node orbs: orbPane.getChildren())
+		{
+			if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere") && orbPane.getColumnIndex(orbs)==orbPane.getColumnIndex(orb))
+			{
+				Sphere orbs_s = (Sphere)orbs;
+				PhongMaterial x = (PhongMaterial)orbs_s.getMaterial();
+				if(x.getDiffuseColor().equals(Color.rgb(180, 180, 180)))
+				{
+					System.out.println("nahi ho paega");
+					return;
+				}
+				
+			}
+		}
+		for(Node orbs: orbPane.getChildren())
+		{
+			if(orbPane.getRowIndex(orbs)==orbPane.getRowIndex(orb))
+			{
+				if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere"))
+				{
+					Sphere orbs_s = (Sphere)orbs;
+					PhongMaterial setOrigMat = new PhongMaterial();
+					setOrigMat.setDiffuseColor(orbColors[orbPane.getColumnIndex(orbs_s)-2]); 
+					orbs_s.setMaterial(setOrigMat);
+					//System.out.println(orbs_s.getClass().getName().equals("javafx.scene.text.Text"));
+				}
+				if(orbs.getClass().getName().equals("javafx.scene.text.Text")&&orbPane.getColumnIndex(orbs)>1)
+				{
+					Text text = (Text)orbs;
+					text.setText("SELECTED");
+					PhongMaterial x = (PhongMaterial)orb.getMaterial();
+					text.setFill(x.getDiffuseColor());
+				}
+			}
+		}
+		PhongMaterial material = new PhongMaterial();
+		material.setDiffuseColor(Color.rgb(180, 180, 180));
+		orb.setMaterial(material);
+	} 
 }
