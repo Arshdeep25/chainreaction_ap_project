@@ -69,51 +69,54 @@ public class GamePlayUI extends Application{
             border.setStroke(Color.BLACK);
             getChildren().add(border);
             setOnMouseClicked(event -> {
-            	obj.takeTurn(PlayerID, x, y);
-            	Cell[][] Temp = obj.getGrid();
-            	for(int p = 0 ; p<9 ; p++)
+            	if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
             	{
-            		System.out.println();
-            		for(int q = 0;q<6;q++)
-            		{
-            			Board[p][q].NumberOfOrbs = Temp[p][q].getOrbCount();
-            			Board[p][q].Owner = Temp[p][q].getOwner();
-            			if(Board[p][q].getChildren().size()>1)
-            				Board[p][q].getChildren().remove(1, Board[p][q].getChildren().size());
-            			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
-                    	{
-                    		Sphere Shape = new Sphere(10);
-                    		if(i==1)
-                    			Shape.setTranslateX(10);
-                    		if(i==2)
-                    			Shape.setTranslateY(10);
-                    		if(Board[p][q].Owner == 0)
-                    		{
-                    			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.GREEN); 
-                				Shape.setMaterial(material);
-                				Board[p][q].getChildren().add(Shape);
-                    		}
-                    		else if(Board[p][q].Owner==1)
-                    		{
-                    			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.RED); 
-                				Shape.setMaterial(material);
-                				Board[p][q].getChildren().add(Shape);
-                    		}
-                    		
-                    	}
-            		}
+            		obj.takeTurn(PlayerID, x, y);
+                	Cell[][] Temp = obj.getGrid();
+                	for(int p = 0 ; p<9 ; p++)
+                	{
+                		System.out.println();
+                		for(int q = 0;q<6;q++)
+                		{
+                			Board[p][q].NumberOfOrbs = Temp[p][q].getOrbCount();
+                			Board[p][q].Owner = Temp[p][q].getOwner();
+                			if(Board[p][q].getChildren().size()>1)
+                				Board[p][q].getChildren().remove(1, Board[p][q].getChildren().size());
+                			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
+                        	{
+                        		Sphere Shape = new Sphere(10);
+                        		if(i==1)
+                        			Shape.setTranslateX(10);
+                        		if(i==2)
+                        			Shape.setTranslateY(10);
+                        		if(Board[p][q].Owner == 0)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.GREEN); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
+                        		else if(Board[p][q].Owner==1)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.RED); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
+                        		
+                        	}
+                		}
+                	}
+                	if(obj.isWinner()&&cnt>=2)
+                	{
+                		System.out.println("winner");
+                		Platform.exit();
+                	}
+                	cnt++;
+                	System.out.println();
+                	System.out.println();
+                	PlayerID = (PlayerID+1)%2;
             	}
-            	if(obj.isWinner()&&cnt>=2)
-            	{
-            		System.out.println("winner");
-            		Platform.exit();
-            	}
-            	cnt++;
-            	System.out.println();
-            	System.out.println();
-            	PlayerID = (PlayerID+1)%2;
             });
 		}
 	}
