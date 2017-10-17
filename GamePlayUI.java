@@ -32,7 +32,7 @@ public class GamePlayUI extends Application{
 	private int cnt = 1;
 	
 	private Parent createContent() {
-        root.setPrefSize(600, 600);
+        root.setPrefSize(300, 450);
         obj = new GamePlay(9,6,2);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 6; j++) {
@@ -75,7 +75,6 @@ public class GamePlayUI extends Application{
                 	Cell[][] Temp = obj.getGrid();
                 	for(int p = 0 ; p<9 ; p++)
                 	{
-                		System.out.println();
                 		for(int q = 0;q<6;q++)
                 		{
                 			Board[p][q].NumberOfOrbs = Temp[p][q].getOrbCount();
@@ -113,8 +112,6 @@ public class GamePlayUI extends Application{
                 		Platform.exit();
                 	}
                 	cnt++;
-                	System.out.println();
-                	System.out.println();
                 	PlayerID = (PlayerID+1)%2;
             	}
             });
