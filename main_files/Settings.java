@@ -3,6 +3,7 @@ import main_files.*;
 import java.lang.*;
 import java.io.*;
 import java.util.*;
+import javafx.scene.paint.Color;
 
 public class Settings
 {
@@ -17,7 +18,7 @@ public class Settings
 		orbColors[6] = Color.rgb(96, 16, 150);
 		orbColors[7] = Color.rgb(150, 16, 94);
 
-		RenderGUISettings x = new RenderGUISettings(orbColors);
+		RenderGUISettings x = new RenderGUISettings();
 		x.render();
 	}
 }
