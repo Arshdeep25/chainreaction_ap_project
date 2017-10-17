@@ -139,9 +139,6 @@ public class MainPage extends Application{
 		Resume_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 		root.getChildren().add(Resume_btn);
 		
-		Start_btn.setOnMouseClicked(event -> {
-			
-		});
 		
 		return root;
 	}
