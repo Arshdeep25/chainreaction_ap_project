@@ -1,4 +1,5 @@
 package main_files;
+import javafx.scene.Node;
 import main_files.*;
 import java.lang.*;
 import java.io.*;
@@ -69,17 +70,45 @@ public class Settings extends Application{
 				EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() { 
 					@Override 
 						public void handle(MouseEvent e) { 
-						System.out.println("Selected"); 
-						PhongMaterial material = new PhongMaterial();  
-						material.setDiffuseColor(Color.rgb(120, 120, 120));
-						orb.getStyleClass().add("orb");
+						System.out.println("Selected");
+						for(Node orbs: orbPane.getChildren())
+						{
+							if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere") && orbPane.getColumnIndex(orbs)==orbPane.getColumnIndex(orb))
+							{
+								Sphere orbs_s = (Sphere)orbs;
+								PhongMaterial x = (PhongMaterial)orbs_s.getMaterial();
+								if(x.getDiffuseColor().equals(Color.rgb(180, 180, 180)))
+								{
+									System.out.print("nahi ho paega");
+									return;
+								}
+								
+							}
+						}
+						for(Node orbs: orbPane.getChildren())
+						{
+							if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere") && orbPane.getRowIndex(orbs)==orbPane.getRowIndex(orb))
+							{
+								Sphere orbs_s = (Sphere)orbs;
+								PhongMaterial setOrigMat = new PhongMaterial();
+								setOrigMat.setDiffuseColor(orbColors[orbPane.getColumnIndex(orbs_s)-2]); 
+								orbs_s.setMaterial(setOrigMat);
+								System.out.println(orbs_s.getClass().getName().equals("javafx.scene.text.Text"));
+							}
+						}
+						PhongMaterial newMaterial = new PhongMaterial();
+						material.setDiffuseColor(Color.rgb(180, 180, 180));
 						orb.setMaterial(material);
 					} 
 				};
 				//Registering the event filter 
 				orb.setOnMousePressed(eventHandler);
-				orbPane.add(orb, 2+j, i); 
+				orbPane.add(orb, 2+j, i);
 			}
+			Text colorText = new Text("N/A");
+			colorText.getStyleClass().add("playername");
+			orbPane.add(colorText, 10, i);
+
 		}
 		 
 		root.getChildren().add(orbPane);
