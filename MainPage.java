@@ -1,5 +1,8 @@
 package main_files;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -119,6 +122,24 @@ public class MainPage extends Application{
 		Start_btn.setPrefSize(200, 50);
 		Start_btn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		Start_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+		Start_btn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event) {
+				 Platform.runLater(new Runnable() {
+				       public void run() {             
+				           try {
+							new GamePlayUI().start(new Stage());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				       }
+				    });
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		root.getChildren().add(Start_btn);
 		
 		Button Setting_btn = new Button();
