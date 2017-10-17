@@ -18,3 +18,8 @@
 	-fx-font-size: 20px;
 	-fx-fill: rgb(255, 255, 255);
 }
+
+.donebtn {
+	-fx-background-color: rgb(46, 192, 209, 0.8);
+	-fx-font: 25px 'Poiret One', cursive;
+}
