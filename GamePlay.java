@@ -250,63 +250,6 @@ public class GamePlay
 		}
 		return -1;
 	}
-
-//	public static void main(String[] args) 
-//	{
-//		Scanner in = new Scanner(System.in);
-//		prt("Grid Size:\n");
-//		int x = in.nextInt();
-//		int y = in.nextInt();
-//		prt("Enter Player count\n");
-//		int pc = in.nextInt();
-//		GamePlay game = new GamePlay(x, y, pc);
-//
-//		for(int i=0; i<game.gridX; i++)
-//		{
-//			for(int j=0; j<game.gridY; j++)
-//			{
-//				prt(game.Grid[i][j].getCriticalMass()+" ");
-//			}
-//			prt("\n");
-//		}
-//
-//		for(int i=0; i<game.getPlayerCount(); i++)
-//		{
-//			prt("enter coordinates:\n");
-//			while(!game.takeTurn(game.getPlayers()[i].getPlayerID(), in.nextInt()-1, in.nextInt()-1))
-//			{
-//
-//			}
-//		}
-//		for(int i=0; i<game.gridX; i++)
-//		{
-//			for(int j=0; j<game.gridY; j++)
-//			{
-//				prt(game.Grid[i][j].getOrbCount()+" ");
-//			}
-//			prt("\n");
-//		}
-//		for(int i=0; !game.isWinner(); )
-//		{
-//			prt("enter coordinates:\n");
-//			boolean shouldPlay = true;
-//			while(shouldPlay)
-//			{
-//				shouldPlay = !game.takeTurn(game.getPlayers()[i].getPlayerID(), in.nextInt()-1, in.nextInt()-1);
-//				for(int k=0; k<game.gridX; k++)
-//				{
-//					for(int j=0; j<game.gridY; j++)
-//					{
-//						prt(game.Grid[k][j].getOrbCount()+" ");
-//					}
-//					prt("\n");
-//				}
-//			}
-//			i++;
-//			i=i%game.getPlayerCount();
-//		}
-//		prt("we have a winner with playerID :"+game.nameWinner()+"\n");
-//	}
 	public static void prt(String x)
 	{
 		System.out.print(x);

@@ -125,11 +125,27 @@ public class MainPage extends Application{
 		Start_btn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
-			public void handle(ActionEvent event) {
+			public void handle(ActionEvent event) 
+			{
+				 String s = group.getSelectedToggle().toString();
+				 String s1 = G.getSelectedToggle().toString();
+				 int a = Character.getNumericValue(s.charAt(s.length()-2));
+				 int b = Character.getNumericValue(s1.charAt(s1.length()-2));
+				 int x,y;
+				 if(b==0)
+				 {
+					 x = 10;
+					 y = 15;
+				 }
+				 else
+				 {
+					 x = 9;
+					 y = 6;
+				 }
 				 Platform.runLater(new Runnable() {
 				       public void run() {             
 				           try {
-							new GamePlayUI().start(new Stage());
+							new GamePlayUI(a,x,y).start(new Stage());
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

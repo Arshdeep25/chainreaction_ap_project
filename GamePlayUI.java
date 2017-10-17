@@ -25,17 +25,26 @@ import javafx.stage.Stage;
 public class GamePlayUI extends Application{
 
 
-	private Tile[][] Board = new Tile[9][6];
+	private Tile[][] Board;
 	private int PlayerID = 0;
 	private GamePlay obj;
 	private Pane root = new Pane();
 	private int cnt = 1;
+	private int TotalPlayers;
+	private int GridX,GridY;
 	
+	public GamePlayUI(int Player,int x,int y)
+	{
+		TotalPlayers = Player;
+		GridX = x;
+		GridY = y;
+		Board = new Tile[GridX][GridY];
+	}
 	private Parent createContent() {
-        root.setPrefSize(300, 450);
-        obj = new GamePlay(9,6,2);
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 6; j++) {
+        root.setPrefSize(GridY*50, GridX*50);
+        obj = new GamePlay(GridX,GridY,TotalPlayers);
+        for (int i = 0; i < GridX; i++) {
+            for (int j = 0; j < GridY; j++) {
                 Tile tile = new Tile();
                 tile.setTranslateX(j * 50);
                 tile.setTranslateY(i * 50);
@@ -73,9 +82,9 @@ public class GamePlayUI extends Application{
             	{
             		obj.takeTurn(PlayerID, x, y);
                 	Cell[][] Temp = obj.getGrid();
-                	for(int p = 0 ; p<9 ; p++)
+                	for(int p = 0 ; p<GridX ; p++)
                 	{
-                		for(int q = 0;q<6;q++)
+                		for(int q = 0;q<GridY;q++)
                 		{
                 			Board[p][q].NumberOfOrbs = Temp[p][q].getOrbCount();
                 			Board[p][q].Owner = Temp[p][q].getOwner();
@@ -102,17 +111,66 @@ public class GamePlayUI extends Application{
                     				Shape.setMaterial(material);
                     				Board[p][q].getChildren().add(Shape);
                         		}
+                        		else if(Board[p][q].Owner==2)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.YELLOW); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
+                        		else if(Board[p][q].Owner==3)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.BLUE); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
+                        		else if(Board[p][q].Owner==4)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.ALICEBLUE); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
+                        		else if(Board[p][q].Owner==5)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.BLACK); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
+                        		else if(Board[p][q].Owner==GridY)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.BROWN); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
+                        		else if(Board[p][q].Owner==7)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.BEIGE); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
+                        		else if(Board[p][q].Owner==8)
+                        		{
+                        			PhongMaterial material = new PhongMaterial();  
+                    				material.setDiffuseColor(Color.PINK); 
+                    				Shape.setMaterial(material);
+                    				Board[p][q].getChildren().add(Shape);
+                        		}
                         		
                         	}
                 		}
                 	}
-                	if(obj.isWinner()&&cnt>=2)
+                	if(obj.isWinner()&&cnt>=TotalPlayers)
                 	{
                 		System.out.println("winner");
                 		Platform.exit();
                 	}
                 	cnt++;
-                	PlayerID = (PlayerID+1)%2;
+                	PlayerID = (PlayerID+1)%TotalPlayers;
             	}
             });
 		}
