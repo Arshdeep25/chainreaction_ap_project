@@ -38,7 +38,7 @@ public class GamePlayUI extends Application implements Serializable{
 
 
 	public Tile[][] Board;
-	public int PlayerID = 0;
+	public int PlayerID;
 	public GamePlay obj;
 //	private Pane root = new Pane();
 	private int cnt = 1;
@@ -53,6 +53,7 @@ public class GamePlayUI extends Application implements Serializable{
 		obj = new GamePlay(GridX,GridY,TotalPlayers);
 		if(Board==null)
 			this.Board = new Tile[x][y];
+		PlayerID = 0;
 	}
 	private Parent createContent() {
 		Pane root = new Pane();
@@ -282,13 +283,14 @@ public class GamePlayUI extends Application implements Serializable{
                 		System.out.println("winner");
                 		Platform.exit();
                 	}
+                	PlayerID = (PlayerID+1)%TotalPlayers;
                 	try {
 						serialise();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-                    PlayerID = (PlayerID+1)%TotalPlayers;
+                   
             	}
             });
 		}

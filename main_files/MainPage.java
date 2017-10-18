@@ -190,8 +190,6 @@ public class MainPage extends Application{
 				       public void run() {             
 				           try {
 							GamePlayUI gameStart = GamePlayUI.deserialise();
-							//System.out.println(gameStart.Board[0][0].Owner);
-							gameStart.PlayerID++;
 							gameStart.start(new Stage());
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
