@@ -4,7 +4,7 @@ import java.lang.*;
 import java.io.*;
 import java.util.*;
 
-public class GamePlay
+public class GamePlay implements Serializable
 {
 	private Cell[][] Grid;
 	private Player[] players;
@@ -309,5 +309,3 @@ public class GamePlay
 		this.players = players;
 	}
 }
-
-

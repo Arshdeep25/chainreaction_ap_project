@@ -2,7 +2,7 @@ package main_files;
 import java.lang.*;
 import java.io.*;
 
-public class Cell
+public class Cell implements Serializable
 {
 	private int orbCount;
 	private int owner;

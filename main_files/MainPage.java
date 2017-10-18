@@ -115,6 +115,9 @@ public class MainPage extends Application{
 		
 		root.getChildren().addAll(G1,G2);
 		
+		group.selectToggle(P2);
+		G.selectToggle(G1);
+		
 		Button Start_btn = new Button();
 		Start_btn.setText("START GAME");
 		Start_btn.setLayoutX(220);
@@ -127,13 +130,13 @@ public class MainPage extends Application{
 			@Override
 			public void handle(ActionEvent event) 
 			{
-				 String s = group.getSelectedToggle().toString();
+				String s = group.getSelectedToggle().toString();
 				 //System.out.println("ye bai "+s);
-				 String s1 = G.getSelectedToggle().toString();
-				 int a = Character.getNumericValue(s.charAt(s.length()-2));
-				 int b = Character.getNumericValue(s1.charAt(s1.length()-2));
-				 int x,y;
-				 if(b==0)
+				String s1 = G.getSelectedToggle().toString();
+				int a = Character.getNumericValue(s.charAt(s.length()-2));
+				int b = Character.getNumericValue(s1.charAt(s1.length()-2));
+				int x,y;
+				if(b==0)
 				 {
 					 x = 10;
 					 y = 15;
@@ -151,7 +154,7 @@ public class MainPage extends Application{
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.getMessage();
-							//e.printStackTrace();
+							e.printStackTrace();
 							System.out.println("dsfgsdfg");
 						}
 				       }
@@ -178,6 +181,30 @@ public class MainPage extends Application{
 		Resume_btn.setPrefSize(200, 50);
 		Resume_btn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		Resume_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+		Resume_btn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event) 
+			{
+				 Platform.runLater(new Runnable() {
+				       public void run() {             
+				           try {
+							GamePlayUI gameStart = GamePlayUI.deserialise();
+							//System.out.println(gameStart.Board[0][0].Owner);
+							gameStart.PlayerID++;
+							gameStart.start(new Stage());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.getMessage();
+							e.printStackTrace();
+							System.out.println("dsfgsdfg");
+						}
+				       }
+				    });
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		root.getChildren().add(Resume_btn);
 		
 		
