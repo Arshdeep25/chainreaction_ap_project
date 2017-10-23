@@ -23,8 +23,8 @@ import javafx.geometry.*;
 public class RenderGUISettings extends Application{
 
 	private Color[] playerColors = new Color[8];
-	private static Settings setting = new Settings();
-	private static Color[] orbColors = new Color[8];
+	private Settings setting = new Settings();
+	private Color[] orbColors = new Color[8];
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
