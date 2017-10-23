@@ -1,19 +1,18 @@
 package main_files;
-import main_files.*;
-import java.lang.*;
 import java.io.*;
-import java.util.*;
 
-public class GamePlay
+public class GamePlay implements Serializable
 {
+	
 	private Cell[][] Grid;
 	private Player[] players;
 	private int playerCount;
 	private int gridX, gridY;
+	private int movesPlayed;
 	
 	public Cell[][] getGrid()
 	{
-		return Grid;
+		return this.Grid;
 	}
 	
 	GamePlay(int gridX, int gridY, int playerCount)
@@ -21,6 +20,7 @@ public class GamePlay
 		this.gridX = gridX;
 		this.gridY = gridY;
 		this.setPlayerCount(playerCount);
+		this.movesPlayed = 0;
 		setPlayers(new Player[playerCount]);
 		for(int i=0; i<playerCount; i++)
 		{
@@ -210,6 +210,42 @@ public class GamePlay
 			Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
 			checkStabilityAndStabilize(x, y, PlayerID);
 		}
+		this.movesPlayed++;
+	}
+	public boolean isInGame(int PlayerID)
+	{
+		if(this.eachPlayerMovedOnce())
+		{
+			if(this.orbCountPlayer(PlayerID)==0)
+			{
+				return false;
+			}
+
+		}
+		return true;
+	}
+	public boolean eachPlayerMovedOnce()
+	{
+		if(this.movesPlayed>=this.playerCount)
+		{
+			return true;
+		}
+		return false;
+	}
+	public int orbCountPlayer(int PlayerID)
+	{
+		int count = 0;
+		for(int i=0; i<gridX; i++)
+		{
+			for(int j=0; j<gridY; j++)
+			{
+				if(Grid[i][j].getOwner()==PlayerID)
+				{
+					count += Grid[i][j].getOrbCount();
+				}
+			}
+		}
+		return count;
 	}
 
 	public boolean isWinner()
@@ -271,5 +307,3 @@ public class GamePlay
 		this.players = players;
 	}
 }
-
-

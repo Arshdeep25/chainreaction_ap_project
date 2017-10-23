@@ -1,14 +1,15 @@
 package main_files;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Background;
@@ -19,7 +20,6 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -29,6 +29,12 @@ public class MainPage extends Application{
 
 	
 	private Pane root = new Pane(); 
+	private static Button Resume_btn;
+	
+	public static Button getButton()
+	{
+		return Resume_btn;
+	}
 	
 	private Parent CreateContent()
 	{
@@ -115,6 +121,9 @@ public class MainPage extends Application{
 		
 		root.getChildren().addAll(G1,G2);
 		
+		group.selectToggle(P2);
+		G.selectToggle(G1);
+		
 		Button Start_btn = new Button();
 		Start_btn.setText("START GAME");
 		Start_btn.setLayoutX(220);
@@ -127,12 +136,12 @@ public class MainPage extends Application{
 			@Override
 			public void handle(ActionEvent event) 
 			{
-				 String s = group.getSelectedToggle().toString();
-				 String s1 = G.getSelectedToggle().toString();
-				 int a = Character.getNumericValue(s.charAt(s.length()-2));
-				 int b = Character.getNumericValue(s1.charAt(s1.length()-2));
-				 int x,y;
-				 if(b==0)
+				String s = group.getSelectedToggle().toString();
+				String s1 = G.getSelectedToggle().toString();
+				int a = Character.getNumericValue(s.charAt(s.length()-2));
+				int b = Character.getNumericValue(s1.charAt(s1.length()-2));
+				int x,y;
+				if(b==0)
 				 {
 					 x = 10;
 					 y = 15;
@@ -145,15 +154,15 @@ public class MainPage extends Application{
 				 Platform.runLater(new Runnable() {
 				       public void run() {             
 				           try {
-							new GamePlayUI(a,x,y).start(new Stage());
+							GamePlayUI gameStart = new GamePlayUI(a,x,y);
+							gameStart.start(new Stage());
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
+							e.getMessage();
 							e.printStackTrace();
+							System.out.println("dsfgsdfg");
 						}
 				       }
 				    });
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		root.getChildren().add(Start_btn);
@@ -165,15 +174,68 @@ public class MainPage extends Application{
 		Setting_btn.setPrefSize(200, 50);
 		Setting_btn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		Setting_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+		Setting_btn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event) 
+			{
+				 Platform.runLater(new Runnable() {
+				       public void run() {             
+				           try {
+							RenderGUISettings Settings = new RenderGUISettings();
+							Settings Color = new Settings();
+							Color = Settings.render(new Stage());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.getMessage();
+							e.printStackTrace();
+						}
+				       }
+				    });
+				
+			}
+		});
 		root.getChildren().add(Setting_btn);
 		
-		Button Resume_btn = new Button();
+		Resume_btn = new Button();
 		Resume_btn.setText("RESUME GAME");
 		Resume_btn.setLayoutX(220);
 		Resume_btn.setLayoutY(500);
 		Resume_btn.setPrefSize(200, 50);
 		Resume_btn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		Resume_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+		GamePlayUI gameStart;
+		try {
+			gameStart = GamePlayUI.deserialise();
+			if(gameStart.getCnt()==1)
+			{
+				Resume_btn.setVisible(false);
+			}
+		} catch (ClassNotFoundException | IOException e1) {
+		}
+		
+		
+		Resume_btn.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event) 
+			{
+				 Platform.runLater(new Runnable() {
+				       public void run() {             
+				           try {
+				        	GamePlayUI gameStart = GamePlayUI.deserialise();
+				        	
+							gameStart.start(new Stage());
+						} catch (Exception e) {
+							e.getMessage();
+							e.printStackTrace();
+						}
+				       }
+				    });
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		root.getChildren().add(Resume_btn);
 		
 		
