@@ -93,9 +93,9 @@ public class RenderGUISettings extends Application{
 		primaryStage.show();
 	}
 
-	public Settings render()
+	public Settings render(Stage stage)
 	{
-		launch();
+		this.start(stage);
 		this.setting.setOthers(orbColors);
 		return this.setting;
 	}
