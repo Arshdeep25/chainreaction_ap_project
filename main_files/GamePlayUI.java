@@ -7,26 +7,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Sphere;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -40,8 +37,7 @@ public class GamePlayUI extends Application implements Serializable{
 	public Tile[][] Board;
 	public int PlayerID;
 	public GamePlay obj;
-//	private Pane root = new Pane();
-	private int cnt = 1;
+	private int cnt = 0;
 	private int TotalPlayers;
 	private int GridX,GridY;
 	
@@ -55,10 +51,9 @@ public class GamePlayUI extends Application implements Serializable{
 			this.Board = new Tile[x][y];
 		PlayerID = 0;
 	}
-	private Parent createContent() {
+	private Parent createContent(Stage primaryStage) {
 		Pane root = new Pane();
-        root.setPrefSize(GridY*50, GridX*50);
-        cnt = 0;
+        root.setPrefSize(GridY*50, GridX*60);
         for (int p = 0; p < GridX; p++) 
         {
             for (int q = 0; q < GridY; q++) 
@@ -158,23 +153,65 @@ public class GamePlayUI extends Application implements Serializable{
                 }
     		}
     	}
+    	Button Undo = new Button();
+    	if(GridX==9)
+    	{
+    		Undo.setLayoutX(GridX*5);
+        	Undo.setLayoutY(GridY*80);
+    	}
+    	else
+    	{
+    		Undo.setLayoutX(GridX*20);
+        	Undo.setLayoutY(GridY*35);
+    	}
+    	Undo.setText("Undo");
+    	root.getChildren().add(Undo);
+    	MenuButton menubutton = new MenuButton("Options");
+    	Button Back = new Button("Exit");
+    	Button StartAgain = new Button("StartAgain");
+    	MenuItem Exit = new MenuItem("",Back);
+    	MenuItem Again = new MenuItem("",StartAgain);
+    	Exit.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				primaryStage.close();
+			}
+		});
+    	menubutton.getItems().addAll(Exit,Again);
+    	if(GridX==9)
+    	{
+        	menubutton.setLayoutX(GridX*20);
+        	menubutton.setLayoutY(GridY*80);
+    	}
+    	else
+    	{
+    		menubutton.setLayoutX(GridX*45);
+        	menubutton.setLayoutY(GridY*35);
+    	}
+    	root.getChildren().add(menubutton);
         return root;
 }
-	
+	public int a = 0;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-        //System.out.println("mvncmnncvdf");
-		 primaryStage.setScene(new Scene(createContent()));
+		 primaryStage.setScene(new Scene(createContent(primaryStage)));
 	     primaryStage.show();
+	     if(a==1)
+	    	 primaryStage.close();
 	    
 	}
 	public static void main(String[] args)
 	{
-        //System.out.println("wetert");
 		launch(args);
 	}
 	public class Tile extends StackPane implements Serializable
 	{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public int Owner=-1,NumberOfOrbs=0,x,y;
 		public Tile(int x,int y)
 		{
@@ -281,7 +318,13 @@ public class GamePlayUI extends Application implements Serializable{
                 	if(obj.isWinner()&&obj.eachPlayerMovedOnce())
                 	{
                 		System.out.println("winner");
-                		Platform.exit();
+                		cnt = 1;
+                		a=1;
+                		
+                	}
+                	else
+                	{
+                		MainPage.getButton().setVisible(true);
                 	}
                 	PlayerID = (PlayerID+1)%TotalPlayers;
                 	try {
@@ -300,7 +343,7 @@ public class GamePlayUI extends Application implements Serializable{
 		ObjectOutputStream out = null;
 		try
 		{
-			out = new ObjectOutputStream(new FileOutputStream("./out.txt"));
+			out = new ObjectOutputStream(new FileOutputStream("./in.txt"));
 			out.writeObject(this);
 		}
 		finally
@@ -313,7 +356,7 @@ public class GamePlayUI extends Application implements Serializable{
 		ObjectInputStream in = null;
 		try
 		{
-			in = new ObjectInputStream(new FileInputStream("./out.txt"));
+			in = new ObjectInputStream(new FileInputStream("./in.txt"));
 			return (GamePlayUI) in.readObject();
 	
 		}
@@ -321,6 +364,12 @@ public class GamePlayUI extends Application implements Serializable{
 		{
 			in.close();
 		}
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	
 }
