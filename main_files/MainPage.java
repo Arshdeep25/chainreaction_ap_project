@@ -30,6 +30,8 @@ public class MainPage extends Application{
 	
 	private Pane root = new Pane(); 
 	private static Button Resume_btn;
+	public static Stage var;
+	
 	
 	public static Button getButton()
 	{
@@ -155,7 +157,8 @@ public class MainPage extends Application{
 				       public void run() {             
 				           try {
 							GamePlayUI gameStart = new GamePlayUI(a,x,y);
-							gameStart.start(new Stage());
+							var = new Stage();
+							gameStart.start(var);
 						} catch (Exception e) {
 							e.getMessage();
 							e.printStackTrace();
@@ -206,12 +209,13 @@ public class MainPage extends Application{
 		Resume_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 		GamePlayUI gameStart;
 		try {
-			gameStart = GamePlayUI.deserialise();
+			gameStart = GamePlayUI.deserialise("in");
 			if(gameStart.getCnt()==1)
 			{
 				Resume_btn.setVisible(false);
 			}
-		} catch (ClassNotFoundException | IOException e1) {
+		} catch (Exception e1) {
+			Resume_btn.setVisible(false);
 		}
 		
 		
@@ -223,9 +227,9 @@ public class MainPage extends Application{
 				 Platform.runLater(new Runnable() {
 				       public void run() {             
 				           try {
-				        	GamePlayUI gameStart = GamePlayUI.deserialise();
-				        	
-							gameStart.start(new Stage());
+				        	GamePlayUI gameStart = GamePlayUI.deserialise("in");
+				        	var = new Stage();
+							gameStart.start(var);
 						} catch (Exception e) {
 							e.getMessage();
 							e.printStackTrace();
