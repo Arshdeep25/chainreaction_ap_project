@@ -41,7 +41,7 @@ public class Settings
 			}
 			else
 			{
-				System.out.println(i);
+//				System.out.println(i);
 			}
 		}
 		for(int i=0; i<8; i++)
@@ -53,7 +53,7 @@ public class Settings
 					if(sel[j]!=true)
 					{
 						playerColors[i] = orbColors[j];
-						System.out.println("j "+j);
+//						System.out.println("j "+j);
 						sel[j] = true;
 						break;
 					}
@@ -61,7 +61,7 @@ public class Settings
 			}
 			else
 			{
-				System.out.println(i);
+//				System.out.println(i);
 			}
 		}
 	}

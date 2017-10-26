@@ -12,7 +12,7 @@ import javafx.scene.input.*;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.shape.*;
-import javafx.stage.*;;
+import javafx.stage.*;
 import javafx.scene.paint.*;
 import javafx.scene.text.*;
 import javafx.scene.effect.*;
@@ -32,12 +32,12 @@ public class RenderGUISettings extends Application{
 		Text mainHeading = new Text("SETTINGS");
 		mainHeading.setX(20); 
 		mainHeading.setY(40);
-		mainHeading.getStyleClass().add("text");
+//		mainHeading.getStyleClass().add("text");
 		root.getChildren().add(mainHeading);
 		Text subHeading = new Text("Please select color of the respective players.");
 		subHeading.setX(20); 
 		subHeading.setY(70);
-		subHeading.getStyleClass().add("subText");
+//		subHeading.getStyleClass().add("subText");
 		root.getChildren().add(subHeading);
 
 		GridPane orbPane = new GridPane();
@@ -49,7 +49,7 @@ public class RenderGUISettings extends Application{
 		orbPane.setTranslateX(50);
 		orbPane.setTranslateY(150);
 
-		orbColors[0] = Color.rgb(216, 221, 115);
+		orbColors[0] = Color.rgb(255, 153, 51);
 		orbColors[1] = Color.rgb(32, 86, 173);
 		orbColors[2] = Color.rgb(31, 130, 42);
 		orbColors[3] = Color.rgb(186, 26, 14);
@@ -74,7 +74,7 @@ public class RenderGUISettings extends Application{
 				orbPane.add(orb, 2+j, i);
 			}
 			Text colorText = new Text("N/A");
-			colorText.getStyleClass().add("playername");
+//			colorText.getStyleClass().add("playername");
 			orbPane.add(colorText, 10, i);
 
 		}
@@ -86,8 +86,8 @@ public class RenderGUISettings extends Application{
 		doneButton.setOnAction(new doneButtonEvent(orbPane, orbColors, primaryStage, setting));
 		root.getChildren().add(doneButton);
 		Scene scene = new Scene(root, 700, 700);
-		scene.getStylesheets().add("style/Settings.css");
-		scene.setFill(Color.rgb(18, 55, 114, 0.99));
+//		scene.getStylesheets().add("style/Settings.css");
+		scene.setFill(Color.rgb(178, 255, 102, 0.99));
 		primaryStage.setTitle("Settings");
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -95,17 +95,14 @@ public class RenderGUISettings extends Application{
 
 	public Settings render(Stage stage)
 	{
-		this.start(stage);
+		try {
+			this.start(stage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.setting.setOthers(orbColors);
 		return this.setting;
-	}
-	public static void main(String[] args) {
-		launch();
-		setting.setOthers(orbColors);
-		for(int i=0; i<8; i++)
-		{
-			System.out.println("Color "+i+" : "+(setting.getAllColors()[i].getRed()*256));
-		}
 	}
 	
 }
@@ -206,7 +203,7 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 				PhongMaterial x = (PhongMaterial)orbs_s.getMaterial();
 				if(x.getDiffuseColor().equals(Color.rgb(180, 180, 180)))
 				{
-					System.out.println("nahi ho paega");
+//					System.out.println("nahi ho paega");
 					return;
 				}
 				
@@ -236,7 +233,7 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 		PhongMaterial material = new PhongMaterial();
 		material.setDiffuseColor(Color.rgb(180, 180, 180));
 		orb.setMaterial(material);
-		System.out.println("lala "+orbPane.getRowIndex(orb)+(orbColors[orbPane.getColumnIndex(orb)-2].getRed()*256));
+//		System.out.println("lala "+orbPane.getRowIndex(orb)+(orbColors[orbPane.getColumnIndex(orb)-2].getRed()*256));
 		setting.setPlayerColor(orbPane.getRowIndex(orb), orbColors[orbPane.getColumnIndex(orb)-2]);
 	} 
 }

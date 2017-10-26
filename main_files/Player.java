@@ -1,8 +1,7 @@
 package main_files;
-import java.lang.*;
 import java.io.*;
 
-public class Player
+public class Player implements Serializable
 {
 	private String name;
 	private final int playerID;

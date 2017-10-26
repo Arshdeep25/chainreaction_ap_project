@@ -1,25 +1,30 @@
 package main_files;
-import main_files.*;
-import java.lang.*;
 import java.io.*;
-import java.util.*;
 
-public class Gameplay
+public class GamePlay implements Serializable
 {
+	
 	private Cell[][] Grid;
 	private Player[] players;
 	private int playerCount;
 	private int gridX, gridY;
-
-	Gameplay(int gridX, int gridY, int playerCount)
+	private int movesPlayed;
+	
+	public Cell[][] getGrid()
+	{
+		return this.Grid;
+	}
+	
+	GamePlay(int gridX, int gridY, int playerCount)
 	{
 		this.gridX = gridX;
 		this.gridY = gridY;
-		this.playerCount = playerCount;
-		players = new Player[playerCount];
+		this.setPlayerCount(playerCount);
+		this.movesPlayed = 0;
+		setPlayers(new Player[playerCount]);
 		for(int i=0; i<playerCount; i++)
 		{
-			players[i] = new Player("Player "+(i+1), i+1, "color"+i);
+			getPlayers()[i] = new Player("Player "+(i+1), i+1, "color"+i);
 		}
 		Grid = new Cell[gridX][gridY];
 		for(int i=0; i<gridX; i++)
@@ -30,7 +35,7 @@ public class Gameplay
 				{
 					Grid[i][j] = new Cell(0, -1, 2);
 				}
-				else if(i==0||i==gridX-1||j==0||j==gridX-1)
+				else if(i==0||i==gridX-1||j==0||j==gridY-1)
 				{
 					Grid[i][j] = new Cell(0, -1, 3);
 				}
@@ -193,16 +198,54 @@ public class Gameplay
 		}
 	}
 
-	public boolean takeTurn(int PlayerID, int x, int y)
+	public void takeTurn(int PlayerID, int x, int y)
 	{
 		if(Grid[x][y].getOwner()!=-1 && Grid[x][y].getOwner()!=PlayerID)
 		{
-			return false;
+			System.out.println("Please Enter Again");
 		}
-		Grid[x][y].setOwner(PlayerID);
-		Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
-		checkStabilityAndStabilize(x, y, PlayerID);
+		else
+		{
+			Grid[x][y].setOwner(PlayerID);
+			Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
+			checkStabilityAndStabilize(x, y, PlayerID);
+		}
+		this.movesPlayed++;
+	}
+	public boolean isInGame(int PlayerID)
+	{
+		if(this.eachPlayerMovedOnce())
+		{
+			if(this.orbCountPlayer(PlayerID)==0)
+			{
+				return false;
+			}
+
+		}
 		return true;
+	}
+	public boolean eachPlayerMovedOnce()
+	{
+		if(this.movesPlayed>=this.playerCount)
+		{
+			return true;
+		}
+		return false;
+	}
+	public int orbCountPlayer(int PlayerID)
+	{
+		int count = 0;
+		for(int i=0; i<gridX; i++)
+		{
+			for(int j=0; j<gridY; j++)
+			{
+				if(Grid[i][j].getOwner()==PlayerID)
+				{
+					count += Grid[i][j].getOrbCount();
+				}
+			}
+		}
+		return count;
 	}
 
 	public boolean isWinner()
@@ -243,67 +286,24 @@ public class Gameplay
 		}
 		return -1;
 	}
-
-	public static void main(String[] args) 
-	{
-		Scanner in = new Scanner(System.in);
-		prt("Grid Size:\n");
-		int x = in.nextInt();
-		int y = in.nextInt();
-		prt("Enter Player count\n");
-		int pc = in.nextInt();
-		Gameplay game = new Gameplay(x, y, pc);
-
-		for(int i=0; i<game.gridX; i++)
-		{
-			for(int j=0; j<game.gridY; j++)
-			{
-				prt(game.Grid[i][j].getCriticalMass()+" ");
-			}
-			prt("\n");
-		}
-
-		for(int i=0; i<game.playerCount; i++)
-		{
-			prt("enter coordinates:\n");
-			while(!game.takeTurn(game.players[i].getPlayerID(), in.nextInt()-1, in.nextInt()-1))
-			{
-
-			}
-		}
-		for(int i=0; i<game.gridX; i++)
-		{
-			for(int j=0; j<game.gridY; j++)
-			{
-				prt(game.Grid[i][j].getOrbCount()+" ");
-			}
-			prt("\n");
-		}
-		for(int i=0; !game.isWinner(); )
-		{
-			prt("enter coordinates:\n");
-			boolean shouldPlay = true;
-			while(shouldPlay)
-			{
-				shouldPlay = !game.takeTurn(game.players[i].getPlayerID(), in.nextInt()-1, in.nextInt()-1);
-				for(int k=0; k<game.gridX; k++)
-				{
-					for(int j=0; j<game.gridY; j++)
-					{
-						prt(game.Grid[k][j].getOrbCount()+" ");
-					}
-					prt("\n");
-				}
-			}
-			i++;
-			i=i%game.playerCount;
-		}
-		prt("we have a winner with playerID :"+game.nameWinner()+"\n");
-	}
 	public static void prt(String x)
 	{
 		System.out.print(x);
 	}
+
+	public int getPlayerCount() {
+		return playerCount;
+	}
+
+	public void setPlayerCount(int playerCount) {
+		this.playerCount = playerCount;
+	}
+
+	public Player[] getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(Player[] players) {
+		this.players = players;
+	}
 }
-
-
