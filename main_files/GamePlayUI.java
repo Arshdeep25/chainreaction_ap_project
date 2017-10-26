@@ -30,6 +30,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.animation.RotateTransition;
 import javafx.animation.Interpolator;
+import javafx.scene.shape.Line;
 
 
 public class GamePlayUI extends Application implements Serializable{
@@ -55,7 +56,7 @@ public class GamePlayUI extends Application implements Serializable{
 	}
 	private Parent createContent(Stage primaryStage) {
 		Pane root = new Pane();
-        root.setPrefSize(GridY*50, GridX*60);
+        root.setPrefSize(GridY*50+10, GridX*60+10);
         for (int p = 0; p < GridX; p++) 
         {
             for (int q = 0; q < GridY; q++) 
@@ -79,7 +80,7 @@ public class GamePlayUI extends Application implements Serializable{
             			Board[p][q].NumberOfOrbs = T[p][q].getOrbCount();
             			Board[p][q].Owner = T[p][q].getOwner();
             			if(Board[p][q].getChildren().size()>1)
-            				Board[p][q].getChildren().remove(1, Board[p][q].getChildren().size());
+            				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
                         Group orbGroup = new Group();
             			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
                     	{
@@ -91,56 +92,56 @@ public class GamePlayUI extends Application implements Serializable{
                     		if(Board[p][q].Owner == 0)
                     		{
                     			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.GREEN); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[0]); 
                 				Shape.setMaterial(material);
                 				orbGroup.getChildren().add(Shape);
                     		}
                     		else if(Board[p][q].Owner==1)
                     		{
                     			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.RED); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[1]); 
                 				Shape.setMaterial(material);
                 				orbGroup.getChildren().add(Shape);
                     		}
                     		else if(Board[p][q].Owner==2)
                     		{
                     			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.YELLOW); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[2]); 
                 				Shape.setMaterial(material);
                 				orbGroup.getChildren().add(Shape);
                     		}
                     		else if(Board[p][q].Owner==3)
                     		{
                     			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.BLUE); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[3]); 
                 				Shape.setMaterial(material);
                 				orbGroup.getChildren().add(Shape);
                     		}
                     		else if(Board[p][q].Owner==4)
                     		{
                     			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.ALICEBLUE); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[4]); 
                 				Shape.setMaterial(material);
                 				orbGroup.getChildren().add(Shape);
                     		}
                     		else if(Board[p][q].Owner==5)
                     		{
                     			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.BLACK); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[5]); 
                 				Shape.setMaterial(material);
                 				orbGroup.getChildren().add(Shape);
                     		}
                     		else if(Board[p][q].Owner==6)
                     		{
                     			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.BROWN); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[6]); 
                 				Shape.setMaterial(material);
                 				orbGroup.getChildren().add(Shape);
                     		}
                     		else if(Board[p][q].Owner==7)
                     		{
                     			PhongMaterial material = new PhongMaterial();  
-                				material.setDiffuseColor(Color.BEIGE); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[7]); 
                 				Shape.setMaterial(material);
                 				orbGroup.getChildren().add(Shape);
                     		}                        		
@@ -256,6 +257,28 @@ public class GamePlayUI extends Application implements Serializable{
             border.setFill(null);
             border.setStroke(Color.BLACK);
             this.getChildren().add(border);
+            Rectangle border1 = new Rectangle(50, 50);
+            border1.setFill(null);
+            border1.setStroke(Color.BLACK);
+            border1.setTranslateX(5);
+            border1.setTranslateY(5);
+            this.getChildren().add(border1);
+            Line line1 = new Line(0, 0, 5, 5);
+            Line line2 = new Line(0, 0, 5, 5);
+            Line line3 = new Line(0, 0, 5, 5);
+            Line line4 = new Line(0, 0, 5, 5);
+            line1.setTranslateX(-22);
+            line1.setTranslateY(-22);
+            line2.setTranslateX(27);
+            line2.setTranslateY(-22);
+            line3.setTranslateX(-22);
+            line3.setTranslateY(27);
+            line4.setTranslateX(27);
+            line4.setTranslateY(27);
+            this.getChildren().add(line1);
+            this.getChildren().add(line2);
+            this.getChildren().add(line3);
+            this.getChildren().add(line4);
             this.setOnMouseClicked(event -> {
                 while(!obj.isInGame(PlayerID))
                 {
@@ -274,7 +297,7 @@ public class GamePlayUI extends Application implements Serializable{
                     			Board[p][q].NumberOfOrbs = T[p][q].getOrbCount();
                     			Board[p][q].Owner = T[p][q].getOwner();
                     			if(Board[p][q].getChildren().size()>1)
-                    				Board[p][q].getChildren().remove(1, Board[p][q].getChildren().size());
+                    				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
                                 Group orbGroup = new Group();
                     			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
                             	{
@@ -286,56 +309,56 @@ public class GamePlayUI extends Application implements Serializable{
                             		if(Board[p][q].Owner == 0)
                             		{
                             			PhongMaterial material = new PhongMaterial();  
-                        				material.setDiffuseColor(Color.GREEN); 
+                        				material.setDiffuseColor(MainPage.color.getAllColors()[0]); 
                         				Shape.setMaterial(material);
                         				orbGroup.getChildren().add(Shape);
                             		}
                             		else if(Board[p][q].Owner==1)
                             		{
                             			PhongMaterial material = new PhongMaterial();  
-                        				material.setDiffuseColor(Color.RED); 
+                        				material.setDiffuseColor(MainPage.color.getAllColors()[1]); 
                         				Shape.setMaterial(material);
                         				orbGroup.getChildren().add(Shape);
                             		}
                             		else if(Board[p][q].Owner==2)
                             		{
                             			PhongMaterial material = new PhongMaterial();  
-                        				material.setDiffuseColor(Color.YELLOW); 
+                        				material.setDiffuseColor(MainPage.color.getAllColors()[2]); 
                         				Shape.setMaterial(material);
                         				orbGroup.getChildren().add(Shape);
                             		}
                             		else if(Board[p][q].Owner==3)
                             		{
                             			PhongMaterial material = new PhongMaterial();  
-                        				material.setDiffuseColor(Color.BLUE); 
+                        				material.setDiffuseColor(MainPage.color.getAllColors()[3]); 
                         				Shape.setMaterial(material);
                         				orbGroup.getChildren().add(Shape);
                             		}
                             		else if(Board[p][q].Owner==4)
                             		{
                             			PhongMaterial material = new PhongMaterial();  
-                        				material.setDiffuseColor(Color.ALICEBLUE); 
+                        				material.setDiffuseColor(MainPage.color.getAllColors()[4]); 
                         				Shape.setMaterial(material);
                         				orbGroup.getChildren().add(Shape);
                             		}
                             		else if(Board[p][q].Owner==5)
                             		{
                             			PhongMaterial material = new PhongMaterial();  
-                        				material.setDiffuseColor(Color.BLACK); 
+                        				material.setDiffuseColor(MainPage.color.getAllColors()[5]); 
                         				Shape.setMaterial(material);
                         				orbGroup.getChildren().add(Shape);
                             		}
                             		else if(Board[p][q].Owner==6)
                             		{
                             			PhongMaterial material = new PhongMaterial();  
-                        				material.setDiffuseColor(Color.BROWN); 
+                        				material.setDiffuseColor(MainPage.color.getAllColors()[6]); 
                         				Shape.setMaterial(material);
                         				orbGroup.getChildren().add(Shape);
                             		}
                             		else if(Board[p][q].Owner==7)
                             		{
                             			PhongMaterial material = new PhongMaterial();  
-                        				material.setDiffuseColor(Color.BEIGE); 
+                        				material.setDiffuseColor(MainPage.color.getAllColors()[7]); 
                         				Shape.setMaterial(material);
                         				orbGroup.getChildren().add(Shape);
                             		}                        		

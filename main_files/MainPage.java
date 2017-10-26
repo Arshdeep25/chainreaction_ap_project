@@ -31,6 +31,7 @@ public class MainPage extends Application{
 	private Pane root = new Pane(); 
 	private static Button Resume_btn;
 	public static Stage var;
+	public static Settings color;
 	
 	
 	public static Button getButton()
@@ -186,8 +187,8 @@ public class MainPage extends Application{
 				       public void run() {             
 				           try {
 							RenderGUISettings Settings = new RenderGUISettings();
-							Settings Color = new Settings();
-							Color = Settings.render(new Stage());
+							color = new Settings();
+							color = Settings.render(new Stage());
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.getMessage();
