@@ -174,14 +174,98 @@ public class GamePlayUI extends Application implements Serializable{
 			@Override
 			public void handle(ActionEvent event) {
 					try {
-						primaryStage.close();
+						
 			    		undo_var = 1;
+			    		MainPage.Undo_button = 1;
 						GamePlayUI U = deserialise("in2");
-						Board = U.Board;
 						PlayerID = U.PlayerID;
 						obj = U.obj;
-						MainPage.var = new Stage();
-						start(MainPage.var);
+						Cell[][] T = obj.getGrid();
+			        	for(int p = 0 ; p<GridX ; p++)
+			        	{
+			                for(int q = 0;q<GridY;q++)
+			        		{
+			                    if(Board[p][q].NumberOfOrbs!=T[p][q].getOrbCount()||Board[p][q].Owner!=T[p][q].getOwner())
+			                    {
+			            			Board[p][q].NumberOfOrbs = T[p][q].getOrbCount();
+			            			Board[p][q].Owner = T[p][q].getOwner();
+			            			if(Board[p][q].getChildren().size()>1)
+			            				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
+			                        Group orbGroup = new Group();
+			            			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
+			                    	{
+			                    		Sphere Shape = new Sphere(10);
+			                    		if(i==1)
+			                    			Shape.setTranslateX(10);
+			                    		if(i==2)
+			                    			Shape.setTranslateY(10);
+			                    		if(Board[p][q].Owner == 0)
+			                    		{
+			                    			PhongMaterial material = new PhongMaterial();  
+			                				material.setDiffuseColor(MainPage.color.getAllColors()[0]); 
+			                				Shape.setMaterial(material);
+			                				orbGroup.getChildren().add(Shape);
+			                    		}
+			                    		else if(Board[p][q].Owner==1)
+			                    		{
+			                    			PhongMaterial material = new PhongMaterial();  
+			                				material.setDiffuseColor(MainPage.color.getAllColors()[1]); 
+			                				Shape.setMaterial(material);
+			                				orbGroup.getChildren().add(Shape);
+			                    		}
+			                    		else if(Board[p][q].Owner==2)
+			                    		{
+			                    			PhongMaterial material = new PhongMaterial();  
+			                				material.setDiffuseColor(MainPage.color.getAllColors()[2]); 
+			                				Shape.setMaterial(material);
+			                				orbGroup.getChildren().add(Shape);
+			                    		}
+			                    		else if(Board[p][q].Owner==3)
+			                    		{
+			                    			PhongMaterial material = new PhongMaterial();  
+			                				material.setDiffuseColor(MainPage.color.getAllColors()[3]); 
+			                				Shape.setMaterial(material);
+			                				orbGroup.getChildren().add(Shape);
+			                    		}
+			                    		else if(Board[p][q].Owner==4)
+			                    		{
+			                    			PhongMaterial material = new PhongMaterial();  
+			                				material.setDiffuseColor(MainPage.color.getAllColors()[4]); 
+			                				Shape.setMaterial(material);
+			                				orbGroup.getChildren().add(Shape);
+			                    		}
+			                    		else if(Board[p][q].Owner==5)
+			                    		{
+			                    			PhongMaterial material = new PhongMaterial();  
+			                				material.setDiffuseColor(MainPage.color.getAllColors()[5]); 
+			                				Shape.setMaterial(material);
+			                				orbGroup.getChildren().add(Shape);
+			                    		}
+			                    		else if(Board[p][q].Owner==6)
+			                    		{
+			                    			PhongMaterial material = new PhongMaterial();  
+			                				material.setDiffuseColor(MainPage.color.getAllColors()[6]); 
+			                				Shape.setMaterial(material);
+			                				orbGroup.getChildren().add(Shape);
+			                    		}
+			                    		else if(Board[p][q].Owner==7)
+			                    		{
+			                    			PhongMaterial material = new PhongMaterial();  
+			                				material.setDiffuseColor(MainPage.color.getAllColors()[7]); 
+			                				Shape.setMaterial(material);
+			                				orbGroup.getChildren().add(Shape);
+			                    		}                        		
+			                    	}
+			                        RotateTransition rt = new RotateTransition(Duration.millis(5000), orbGroup);
+			                        rt.setAutoReverse(false);
+			                        rt.setCycleCount(Timeline.INDEFINITE);
+			                        rt.setByAngle(360);
+			                        rt.setInterpolator(Interpolator.LINEAR);
+			                        rt.play();
+			                        Board[p][q].getChildren().add(orbGroup);
+			                    }
+			        		}
+			        	}
 					} catch (Exception e) {
 					}
 					
@@ -207,13 +291,95 @@ public class GamePlayUI extends Application implements Serializable{
 
 			@Override
 			public void handle(ActionEvent event) {
-				primaryStage.close();
 				try {
-					Board = new Tile[GridX][GridY];
 					PlayerID = 0;
 					obj = new GamePlay(GridX,GridY,TotalPlayers);
-					MainPage.var = new Stage();
-					start(MainPage.var);
+					Cell[][] T = obj.getGrid();
+		        	for(int p = 0 ; p<GridX ; p++)
+		        	{
+		                for(int q = 0;q<GridY;q++)
+		        		{
+		                    if(Board[p][q].NumberOfOrbs!=T[p][q].getOrbCount()||Board[p][q].Owner!=T[p][q].getOwner())
+		                    {
+		            			Board[p][q].NumberOfOrbs = T[p][q].getOrbCount();
+		            			Board[p][q].Owner = T[p][q].getOwner();
+		            			if(Board[p][q].getChildren().size()>1)
+		            				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
+		                        Group orbGroup = new Group();
+		            			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
+		                    	{
+		                    		Sphere Shape = new Sphere(10);
+		                    		if(i==1)
+		                    			Shape.setTranslateX(10);
+		                    		if(i==2)
+		                    			Shape.setTranslateY(10);
+		                    		if(Board[p][q].Owner == 0)
+		                    		{
+		                    			PhongMaterial material = new PhongMaterial();  
+		                				material.setDiffuseColor(MainPage.color.getAllColors()[0]); 
+		                				Shape.setMaterial(material);
+		                				orbGroup.getChildren().add(Shape);
+		                    		}
+		                    		else if(Board[p][q].Owner==1)
+		                    		{
+		                    			PhongMaterial material = new PhongMaterial();  
+		                				material.setDiffuseColor(MainPage.color.getAllColors()[1]); 
+		                				Shape.setMaterial(material);
+		                				orbGroup.getChildren().add(Shape);
+		                    		}
+		                    		else if(Board[p][q].Owner==2)
+		                    		{
+		                    			PhongMaterial material = new PhongMaterial();  
+		                				material.setDiffuseColor(MainPage.color.getAllColors()[2]); 
+		                				Shape.setMaterial(material);
+		                				orbGroup.getChildren().add(Shape);
+		                    		}
+		                    		else if(Board[p][q].Owner==3)
+		                    		{
+		                    			PhongMaterial material = new PhongMaterial();  
+		                				material.setDiffuseColor(MainPage.color.getAllColors()[3]); 
+		                				Shape.setMaterial(material);
+		                				orbGroup.getChildren().add(Shape);
+		                    		}
+		                    		else if(Board[p][q].Owner==4)
+		                    		{
+		                    			PhongMaterial material = new PhongMaterial();  
+		                				material.setDiffuseColor(MainPage.color.getAllColors()[4]); 
+		                				Shape.setMaterial(material);
+		                				orbGroup.getChildren().add(Shape);
+		                    		}
+		                    		else if(Board[p][q].Owner==5)
+		                    		{
+		                    			PhongMaterial material = new PhongMaterial();  
+		                				material.setDiffuseColor(MainPage.color.getAllColors()[5]); 
+		                				Shape.setMaterial(material);
+		                				orbGroup.getChildren().add(Shape);
+		                    		}
+		                    		else if(Board[p][q].Owner==6)
+		                    		{
+		                    			PhongMaterial material = new PhongMaterial();  
+		                				material.setDiffuseColor(MainPage.color.getAllColors()[6]); 
+		                				Shape.setMaterial(material);
+		                				orbGroup.getChildren().add(Shape);
+		                    		}
+		                    		else if(Board[p][q].Owner==7)
+		                    		{
+		                    			PhongMaterial material = new PhongMaterial();  
+		                				material.setDiffuseColor(MainPage.color.getAllColors()[7]); 
+		                				Shape.setMaterial(material);
+		                				orbGroup.getChildren().add(Shape);
+		                    		}                        		
+		                    	}
+		                        RotateTransition rt = new RotateTransition(Duration.millis(5000), orbGroup);
+		                        rt.setAutoReverse(false);
+		                        rt.setCycleCount(Timeline.INDEFINITE);
+		                        rt.setByAngle(360);
+		                        rt.setInterpolator(Interpolator.LINEAR);
+		                        rt.play();
+		                        Board[p][q].getChildren().add(orbGroup);
+		                    }
+		        		}
+		        	}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -396,6 +562,7 @@ public class GamePlayUI extends Application implements Serializable{
 								serialise("in2",obj);
                 			}
                 			undo_var = 0;
+                			MainPage.Undo_button = 0;
 						} catch (Exception e) {
 						}
 						serialise("in",null);

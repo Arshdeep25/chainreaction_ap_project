@@ -32,6 +32,7 @@ public class MainPage extends Application{
 	private static Button Resume_btn;
 	public static Stage var;
 	public static Settings color;
+	public static int Undo_button = 0;
 	
 	
 	public static Button getButton()
@@ -210,7 +211,10 @@ public class MainPage extends Application{
 		Resume_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 		GamePlayUI gameStart;
 		try {
-			gameStart = GamePlayUI.deserialise("in");
+			if(Undo_button == 0)
+				gameStart = GamePlayUI.deserialise("in");
+			else
+				gameStart = GamePlayUI.deserialise("in2");
 			if(gameStart.getCnt()==1)
 			{
 				Resume_btn.setVisible(false);
@@ -228,7 +232,11 @@ public class MainPage extends Application{
 				 Platform.runLater(new Runnable() {
 				       public void run() {             
 				           try {
-				        	GamePlayUI gameStart = GamePlayUI.deserialise("in");
+					        	GamePlayUI gameStart;
+				        	   if(Undo_button == 0)
+				   				gameStart = GamePlayUI.deserialise("in");
+				   			else
+				   				gameStart = GamePlayUI.deserialise("in2");
 				        	var = new Stage();
 							gameStart.start(var);
 						} catch (Exception e) {
