@@ -107,18 +107,21 @@ public class GamePlay implements Serializable
 				orbGroup.getChildren().add(Shape1);
 				orbGroup.getChildren().add(Shape2);
 				GamePlayUI.root.getChildren().add(orbGroup);
-				TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+				TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 				tt1.setFromX(25f);
 				tt1.setToX(75f);
 				tt1.setFromY(25f);
 				tt1.setToY(25f);
-				TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+				TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 				tt2.setFromX(25f);
 				tt2.setToX(25f);
 				tt2.setFromY(25f);
 				tt2.setToY(75f);
 				tt1.play();
 				tt2.play();
+				tt2.setOnFinished(event -> {
+					GamePlayUI.root.getChildren().remove(orbGroup);
+				});		  
 		        checkStabilityAndStabilize(x+1, y, PlayerID);
 				checkStabilityAndStabilize(x, y+1, PlayerID);
 				return ;
@@ -143,19 +146,22 @@ public class GamePlay implements Serializable
 				orbGroup.getChildren().add(Shape2);
 				GamePlayUI.root.getChildren().add(orbGroup);
 				System.out.println(x+" "+y);
-				TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+				TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 				tt1.setFromX((float)y*50+25f);
 				tt1.setToX((float)(y-1)*50+25f);
 				tt1.setFromY(25f);
 				tt1.setToY(25f);
-				TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+				TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 				tt2.setFromX((float)y*50+25f);
 				tt2.setToX((float)y*50+25f);
 				tt2.setFromY(25f);
 				tt2.setToY(75f);
 				tt1.play();
 				tt2.play();
-
+				tt2.setOnFinished(event -> {
+					GamePlayUI.root.getChildren().remove(orbGroup);
+				});
+				
 				checkStabilityAndStabilize(x+1, y, PlayerID);
 				checkStabilityAndStabilize(x, y-1, PlayerID);
 				return ;
@@ -182,19 +188,22 @@ public class GamePlay implements Serializable
 				orbGroup.getChildren().add(Shape2);
 				GamePlayUI.root.getChildren().add(orbGroup);
 				System.out.println(x+" "+y);
-				TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+				TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 				tt1.setFromX(25f);
 				tt1.setToX(75f);
 				tt1.setFromY((float)x*50+25f);
 				tt1.setToY((float)x*50+25f);
-				TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+				TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 				tt2.setFromX((float)y*50+25f);
 				tt2.setToX((float)y*50+25f);
 				tt2.setFromY((float)x*50+25f);
 				tt2.setToY((float)(x-1)*50+25f);
 				tt1.play();
 				tt2.play();
-
+				tt2.setOnFinished(event -> {
+					GamePlayUI.root.getChildren().remove(orbGroup);
+				});
+				
 				checkStabilityAndStabilize(x-1, y, PlayerID);
 				checkStabilityAndStabilize(x, y+1, PlayerID);
 				return ;
@@ -218,19 +227,22 @@ public class GamePlay implements Serializable
 				orbGroup.getChildren().add(Shape2);
 				GamePlayUI.root.getChildren().add(orbGroup);
 				System.out.println(x+" "+y);
-				TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+				TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 				tt1.setFromX((float)y*50+25f);
 				tt1.setToX((float)(y-1)*50+25f);
 				tt1.setFromY((float)x*50+25f);
 				tt1.setToY((float)x*50+25f);
-				TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+				TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 				tt2.setFromX((float)y*50+25f);
 				tt2.setToX((float)y*50+25f);
 				tt2.setFromY((float)x*50+25f);
 				tt2.setToY((float)(x-1)*50+25f);
 				tt1.play();
 				tt2.play();
-
+				tt2.setOnFinished(event -> {
+					GamePlayUI.root.getChildren().remove(orbGroup);
+				});
+				
 				checkStabilityAndStabilize(x-1, y, PlayerID);
 				checkStabilityAndStabilize(x, y-1, PlayerID);
 				return ;
@@ -263,17 +275,17 @@ public class GamePlay implements Serializable
 			orbGroup.getChildren().add(Shape3);
 			GamePlayUI.root.getChildren().add(orbGroup);
 			System.out.println(x+" "+y);
-			TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+			TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 			tt1.setFromX((float)y*50+25f);
 			tt1.setToX((float)y*50+25f);
 			tt1.setFromY((float)x*50+25f);
 			tt1.setToY((float)(x+1)*50+25f);
-			TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+			TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 			tt2.setFromX((float)y*50+25f);
 			tt2.setToX((float)y*50+25f);
 			tt2.setFromY((float)x*50+25f);
 			tt2.setToY((float)(x-1)*50+25f);
-			TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+			TranslateTransition tt3 = new TranslateTransition(Duration.millis(100), Shape3);
 			tt3.setFromX((float)y*50+25f);
 			tt3.setToX((float)(y+1)*50+25f);
 			tt3.setFromY((float)x*50+25f);
@@ -282,6 +294,9 @@ public class GamePlay implements Serializable
 			tt1.play();
 			tt2.play();
 			tt3.play();
+			tt3.setOnFinished(event -> {
+				GamePlayUI.root.getChildren().remove(orbGroup);
+			});
 
 			checkStabilityAndStabilize(x+1, y, PlayerID);
 			checkStabilityAndStabilize(x-1, y, PlayerID);
@@ -312,21 +327,24 @@ public class GamePlay implements Serializable
 			orbGroup.getChildren().add(Shape3);
 			GamePlayUI.root.getChildren().add(orbGroup);
 			System.out.println(x+" "+y);
-			TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+			TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 			tt1.setFromX((float)y*50+25f);
 			tt1.setToX((float)y*50+25f);
 			tt1.setFromY((float)x*50+25f);
 			tt1.setToY((float)(x+1)*50+25f);
-			TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+			TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 			tt2.setFromX((float)y*50+25f);
 			tt2.setToX((float)(y+1)*50+25f);
 			tt2.setFromY((float)x*50+25f);
 			tt2.setToY((float)x*50+25f);
-			TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+			TranslateTransition tt3 = new TranslateTransition(Duration.millis(100), Shape3);
 			tt3.setFromX((float)y*50+25f);
 			tt3.setToX((float)(y-1)*50+25f);
 			tt3.setFromY((float)x*50+25f);
 			tt3.setToY((float)x*50+25f);
+			tt3.setOnFinished(event -> {
+				GamePlayUI.root.getChildren().remove(orbGroup);
+			});
 
 			tt1.play();
 			tt2.play();
@@ -361,17 +379,17 @@ public class GamePlay implements Serializable
 			orbGroup.getChildren().add(Shape3);
 			GamePlayUI.root.getChildren().add(orbGroup);
 			System.out.println(x+" "+y);
-			TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+			TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 			tt1.setFromX((float)y*50+25f);
 			tt1.setToX((float)y*50+25f);
 			tt1.setFromY((float)x*50+25f);
 			tt1.setToY((float)(x+1)*50+25f);
-			TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+			TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 			tt2.setFromX((float)y*50+25f);
 			tt2.setToX((float)y*50+25f);
 			tt2.setFromY((float)x*50+25f);
 			tt2.setToY((float)(x-1)*50+25f);
-			TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+			TranslateTransition tt3 = new TranslateTransition(Duration.millis(100), Shape3);
 			tt3.setFromX((float)y*50+25f);
 			tt3.setToX((float)(y-1)*50+25f);
 			tt3.setFromY((float)x*50+25f);
@@ -380,6 +398,9 @@ public class GamePlay implements Serializable
 			tt1.play();
 			tt2.play();
 			tt3.play();
+			tt3.setOnFinished(event -> {
+				GamePlayUI.root.getChildren().remove(orbGroup);
+			});
 
 			checkStabilityAndStabilize(x+1, y, PlayerID);
 			checkStabilityAndStabilize(x-1, y, PlayerID);
@@ -410,17 +431,17 @@ public class GamePlay implements Serializable
 			orbGroup.getChildren().add(Shape3);
 			GamePlayUI.root.getChildren().add(orbGroup);
 			System.out.println(x+" "+y);
-			TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+			TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 			tt1.setFromX((float)y*50+25f);
 			tt1.setToX((float)(y+1)*50+25f);
 			tt1.setFromY((float)x*50+25f);
 			tt1.setToY((float)x*50+25f);
-			TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+			TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 			tt2.setFromX((float)y*50+25f);
 			tt2.setToX((float)y*50+25f);
 			tt2.setFromY((float)x*50+25f);
 			tt2.setToY((float)(x-1)*50+25f);
-			TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+			TranslateTransition tt3 = new TranslateTransition(Duration.millis(100), Shape3);
 			tt3.setFromX((float)y*50+25f);
 			tt3.setToX((float)(y-1)*50+25f);
 			tt3.setFromY((float)x*50+25f);
@@ -429,6 +450,9 @@ public class GamePlay implements Serializable
 			tt1.play();
 			tt2.play();
 			tt3.play();
+			tt3.setOnFinished(event -> {
+				GamePlayUI.root.getChildren().remove(orbGroup);
+			});
 
 			checkStabilityAndStabilize(x-1, y, PlayerID);
 			checkStabilityAndStabilize(x, y+1, PlayerID);
@@ -465,22 +489,22 @@ public class GamePlay implements Serializable
 		orbGroup.getChildren().add(Shape4);
 		GamePlayUI.root.getChildren().add(orbGroup);
 		System.out.println(x+" "+y);
-		TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+		TranslateTransition tt1 = new TranslateTransition(Duration.millis(100), Shape1);
 		tt1.setFromX((float)y*50+25f);
 		tt1.setToX((float)(y+1)*50+25f);
 		tt1.setFromY((float)x*50+25f);
 		tt1.setToY((float)x*50+25f);
-		TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+		TranslateTransition tt2 = new TranslateTransition(Duration.millis(100), Shape2);
 		tt2.setFromX((float)y*50+25f);
 		tt2.setToX((float)y*50+25f);
 		tt2.setFromY((float)x*50+25f);
 		tt2.setToY((float)(x-1)*50+25f);
-		TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+		TranslateTransition tt3 = new TranslateTransition(Duration.millis(100), Shape3);
 		tt3.setFromX((float)y*50+25f);
 		tt3.setToX((float)(y-1)*50+25f);
 		tt3.setFromY((float)x*50+25f);
 		tt3.setToY((float)x*50+25f);
-		TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), Shape4);
+		TranslateTransition tt4 = new TranslateTransition(Duration.millis(100), Shape4);
 		tt4.setFromX((float)y*50+25f);
 		tt4.setToX((float)(x+1)*50+25f);
 		tt4.setFromY((float)x*50+25f);
@@ -490,6 +514,9 @@ public class GamePlay implements Serializable
 		tt2.play();
 		tt3.play();
 		tt4.play();
+		tt4.setOnFinished(event -> {
+			GamePlayUI.root.getChildren().remove(orbGroup);
+		});
 
 
 		checkStabilityAndStabilize(x+1, y, PlayerID);
