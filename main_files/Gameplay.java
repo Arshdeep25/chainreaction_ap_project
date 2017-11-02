@@ -1,5 +1,39 @@
 package main_files;
 import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitMenuButton;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.*;
+import javafx.stage.Stage;
+import javafx.animation.Timeline;
+import javafx.animation.RotateTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.animation.ParallelTransition;
+import java.util.concurrent.*;
+import javafx.util.Duration;
 
 public class GamePlay implements Serializable
 {
@@ -13,6 +47,10 @@ public class GamePlay implements Serializable
 	public Cell[][] getGrid()
 	{
 		return this.Grid;
+	}
+	public void setGrid(Cell[][] Grid)
+	{
+		this.Grid = Grid;
 	}
 	
 	GamePlay(int gridX, int gridY, int playerCount)
@@ -58,9 +96,33 @@ public class GamePlay implements Serializable
 				Grid[x+1][y].setOwner(PlayerID);
 				Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 				Grid[x][y+1].setOwner(PlayerID);
-				checkStabilityAndStabilize(x+1, y, PlayerID);
+
+				Sphere Shape1 = new Sphere(10);
+				PhongMaterial material = new PhongMaterial();  
+				material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+				Shape1.setMaterial(material);
+				Sphere Shape2 = new Sphere(10);
+				Shape2.setMaterial(material);
+				Group orbGroup = new Group();
+				orbGroup.getChildren().add(Shape1);
+				orbGroup.getChildren().add(Shape2);
+				GamePlayUI.root.getChildren().add(orbGroup);
+				TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+				tt1.setFromX(25f);
+				tt1.setToX(75f);
+				tt1.setFromY(25f);
+				tt1.setToY(25f);
+				TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+				tt2.setFromX(25f);
+				tt2.setToX(25f);
+				tt2.setFromY(25f);
+				tt2.setToY(75f);
+				tt1.play();
+				tt2.play();
+		        checkStabilityAndStabilize(x+1, y, PlayerID);
 				checkStabilityAndStabilize(x, y+1, PlayerID);
 				return ;
+				
 			}
 			else
 			{
@@ -69,6 +131,31 @@ public class GamePlay implements Serializable
 				Grid[x+1][y].setOwner(PlayerID);
 				Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 				Grid[x][y-1].setOwner(PlayerID);
+
+				Sphere Shape1 = new Sphere(10);
+				PhongMaterial material = new PhongMaterial();  
+				material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+				Shape1.setMaterial(material);
+				Sphere Shape2 = new Sphere(10);
+				Shape2.setMaterial(material);
+				Group orbGroup = new Group();
+				orbGroup.getChildren().add(Shape1);
+				orbGroup.getChildren().add(Shape2);
+				GamePlayUI.root.getChildren().add(orbGroup);
+				System.out.println(x+" "+y);
+				TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+				tt1.setFromX((float)y*50+25f);
+				tt1.setToX((float)(y-1)*50+25f);
+				tt1.setFromY(25f);
+				tt1.setToY(25f);
+				TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+				tt2.setFromX((float)y*50+25f);
+				tt2.setToX((float)y*50+25f);
+				tt2.setFromY(25f);
+				tt2.setToY(75f);
+				tt1.play();
+				tt2.play();
+
 				checkStabilityAndStabilize(x+1, y, PlayerID);
 				checkStabilityAndStabilize(x, y-1, PlayerID);
 				return ;
@@ -83,6 +170,31 @@ public class GamePlay implements Serializable
 				Grid[x-1][y].setOwner(PlayerID);
 				Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 				Grid[x][y+1].setOwner(PlayerID);
+
+				Sphere Shape1 = new Sphere(10);
+				PhongMaterial material = new PhongMaterial();  
+				material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+				Shape1.setMaterial(material);
+				Sphere Shape2 = new Sphere(10);
+				Shape2.setMaterial(material);
+				Group orbGroup = new Group();
+				orbGroup.getChildren().add(Shape1);
+				orbGroup.getChildren().add(Shape2);
+				GamePlayUI.root.getChildren().add(orbGroup);
+				System.out.println(x+" "+y);
+				TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+				tt1.setFromX(25f);
+				tt1.setToX(75f);
+				tt1.setFromY((float)x*50+25f);
+				tt1.setToY((float)x*50+25f);
+				TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+				tt2.setFromX((float)y*50+25f);
+				tt2.setToX((float)y*50+25f);
+				tt2.setFromY((float)x*50+25f);
+				tt2.setToY((float)(x-1)*50+25f);
+				tt1.play();
+				tt2.play();
+
 				checkStabilityAndStabilize(x-1, y, PlayerID);
 				checkStabilityAndStabilize(x, y+1, PlayerID);
 				return ;
@@ -94,6 +206,31 @@ public class GamePlay implements Serializable
 				Grid[x-1][y].setOwner(PlayerID);
 				Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 				Grid[x][y-1].setOwner(PlayerID);
+
+				Sphere Shape1 = new Sphere(10);
+				PhongMaterial material = new PhongMaterial();  
+				material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+				Shape1.setMaterial(material);
+				Sphere Shape2 = new Sphere(10);
+				Shape2.setMaterial(material);
+				Group orbGroup = new Group();
+				orbGroup.getChildren().add(Shape1);
+				orbGroup.getChildren().add(Shape2);
+				GamePlayUI.root.getChildren().add(orbGroup);
+				System.out.println(x+" "+y);
+				TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+				tt1.setFromX((float)y*50+25f);
+				tt1.setToX((float)(y-1)*50+25f);
+				tt1.setFromY((float)x*50+25f);
+				tt1.setToY((float)x*50+25f);
+				TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+				tt2.setFromX((float)y*50+25f);
+				tt2.setToX((float)y*50+25f);
+				tt2.setFromY((float)x*50+25f);
+				tt2.setToY((float)(x-1)*50+25f);
+				tt1.play();
+				tt2.play();
+
 				checkStabilityAndStabilize(x-1, y, PlayerID);
 				checkStabilityAndStabilize(x, y-1, PlayerID);
 				return ;
@@ -111,6 +248,41 @@ public class GamePlay implements Serializable
 			Grid[x-1][y].setOwner(PlayerID);
 			Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 			Grid[x][y+1].setOwner(PlayerID);
+
+			Sphere Shape1 = new Sphere(10);
+			PhongMaterial material = new PhongMaterial();  
+			material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+			Shape1.setMaterial(material);
+			Sphere Shape2 = new Sphere(10);
+			Shape2.setMaterial(material);
+			Sphere Shape3 = new Sphere(10);
+			Shape3.setMaterial(material);
+			Group orbGroup = new Group();
+			orbGroup.getChildren().add(Shape1);
+			orbGroup.getChildren().add(Shape2);
+			orbGroup.getChildren().add(Shape3);
+			GamePlayUI.root.getChildren().add(orbGroup);
+			System.out.println(x+" "+y);
+			TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+			tt1.setFromX((float)y*50+25f);
+			tt1.setToX((float)y*50+25f);
+			tt1.setFromY((float)x*50+25f);
+			tt1.setToY((float)(x+1)*50+25f);
+			TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+			tt2.setFromX((float)y*50+25f);
+			tt2.setToX((float)y*50+25f);
+			tt2.setFromY((float)x*50+25f);
+			tt2.setToY((float)(x-1)*50+25f);
+			TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+			tt3.setFromX((float)y*50+25f);
+			tt3.setToX((float)(y+1)*50+25f);
+			tt3.setFromY((float)x*50+25f);
+			tt3.setToY((float)x*50+25f);
+
+			tt1.play();
+			tt2.play();
+			tt3.play();
+
 			checkStabilityAndStabilize(x+1, y, PlayerID);
 			checkStabilityAndStabilize(x-1, y, PlayerID);
 			checkStabilityAndStabilize(x, y+1, PlayerID);
@@ -125,6 +297,41 @@ public class GamePlay implements Serializable
 			Grid[x][y+1].setOwner(PlayerID);
 			Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 			Grid[x][y-1].setOwner(PlayerID);
+
+			Sphere Shape1 = new Sphere(10);
+			PhongMaterial material = new PhongMaterial();  
+			material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+			Shape1.setMaterial(material);
+			Sphere Shape2 = new Sphere(10);
+			Shape2.setMaterial(material);
+			Sphere Shape3 = new Sphere(10);
+			Shape3.setMaterial(material);
+			Group orbGroup = new Group();
+			orbGroup.getChildren().add(Shape1);
+			orbGroup.getChildren().add(Shape2);
+			orbGroup.getChildren().add(Shape3);
+			GamePlayUI.root.getChildren().add(orbGroup);
+			System.out.println(x+" "+y);
+			TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+			tt1.setFromX((float)y*50+25f);
+			tt1.setToX((float)y*50+25f);
+			tt1.setFromY((float)x*50+25f);
+			tt1.setToY((float)(x+1)*50+25f);
+			TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+			tt2.setFromX((float)y*50+25f);
+			tt2.setToX((float)(y+1)*50+25f);
+			tt2.setFromY((float)x*50+25f);
+			tt2.setToY((float)x*50+25f);
+			TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+			tt3.setFromX((float)y*50+25f);
+			tt3.setToX((float)(y-1)*50+25f);
+			tt3.setFromY((float)x*50+25f);
+			tt3.setToY((float)x*50+25f);
+
+			tt1.play();
+			tt2.play();
+			tt3.play();
+
 			checkStabilityAndStabilize(x+1, y, PlayerID);
 			checkStabilityAndStabilize(x, y+1, PlayerID);
 			checkStabilityAndStabilize(x, y-1, PlayerID);
@@ -139,6 +346,41 @@ public class GamePlay implements Serializable
 			Grid[x-1][y].setOwner(PlayerID);
 			Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 			Grid[x][y-1].setOwner(PlayerID);
+
+			Sphere Shape1 = new Sphere(10);
+			PhongMaterial material = new PhongMaterial();  
+			material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+			Shape1.setMaterial(material);
+			Sphere Shape2 = new Sphere(10);
+			Shape2.setMaterial(material);
+			Sphere Shape3 = new Sphere(10);
+			Shape3.setMaterial(material);
+			Group orbGroup = new Group();
+			orbGroup.getChildren().add(Shape1);
+			orbGroup.getChildren().add(Shape2);
+			orbGroup.getChildren().add(Shape3);
+			GamePlayUI.root.getChildren().add(orbGroup);
+			System.out.println(x+" "+y);
+			TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+			tt1.setFromX((float)y*50+25f);
+			tt1.setToX((float)y*50+25f);
+			tt1.setFromY((float)x*50+25f);
+			tt1.setToY((float)(x+1)*50+25f);
+			TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+			tt2.setFromX((float)y*50+25f);
+			tt2.setToX((float)y*50+25f);
+			tt2.setFromY((float)x*50+25f);
+			tt2.setToY((float)(x-1)*50+25f);
+			TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+			tt3.setFromX((float)y*50+25f);
+			tt3.setToX((float)(y-1)*50+25f);
+			tt3.setFromY((float)x*50+25f);
+			tt3.setToY((float)x*50+25f);
+
+			tt1.play();
+			tt2.play();
+			tt3.play();
+
 			checkStabilityAndStabilize(x+1, y, PlayerID);
 			checkStabilityAndStabilize(x-1, y, PlayerID);
 			checkStabilityAndStabilize(x, y-1, PlayerID);
@@ -153,6 +395,41 @@ public class GamePlay implements Serializable
 			Grid[x][y+1].setOwner(PlayerID);
 			Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 			Grid[x][y-1].setOwner(PlayerID);
+
+			Sphere Shape1 = new Sphere(10);
+			PhongMaterial material = new PhongMaterial();  
+			material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+			Shape1.setMaterial(material);
+			Sphere Shape2 = new Sphere(10);
+			Shape2.setMaterial(material);
+			Sphere Shape3 = new Sphere(10);
+			Shape3.setMaterial(material);
+			Group orbGroup = new Group();
+			orbGroup.getChildren().add(Shape1);
+			orbGroup.getChildren().add(Shape2);
+			orbGroup.getChildren().add(Shape3);
+			GamePlayUI.root.getChildren().add(orbGroup);
+			System.out.println(x+" "+y);
+			TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+			tt1.setFromX((float)y*50+25f);
+			tt1.setToX((float)(y+1)*50+25f);
+			tt1.setFromY((float)x*50+25f);
+			tt1.setToY((float)x*50+25f);
+			TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+			tt2.setFromX((float)y*50+25f);
+			tt2.setToX((float)y*50+25f);
+			tt2.setFromY((float)x*50+25f);
+			tt2.setToY((float)(x-1)*50+25f);
+			TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+			tt3.setFromX((float)y*50+25f);
+			tt3.setToX((float)(y-1)*50+25f);
+			tt3.setFromY((float)x*50+25f);
+			tt3.setToY((float)x*50+25f);
+
+			tt1.play();
+			tt2.play();
+			tt3.play();
+
 			checkStabilityAndStabilize(x-1, y, PlayerID);
 			checkStabilityAndStabilize(x, y+1, PlayerID);
 			checkStabilityAndStabilize(x, y-1, PlayerID);
@@ -170,6 +447,51 @@ public class GamePlay implements Serializable
 		Grid[x][y+1].setOwner(PlayerID);
 		Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 		Grid[x][y-1].setOwner(PlayerID);
+
+		Sphere Shape1 = new Sphere(10);
+		PhongMaterial material = new PhongMaterial();  
+		material.setDiffuseColor(MainPage.color.getAllColors()[GamePlayUI.Board[x][y].Owner]); 
+		Shape1.setMaterial(material);
+		Sphere Shape2 = new Sphere(10);
+		Shape2.setMaterial(material);
+		Sphere Shape3 = new Sphere(10);
+		Shape3.setMaterial(material);
+		Sphere Shape4 = new Sphere(10);
+		Shape4.setMaterial(material);
+		Group orbGroup = new Group();
+		orbGroup.getChildren().add(Shape1);
+		orbGroup.getChildren().add(Shape2);
+		orbGroup.getChildren().add(Shape3);
+		orbGroup.getChildren().add(Shape4);
+		GamePlayUI.root.getChildren().add(orbGroup);
+		System.out.println(x+" "+y);
+		TranslateTransition tt1 = new TranslateTransition(Duration.millis(2000), Shape1);
+		tt1.setFromX((float)y*50+25f);
+		tt1.setToX((float)(y+1)*50+25f);
+		tt1.setFromY((float)x*50+25f);
+		tt1.setToY((float)x*50+25f);
+		TranslateTransition tt2 = new TranslateTransition(Duration.millis(2000), Shape2);
+		tt2.setFromX((float)y*50+25f);
+		tt2.setToX((float)y*50+25f);
+		tt2.setFromY((float)x*50+25f);
+		tt2.setToY((float)(x-1)*50+25f);
+		TranslateTransition tt3 = new TranslateTransition(Duration.millis(2000), Shape3);
+		tt3.setFromX((float)y*50+25f);
+		tt3.setToX((float)(y-1)*50+25f);
+		tt3.setFromY((float)x*50+25f);
+		tt3.setToY((float)x*50+25f);
+		TranslateTransition tt4 = new TranslateTransition(Duration.millis(2000), Shape4);
+		tt4.setFromX((float)y*50+25f);
+		tt4.setToX((float)(x+1)*50+25f);
+		tt4.setFromY((float)x*50+25f);
+		tt4.setToY((float)x*50+25f);
+
+		tt1.play();
+		tt2.play();
+		tt3.play();
+		tt4.play();
+
+
 		checkStabilityAndStabilize(x+1, y, PlayerID);
 		checkStabilityAndStabilize(x-1, y, PlayerID);
 		checkStabilityAndStabilize(x, y+1, PlayerID);
@@ -177,29 +499,35 @@ public class GamePlay implements Serializable
 		return ;
 	}
 
-	private void checkStabilityAndStabilize(int x, int y, int PlayerID)
+	public int checkStabilityAndStabilize(int x, int y, int PlayerID)
 	{
 		if(Grid[x][y].isStable())
 		{
-			return ;
+			return 0;
 		}
 		Grid[x][y].setOwner(-1);
+		GamePlayUI.Board[x][y].getChildren().remove(6, GamePlayUI.Board[x][y].getChildren().size());
 		if(Grid[x][y].getCriticalMass()==2)
 		{
 			stabilizeCell2(x,y, PlayerID);
+			return 2;
 		}
 		if(Grid[x][y].getCriticalMass()==3)
 		{
 			stabilizeCell3(x,y, PlayerID);
+			return 3;
 		}
 		if(Grid[x][y].getCriticalMass()==4)
 		{
 			stabilizeCell4(x,y, PlayerID);
+			return 4;
 		}
+		return 0;
 	}
 
-	public void takeTurn(int PlayerID, int x, int y)
+	public int takeTurn(int PlayerID, int x, int y)
 	{
+		int cellType = 0;
 		if(Grid[x][y].getOwner()!=-1 && Grid[x][y].getOwner()!=PlayerID)
 		{
 			System.out.println("Please Enter Again");
@@ -208,9 +536,10 @@ public class GamePlay implements Serializable
 		{
 			Grid[x][y].setOwner(PlayerID);
 			Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
-			checkStabilityAndStabilize(x, y, PlayerID);
+			cellType = checkStabilityAndStabilize(x, y, PlayerID);
 		}
 		this.movesPlayed++;
+		return cellType;
 	}
 	public boolean isInGame(int PlayerID)
 	{
