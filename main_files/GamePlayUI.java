@@ -46,21 +46,18 @@ public class GamePlayUI extends Application implements Serializable{
 	public static Tile[][] Board;
 	public Cell[][] Grid;
 	public int PlayerID;
-	public GamePlay obj;
 	private int cnt = 0;
 	public int TotalPlayers;
 	public int GridX,GridY;
 	public Player[] players;
 	private int movesPlayed;
 	protected int undo_var;
-	static Pane root;
 	
 	public GamePlayUI(int Player,int x,int y)
 	{
 		this.TotalPlayers = Player;
 		this.GridX = x;
 		this.GridY = y;
-		obj = new GamePlay(GridX,GridY,TotalPlayers);
 		if(Board==null)
 			this.Board = new Tile[x][y];
 		PlayerID = 0;
@@ -91,7 +88,7 @@ public class GamePlayUI extends Application implements Serializable{
 	}
 	private Parent createContent(Stage primaryStage) 
 	{
-		root = new Pane();
+		Pane root = new Pane();
         root.setPrefSize(GridY*50+10, GridX*60+10);
         for (int p = 0; p < GridX; p++) 
         {
@@ -158,101 +155,6 @@ public class GamePlayUI extends Application implements Serializable{
     		
 			@Override
 			public void handle(ActionEvent event) {
-					try {
-						
-			    		undo_var = 1;
-			    		MainPage.Undo_button = 1;
-						GamePlayUI U = deserialise("in2");
-						PlayerID = U.PlayerID;
-						obj = U.obj;
-						Cell[][] T = obj.getGrid();
-			        	for(int p = 0 ; p<GridX ; p++)
-			        	{
-			                for(int q = 0;q<GridY;q++)
-			        		{
-			                    if(Board[p][q].NumberOfOrbs!=T[p][q].getOrbCount()||Board[p][q].Owner!=T[p][q].getOwner())
-			                    {
-			            			Board[p][q].NumberOfOrbs = T[p][q].getOrbCount();
-			            			Board[p][q].Owner = T[p][q].getOwner();
-			            			if(Board[p][q].getChildren().size()>1)
-			            				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
-			                        Group orbGroup = new Group();
-			            			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
-			                    	{
-			                    		Sphere Shape = new Sphere(10);
-			                    		if(i==1)
-			                    			Shape.setTranslateX(10);
-			                    		if(i==2)
-			                    			Shape.setTranslateY(10);
-			                    		if(Board[p][q].Owner == 0)
-			                    		{
-			                    			PhongMaterial material = new PhongMaterial();  
-			                				material.setDiffuseColor(MainPage.color.getAllColors()[0]); 
-			                				Shape.setMaterial(material);
-			                				orbGroup.getChildren().add(Shape);
-			                    		}
-			                    		else if(Board[p][q].Owner==1)
-			                    		{
-			                    			PhongMaterial material = new PhongMaterial();  
-			                				material.setDiffuseColor(MainPage.color.getAllColors()[1]); 
-			                				Shape.setMaterial(material);
-			                				orbGroup.getChildren().add(Shape);
-			                    		}
-			                    		else if(Board[p][q].Owner==2)
-			                    		{
-			                    			PhongMaterial material = new PhongMaterial();  
-			                				material.setDiffuseColor(MainPage.color.getAllColors()[2]); 
-			                				Shape.setMaterial(material);
-			                				orbGroup.getChildren().add(Shape);
-			                    		}
-			                    		else if(Board[p][q].Owner==3)
-			                    		{
-			                    			PhongMaterial material = new PhongMaterial();  
-			                				material.setDiffuseColor(MainPage.color.getAllColors()[3]); 
-			                				Shape.setMaterial(material);
-			                				orbGroup.getChildren().add(Shape);
-			                    		}
-			                    		else if(Board[p][q].Owner==4)
-			                    		{
-			                    			PhongMaterial material = new PhongMaterial();  
-			                				material.setDiffuseColor(MainPage.color.getAllColors()[4]); 
-			                				Shape.setMaterial(material);
-			                				orbGroup.getChildren().add(Shape);
-			                    		}
-			                    		else if(Board[p][q].Owner==5)
-			                    		{
-			                    			PhongMaterial material = new PhongMaterial();  
-			                				material.setDiffuseColor(MainPage.color.getAllColors()[5]); 
-			                				Shape.setMaterial(material);
-			                				orbGroup.getChildren().add(Shape);
-			                    		}
-			                    		else if(Board[p][q].Owner==6)
-			                    		{
-			                    			PhongMaterial material = new PhongMaterial();  
-			                				material.setDiffuseColor(MainPage.color.getAllColors()[6]); 
-			                				Shape.setMaterial(material);
-			                				orbGroup.getChildren().add(Shape);
-			                    		}
-			                    		else if(Board[p][q].Owner==7)
-			                    		{
-			                    			PhongMaterial material = new PhongMaterial();  
-			                				material.setDiffuseColor(MainPage.color.getAllColors()[7]); 
-			                				Shape.setMaterial(material);
-			                				orbGroup.getChildren().add(Shape);
-			                    		}                        		
-			                    	}
-			                        RotateTransition rt = new RotateTransition(Duration.millis(5000), orbGroup);
-			                        rt.setAutoReverse(false);
-			                        rt.setCycleCount(Timeline.INDEFINITE);
-			                        rt.setByAngle(360);
-			                        rt.setInterpolator(Interpolator.LINEAR);
-			                        rt.play();
-			                        Board[p][q].getChildren().add(orbGroup);
-			                    }
-			        		}
-			        	}
-					} catch (Exception e) {
-					}
 					
 			}
 	
@@ -276,99 +178,7 @@ public class GamePlayUI extends Application implements Serializable{
 
 			@Override
 			public void handle(ActionEvent event) {
-				try {
-					PlayerID = 0;
-					obj = new GamePlay(GridX,GridY,TotalPlayers);
-					Cell[][] T = obj.getGrid();
-		        	for(int p = 0 ; p<GridX ; p++)
-		        	{
-		                for(int q = 0;q<GridY;q++)
-		        		{
-		                    if(Board[p][q].NumberOfOrbs!=T[p][q].getOrbCount()||Board[p][q].Owner!=T[p][q].getOwner())
-		                    {
-		            			Board[p][q].NumberOfOrbs = T[p][q].getOrbCount();
-		            			Board[p][q].Owner = T[p][q].getOwner();
-		            			if(Board[p][q].getChildren().size()>1)
-		            				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
-		                        Group orbGroup = new Group();
-		            			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
-		                    	{
-		                    		Sphere Shape = new Sphere(10);
-		                    		if(i==1)
-		                    			Shape.setTranslateX(10);
-		                    		if(i==2)
-		                    			Shape.setTranslateY(10);
-		                    		if(Board[p][q].Owner == 0)
-		                    		{
-		                    			PhongMaterial material = new PhongMaterial();  
-		                				material.setDiffuseColor(MainPage.color.getAllColors()[0]); 
-		                				Shape.setMaterial(material);
-		                				orbGroup.getChildren().add(Shape);
-		                    		}
-		                    		else if(Board[p][q].Owner==1)
-		                    		{
-		                    			PhongMaterial material = new PhongMaterial();  
-		                				material.setDiffuseColor(MainPage.color.getAllColors()[1]); 
-		                				Shape.setMaterial(material);
-		                				orbGroup.getChildren().add(Shape);
-		                    		}
-		                    		else if(Board[p][q].Owner==2)
-		                    		{
-		                    			PhongMaterial material = new PhongMaterial();  
-		                				material.setDiffuseColor(MainPage.color.getAllColors()[2]); 
-		                				Shape.setMaterial(material);
-		                				orbGroup.getChildren().add(Shape);
-		                    		}
-		                    		else if(Board[p][q].Owner==3)
-		                    		{
-		                    			PhongMaterial material = new PhongMaterial();  
-		                				material.setDiffuseColor(MainPage.color.getAllColors()[3]); 
-		                				Shape.setMaterial(material);
-		                				orbGroup.getChildren().add(Shape);
-		                    		}
-		                    		else if(Board[p][q].Owner==4)
-		                    		{
-		                    			PhongMaterial material = new PhongMaterial();  
-		                				material.setDiffuseColor(MainPage.color.getAllColors()[4]); 
-		                				Shape.setMaterial(material);
-		                				orbGroup.getChildren().add(Shape);
-		                    		}
-		                    		else if(Board[p][q].Owner==5)
-		                    		{
-		                    			PhongMaterial material = new PhongMaterial();  
-		                				material.setDiffuseColor(MainPage.color.getAllColors()[5]); 
-		                				Shape.setMaterial(material);
-		                				orbGroup.getChildren().add(Shape);
-		                    		}
-		                    		else if(Board[p][q].Owner==6)
-		                    		{
-		                    			PhongMaterial material = new PhongMaterial();  
-		                				material.setDiffuseColor(MainPage.color.getAllColors()[6]); 
-		                				Shape.setMaterial(material);
-		                				orbGroup.getChildren().add(Shape);
-		                    		}
-		                    		else if(Board[p][q].Owner==7)
-		                    		{
-		                    			PhongMaterial material = new PhongMaterial();  
-		                				material.setDiffuseColor(MainPage.color.getAllColors()[7]); 
-		                				Shape.setMaterial(material);
-		                				orbGroup.getChildren().add(Shape);
-		                    		}                        		
-		                    	}
-		                        RotateTransition rt = new RotateTransition(Duration.millis(5000), orbGroup);
-		                        rt.setAutoReverse(false);
-		                        rt.setCycleCount(Timeline.INDEFINITE);
-		                        rt.setByAngle(360);
-		                        rt.setInterpolator(Interpolator.LINEAR);
-		                        rt.play();
-		                        Board[p][q].getChildren().add(orbGroup);
-		                    }
-		        		}
-		        	}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 			}
     		
    		});
@@ -400,7 +210,7 @@ public class GamePlayUI extends Application implements Serializable{
 	public class Tile extends StackPane implements Serializable
 	{
 		public int Owner=-1, NumberOfOrbs=0, x, y;
-		public int transistionTime = 400;
+		public int transistionTime = 200;
 		public Tile(int x,int y)
 		{
 			Rectangle border = new Rectangle(50, 50);
@@ -471,7 +281,7 @@ public class GamePlayUI extends Application implements Serializable{
 				public void makeBoardCell(int x, int y, int PlayerID)
 				{
 					Board[x][y].NumberOfOrbs = Grid[x][y].getOrbCount();
-        			//Board[x][y].Owner = Grid[x][y].getOwner();
+        			Board[x][y].Owner = Grid[x][y].getOwner();
         			if(Board[x][y].getChildren().size()>1)
         				Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
                     Group orbGroup = new Group();
@@ -592,35 +402,42 @@ public class GamePlayUI extends Application implements Serializable{
 	            	if(Grid[x][y].isStable())
             		{
             			makeBoardCell(x, y, PlayerID);
-            			System.out.println("chidsfsdldren.size()");
+            			System.out.println("Stable "+x+" "+y+" - "+PlayerID);
             			return;
             		}
             		else if(Grid[x][y].getCriticalMass()==2)
             		{
+            			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
+            			makeBoardCell(x, y, PlayerID);
             			if(x==0)
             			{
             				if(y==0)
             				{
             					int playerIndex = Board[x][y].Owner;
+            					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+            					System.out.println("orbsleft "+orbsleft);
             					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             					{
             						Grid[x][y].setOwner(-1);
             						Board[x][y].Owner = -1;
             					}
+            					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
+								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
 								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 								Grid[x][y+1].setOwner(PlayerID);
 								Board[x][y+1].Owner = PlayerID;
+								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
 
 								ObservableList<Node> children = Board[x][y].getChildren();
-								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
+								Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
 								Sphere Shape1 = new Sphere(10);
                     			PhongMaterial material = new PhongMaterial();  
                     			System.out.println("sdfsdf "+playerIndex);
-                				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
                 				Shape1.setMaterial(material);
                 				Sphere Shape2 = new Sphere(10);
                 				Shape2.setMaterial(material);
@@ -632,8 +449,8 @@ public class GamePlayUI extends Application implements Serializable{
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
                 				transition.setOnFinished(event->{
-                					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-                					makeBoardCell(x, y, PlayerID);
+                					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
+                					//makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x+1, y, PlayerID);
 	                				stabilizeCell(x, y+1, PlayerID);
 
@@ -644,25 +461,30 @@ public class GamePlayUI extends Application implements Serializable{
             				else
             				{
             					int playerIndex = Board[x][y].Owner;
+            					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+            					System.out.println("orbsleft "+orbsleft);
             					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             					{
             						Grid[x][y].setOwner(-1);
             						Board[x][y].Owner = -1;
             					}
+            					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
+								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
 								Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 								Grid[x][y-1].setOwner(PlayerID);
 								Board[x][y-1].Owner = PlayerID;
+								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 								Sphere Shape1 = new Sphere(10);
                     			PhongMaterial material = new PhongMaterial();  
                     			System.out.println("sdfsdf "+playerIndex);
-                				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
                 				Shape1.setMaterial(material);
                 				Sphere Shape2 = new Sphere(10);
                 				Shape2.setMaterial(material);
@@ -674,8 +496,8 @@ public class GamePlayUI extends Application implements Serializable{
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
                 				transition.setOnFinished(event->{
-                					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-                					makeBoardCell(x, y, PlayerID);
+                					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
+                					//makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x+1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
 
@@ -687,25 +509,30 @@ public class GamePlayUI extends Application implements Serializable{
             				if(y==0)
             				{
             					int playerIndex = Board[x][y].Owner;
+            					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+            					System.out.println("orbsleft "+orbsleft);
             					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             					{	
             						Grid[x][y].setOwner(-1);
             						Board[x][y].Owner = -1;
             					}
+            					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
 								Board[x-1][y].Owner = PlayerID;
+								Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
 								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 								Grid[x][y+1].setOwner(PlayerID);
 								Board[x][y+1].Owner = PlayerID;
+								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 								Sphere Shape1 = new Sphere(10);
                     			PhongMaterial material = new PhongMaterial();  
                     			System.out.println("sdfsdf "+playerIndex);
-                				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
                 				Shape1.setMaterial(material);
                 				Sphere Shape2 = new Sphere(10);
                 				Shape2.setMaterial(material);
@@ -717,8 +544,8 @@ public class GamePlayUI extends Application implements Serializable{
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
                 				transition.setOnFinished(event->{
-                					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-                					makeBoardCell(x, y, PlayerID);
+                					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
+                					//makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y+1, PlayerID);
 
@@ -727,25 +554,30 @@ public class GamePlayUI extends Application implements Serializable{
             				else
             				{
             					int playerIndex = Board[x][y].Owner;
+            					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+            					System.out.println("orbsleft "+orbsleft);
             					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             					{	
             						Grid[x][y].setOwner(-1);
             						Board[x][y].Owner = -1;
             					}
+            					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
 								Board[x-1][y].Owner = PlayerID;
+								Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
 								Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 								Grid[x][y-1].setOwner(PlayerID);
 								Board[x][y-1].Owner = PlayerID;
+								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 								Sphere Shape1 = new Sphere(10);
                     			PhongMaterial material = new PhongMaterial();  
                     			System.out.println("sdfsdf "+playerIndex);
-                				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+                				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
                 				Shape1.setMaterial(material);
                 				Sphere Shape2 = new Sphere(10);
                 				Shape2.setMaterial(material);
@@ -757,8 +589,8 @@ public class GamePlayUI extends Application implements Serializable{
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
                 				transition.setOnFinished(event->{
-                					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-                					makeBoardCell(x, y, PlayerID);
+                					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
+                					//makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
 
@@ -769,30 +601,38 @@ public class GamePlayUI extends Application implements Serializable{
             		}
             		else if(Grid[x][y].getCriticalMass()==3)
             		{
+            			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
+            			makeBoardCell(x, y, PlayerID);
             			if(x==0)
             			{
         					int playerIndex = Board[x][y].Owner;
+        					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+        					System.out.println("orbsleft "+orbsleft);
         					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
         					{	
         						Grid[x][y].setOwner(-1);
     							Board[x][y].Owner = -1;
     						}
+    						System.out.println("Player3 - "+playerIndex);
         					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
+							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
 							Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 							Grid[x][y+1].setOwner(PlayerID);
 							Board[x][y+1].Owner = PlayerID;
+							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
 							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 							Grid[x][y-1].setOwner(PlayerID);
 							Board[x][y-1].Owner = PlayerID;
+							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
 
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 							Sphere Shape1 = new Sphere(10);
                 			PhongMaterial material = new PhongMaterial();  
-            				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+            				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
             				Shape1.setMaterial(material);
             				Sphere Shape2 = new Sphere(10);
             				Shape2.setMaterial(material);
@@ -808,8 +648,8 @@ public class GamePlayUI extends Application implements Serializable{
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
             				transition.setOnFinished(event->{
-            					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-            					makeBoardCell(x, y, PlayerID);
+            					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
+            					//makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
@@ -819,27 +659,33 @@ public class GamePlayUI extends Application implements Serializable{
             			else if(y==0)
             			{
             				int playerIndex = Board[x][y].Owner;
+            				int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+            				System.out.println("orbsleft "+orbsleft);
             				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             				{	
             					Grid[x][y].setOwner(-1);
             					Board[x][y].Owner = -1;
             				}
+            				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
+							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
 							Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 							Grid[x-1][y].setOwner(PlayerID);
 							Board[x-1][y].Owner = PlayerID;
+							Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
 							Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 							Grid[x][y+1].setOwner(PlayerID);
 							Board[x][y+1].Owner = PlayerID;
+							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
 
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 							Sphere Shape1 = new Sphere(10);
                 			PhongMaterial material = new PhongMaterial();  
-            				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+            				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
             				Shape1.setMaterial(material);
             				Sphere Shape2 = new Sphere(10);
             				Shape2.setMaterial(material);
@@ -855,8 +701,8 @@ public class GamePlayUI extends Application implements Serializable{
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
             				transition.setOnFinished(event->{
-            					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-            					makeBoardCell(x, y, PlayerID);
+            					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
+            					//makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -865,28 +711,34 @@ public class GamePlayUI extends Application implements Serializable{
             			else if(x==GridX-1)
             			{
         					int playerIndex = Board[x][y].Owner;
+        					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+        					System.out.println("orbsleft "+orbsleft);
         					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             				{	
             					Grid[x][y].setOwner(-1);
         						Board[x][y].Owner = -1;
             				}
+            				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 							Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 							Grid[x-1][y].setOwner(PlayerID);
 							Board[x-1][y].Owner = PlayerID;
+							Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
 							Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 							Grid[x][y+1].setOwner(PlayerID);
 							Board[x][y+1].Owner = PlayerID;
+							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
 							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 							Grid[x][y-1].setOwner(PlayerID);
 							Board[x][y-1].Owner = PlayerID;
+							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
 
             				System.out.println("vbvbvnbn "+playerIndex+" "+x);
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 							Sphere Shape1 = new Sphere(10);
                 			PhongMaterial material = new PhongMaterial();  
-            				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+            				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
             				Shape1.setMaterial(material);
             				Sphere Shape2 = new Sphere(10);
             				Shape2.setMaterial(material);
@@ -902,8 +754,8 @@ public class GamePlayUI extends Application implements Serializable{
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
             				transition.setOnFinished(event->{
-            					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-            					makeBoardCell(x, y, PlayerID);
+            					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
+            					//makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
@@ -912,27 +764,33 @@ public class GamePlayUI extends Application implements Serializable{
             			else if(y==GridY-1)
             			{
             				int playerIndex = Board[x][y].Owner;
+            				int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+            				System.out.println("orbsleft "+orbsleft);
             				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             				{
             					Grid[x][y].setOwner(-1);
             					Board[x][y].Owner = -1;
             				}
+            				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
+							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
 							Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 							Grid[x-1][y].setOwner(PlayerID);
 							Board[x-1][y].Owner = PlayerID;
+							Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
 							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 							Grid[x][y-1].setOwner(PlayerID);
 							Board[x][y-1].Owner = PlayerID;
+							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
 
 							ObservableList<Node> children = Board[x][y].getChildren();
-							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
+							Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
 							Sphere Shape1 = new Sphere(10);
                 			PhongMaterial material = new PhongMaterial();  
-            				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+            				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
             				Shape1.setMaterial(material);
             				Sphere Shape2 = new Sphere(10);
             				Shape2.setMaterial(material);
@@ -949,7 +807,7 @@ public class GamePlayUI extends Application implements Serializable{
             				transition.play();
             				transition.setOnFinished(event->{
             					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-            					makeBoardCell(x, y, PlayerID);
+            					//makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -958,31 +816,42 @@ public class GamePlayUI extends Application implements Serializable{
             		}
             		else if(Grid[x][y].getCriticalMass()==4)
             		{
+            			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
+            			makeBoardCell(x, y, PlayerID);
         				int playerIndex = Board[x][y].Owner;
+        				System.out.println("owner4-  "+playerIndex);
+        				int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
+        				System.out.println("orbsleft "+orbsleft);
         				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             			{	
             				Grid[x][y].setOwner(-1);
         					Board[x][y].Owner = -1;
+        					System.out.println("kjhasdfiouy  "+playerIndex);
         				}
             			Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 						Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 						Grid[x+1][y].setOwner(PlayerID);
 						Board[x+1][y].Owner = PlayerID;
+						Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
 						Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 						Grid[x-1][y].setOwner(PlayerID);
 						Board[x-1][y].Owner = PlayerID;
+						Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
 						Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 						Grid[x][y-1].setOwner(PlayerID);
 						Board[x][y-1].Owner = PlayerID;
+						Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
 						Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 						Grid[x][y+1].setOwner(PlayerID);
 						Board[x][y+1].Owner = PlayerID;
+						Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
 
 						ObservableList<Node> children = Board[x][y].getChildren();
-						Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
+						Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
 						Sphere Shape1 = new Sphere(10);
             			PhongMaterial material = new PhongMaterial();  
-        				material.setDiffuseColor(MainPage.color.getAllColors()[playerIndex]); 
+        				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
+        				System.out.println("Player4 - "+playerIndex);
         				Shape1.setMaterial(material);
         				Sphere Shape2 = new Sphere(10);
         				Shape2.setMaterial(material);
@@ -1001,9 +870,9 @@ public class GamePlayUI extends Application implements Serializable{
         				tt4.setByX(40f);
         				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3, tt4);
         				transition.play();
-        				transition.setOnFinished(event->{
+        				transition.setOnFinished(event -> {
         					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-        					makeBoardCell(x, y, PlayerID);
+        					//makeBoardCell(x, y, PlayerID);
             				stabilizeCell(x+1, y, PlayerID);
             				stabilizeCell(x, y+1, PlayerID);
             				stabilizeCell(x-1, y, PlayerID);
