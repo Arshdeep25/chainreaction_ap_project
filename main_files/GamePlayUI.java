@@ -601,10 +601,13 @@ public class GamePlayUI extends Application implements Serializable{
             			{
             				if(y==0)
             				{
-            					Grid[x][y].setOrbCount(0);
-            					Grid[x][y].setOwner(-1);
             					int playerIndex = Board[x][y].Owner;
-            					Board[x][y].Owner = -1;
+            					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+            					{
+            						Grid[x][y].setOwner(-1);
+            						Board[x][y].Owner = -1;
+            					}
+            					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
@@ -640,10 +643,13 @@ public class GamePlayUI extends Application implements Serializable{
             				}
             				else
             				{
-            					Grid[x][y].setOrbCount(0);
-            					Grid[x][y].setOwner(-1);
             					int playerIndex = Board[x][y].Owner;
-            					Board[x][y].Owner = -1;
+            					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+            					{
+            						Grid[x][y].setOwner(-1);
+            						Board[x][y].Owner = -1;
+            					}
+            					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
@@ -680,10 +686,13 @@ public class GamePlayUI extends Application implements Serializable{
             			{
             				if(y==0)
             				{
-            					Grid[x][y].setOrbCount(0);
-            					Grid[x][y].setOwner(-1);
             					int playerIndex = Board[x][y].Owner;
-            					Board[x][y].Owner = -1;
+            					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+            					{	
+            						Grid[x][y].setOwner(-1);
+            						Board[x][y].Owner = -1;
+            					}
+            					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
 								Board[x-1][y].Owner = PlayerID;
@@ -717,10 +726,13 @@ public class GamePlayUI extends Application implements Serializable{
             				}
             				else
             				{
-            					Grid[x][y].setOrbCount(0);
-            					Grid[x][y].setOwner(-1);
             					int playerIndex = Board[x][y].Owner;
-            					Board[x][y].Owner = -1;
+            					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+            					{	
+            						Grid[x][y].setOwner(-1);
+            						Board[x][y].Owner = -1;
+            					}
+            					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
 								Board[x-1][y].Owner = PlayerID;
@@ -759,10 +771,13 @@ public class GamePlayUI extends Application implements Serializable{
             		{
             			if(x==0)
             			{
-        					Grid[x][y].setOrbCount(0);
-        					Grid[x][y].setOwner(-1);
         					int playerIndex = Board[x][y].Owner;
-        					Board[x][y].Owner = -1;
+        					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+        					{	
+        						Grid[x][y].setOwner(-1);
+    							Board[x][y].Owner = -1;
+    						}
+        					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
@@ -803,10 +818,13 @@ public class GamePlayUI extends Application implements Serializable{
             			}
             			else if(y==0)
             			{
-            				Grid[x][y].setOrbCount(0);
-            				Grid[x][y].setOwner(-1);
             				int playerIndex = Board[x][y].Owner;
-            				Board[x][y].Owner = -1;
+            				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+            				{	
+            					Grid[x][y].setOwner(-1);
+            					Board[x][y].Owner = -1;
+            				}
+            				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
@@ -846,10 +864,13 @@ public class GamePlayUI extends Application implements Serializable{
             			}
             			else if(x==GridX-1)
             			{
-            				Grid[x][y].setOrbCount(0);
-        					Grid[x][y].setOwner(-1);
         					int playerIndex = Board[x][y].Owner;
-        					Board[x][y].Owner = -1;
+        					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+            				{	
+            					Grid[x][y].setOwner(-1);
+        						Board[x][y].Owner = -1;
+            				}
+            				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 							Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 							Grid[x-1][y].setOwner(PlayerID);
 							Board[x-1][y].Owner = PlayerID;
@@ -890,10 +911,13 @@ public class GamePlayUI extends Application implements Serializable{
             			}
             			else if(y==GridY-1)
             			{
-            				Grid[x][y].setOrbCount(0);
-            				Grid[x][y].setOwner(-1);
             				int playerIndex = Board[x][y].Owner;
-            				Board[x][y].Owner = -1;
+            				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+            				{
+            					Grid[x][y].setOwner(-1);
+            					Board[x][y].Owner = -1;
+            				}
+            				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
@@ -934,10 +958,13 @@ public class GamePlayUI extends Application implements Serializable{
             		}
             		else if(Grid[x][y].getCriticalMass()==4)
             		{
-            			Grid[x][y].setOrbCount(0);
-        				Grid[x][y].setOwner(-1);
         				int playerIndex = Board[x][y].Owner;
-        				Board[x][y].Owner = -1;
+        				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
+            			{	
+            				Grid[x][y].setOwner(-1);
+        					Board[x][y].Owner = -1;
+        				}
+            			Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 						Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 						Grid[x+1][y].setOwner(PlayerID);
 						Board[x+1][y].Owner = PlayerID;
