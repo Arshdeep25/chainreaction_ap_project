@@ -210,7 +210,7 @@ public class GamePlayUI extends Application implements Serializable{
 	public class Tile extends StackPane implements Serializable
 	{
 		public int Owner=-1, NumberOfOrbs=0, x, y;
-		public int transistionTime = 200;
+		public int transistionTime = 400;
 		public Tile(int x,int y)
 		{
 			Rectangle border = new Rectangle(50, 50);
@@ -408,7 +408,7 @@ public class GamePlayUI extends Application implements Serializable{
             		else if(Grid[x][y].getCriticalMass()==2)
             		{
             			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
-            			makeBoardCell(x, y, PlayerID);
+            			//makeBoardCell(x, y, PlayerID);
             			if(x==0)
             			{
             				if(y==0)
@@ -637,7 +637,7 @@ public class GamePlayUI extends Application implements Serializable{
             		else if(Grid[x][y].getCriticalMass()==3)
             		{
             			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
-            			makeBoardCell(x, y, PlayerID);
+            			//makeBoardCell(x, y, PlayerID);
             			if(x==0)
             			{
         					int playerIndex = Board[x][y].Owner;
@@ -904,7 +904,7 @@ public class GamePlayUI extends Application implements Serializable{
             		else if(Grid[x][y].getCriticalMass()==4)
             		{
             			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
-            			makeBoardCell(x, y, PlayerID);
+            			//makeBoardCell(x, y, PlayerID);
         				int playerIndex = Board[x][y].Owner;
         				System.out.println("owner4-  "+playerIndex);
         				int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
