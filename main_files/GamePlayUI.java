@@ -423,14 +423,14 @@ public class GamePlayUI extends Application implements Serializable{
             					}
             					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+								/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
 								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
 								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 								Grid[x][y+1].setOwner(PlayerID);
 								Board[x][y+1].Owner = PlayerID;
-								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
+								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();*/
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
@@ -449,6 +449,14 @@ public class GamePlayUI extends Application implements Serializable{
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
                 				transition.setOnFinished(event->{
+									Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+									Grid[x+1][y].setOwner(PlayerID);
+									Board[x+1][y].Owner = PlayerID;
+									Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
+									Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
+									Grid[x][y+1].setOwner(PlayerID);
+									Board[x][y+1].Owner = PlayerID;
+									Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					//makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x+1, y, PlayerID);
@@ -470,14 +478,14 @@ public class GamePlayUI extends Application implements Serializable{
             					}
             					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+								/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
 								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
 								Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 								Grid[x][y-1].setOwner(PlayerID);
 								Board[x][y-1].Owner = PlayerID;
-								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
+								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
@@ -496,6 +504,15 @@ public class GamePlayUI extends Application implements Serializable{
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
                 				transition.setOnFinished(event->{
+                					
+									Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+									Grid[x+1][y].setOwner(PlayerID);
+									Board[x+1][y].Owner = PlayerID;
+									Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
+									Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
+									Grid[x][y-1].setOwner(PlayerID);
+									Board[x][y-1].Owner = PlayerID;
+									Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					//makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x+1, y, PlayerID);
@@ -518,14 +535,14 @@ public class GamePlayUI extends Application implements Serializable{
             					}
             					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+								/*Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
 								Board[x-1][y].Owner = PlayerID;
 								Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
 								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 								Grid[x][y+1].setOwner(PlayerID);
 								Board[x][y+1].Owner = PlayerID;
-								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
+								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();*/
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
@@ -544,6 +561,15 @@ public class GamePlayUI extends Application implements Serializable{
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
                 				transition.setOnFinished(event->{
+                					
+									Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+									Grid[x-1][y].setOwner(PlayerID);
+									Board[x-1][y].Owner = PlayerID;
+									Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
+									Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
+									Grid[x][y+1].setOwner(PlayerID);
+									Board[x][y+1].Owner = PlayerID;
+									Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					//makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x-1, y, PlayerID);
@@ -563,14 +589,14 @@ public class GamePlayUI extends Application implements Serializable{
             					}
             					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+								/*Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
 								Board[x-1][y].Owner = PlayerID;
 								Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
 								Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 								Grid[x][y-1].setOwner(PlayerID);
 								Board[x][y-1].Owner = PlayerID;
-								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
+								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
@@ -589,6 +615,15 @@ public class GamePlayUI extends Application implements Serializable{
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
                 				transition.setOnFinished(event->{
+                					
+									Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+									Grid[x-1][y].setOwner(PlayerID);
+									Board[x-1][y].Owner = PlayerID;
+									Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
+									Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
+									Grid[x][y-1].setOwner(PlayerID);
+									Board[x][y-1].Owner = PlayerID;
+									Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					//makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x-1, y, PlayerID);
@@ -615,7 +650,7 @@ public class GamePlayUI extends Application implements Serializable{
     						}
     						System.out.println("Player3 - "+playerIndex);
         					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+							/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
 							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
@@ -626,7 +661,7 @@ public class GamePlayUI extends Application implements Serializable{
 							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 							Grid[x][y-1].setOwner(PlayerID);
 							Board[x][y-1].Owner = PlayerID;
-							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
+							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
 
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
@@ -648,6 +683,19 @@ public class GamePlayUI extends Application implements Serializable{
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
             				transition.setOnFinished(event->{
+            					
+								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+								Grid[x+1][y].setOwner(PlayerID);
+								Board[x+1][y].Owner = PlayerID;
+								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
+								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
+								Grid[x][y+1].setOwner(PlayerID);
+								Board[x][y+1].Owner = PlayerID;
+								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
+								Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
+								Grid[x][y-1].setOwner(PlayerID);
+								Board[x][y-1].Owner = PlayerID;
+								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					//makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
@@ -668,7 +716,7 @@ public class GamePlayUI extends Application implements Serializable{
             				}
             				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+							/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
 							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
@@ -679,7 +727,7 @@ public class GamePlayUI extends Application implements Serializable{
 							Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 							Grid[x][y+1].setOwner(PlayerID);
 							Board[x][y+1].Owner = PlayerID;
-							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
+							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();*/
 
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
@@ -701,6 +749,19 @@ public class GamePlayUI extends Application implements Serializable{
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
             				transition.setOnFinished(event->{
+            					
+								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+								Grid[x+1][y].setOwner(PlayerID);
+								Board[x+1][y].Owner = PlayerID;
+								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
+								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+								Grid[x-1][y].setOwner(PlayerID);
+								Board[x-1][y].Owner = PlayerID;
+								Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
+								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
+								Grid[x][y+1].setOwner(PlayerID);
+								Board[x][y+1].Owner = PlayerID;
+								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					//makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
@@ -720,7 +781,7 @@ public class GamePlayUI extends Application implements Serializable{
             				}
             				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-							Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+							/*Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 							Grid[x-1][y].setOwner(PlayerID);
 							Board[x-1][y].Owner = PlayerID;
 							Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
@@ -731,7 +792,7 @@ public class GamePlayUI extends Application implements Serializable{
 							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 							Grid[x][y-1].setOwner(PlayerID);
 							Board[x][y-1].Owner = PlayerID;
-							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
+							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
 
             				System.out.println("vbvbvnbn "+playerIndex+" "+x);
 							ObservableList<Node> children = Board[x][y].getChildren();
@@ -754,6 +815,19 @@ public class GamePlayUI extends Application implements Serializable{
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
             				transition.setOnFinished(event->{
+            					
+								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+								Grid[x-1][y].setOwner(PlayerID);
+								Board[x-1][y].Owner = PlayerID;
+								Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
+								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
+								Grid[x][y+1].setOwner(PlayerID);
+								Board[x][y+1].Owner = PlayerID;
+								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
+								Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
+								Grid[x][y-1].setOwner(PlayerID);
+								Board[x][y-1].Owner = PlayerID;
+								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					//makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -773,7 +847,7 @@ public class GamePlayUI extends Application implements Serializable{
             				}
             				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-							Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+							/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
 							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
@@ -784,7 +858,7 @@ public class GamePlayUI extends Application implements Serializable{
 							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
 							Grid[x][y-1].setOwner(PlayerID);
 							Board[x][y-1].Owner = PlayerID;
-							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
+							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
 
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
@@ -806,6 +880,19 @@ public class GamePlayUI extends Application implements Serializable{
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
             				transition.setOnFinished(event->{
+            					
+								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+								Grid[x+1][y].setOwner(PlayerID);
+								Board[x+1][y].Owner = PlayerID;
+								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
+								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+								Grid[x-1][y].setOwner(PlayerID);
+								Board[x-1][y].Owner = PlayerID;
+								Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
+								Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
+								Grid[x][y-1].setOwner(PlayerID);
+								Board[x][y-1].Owner = PlayerID;
+								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
             					//makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
@@ -829,7 +916,7 @@ public class GamePlayUI extends Application implements Serializable{
         					System.out.println("kjhasdfiouy  "+playerIndex);
         				}
             			Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-						Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+						/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 						Grid[x+1][y].setOwner(PlayerID);
 						Board[x+1][y].Owner = PlayerID;
 						Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
@@ -844,7 +931,7 @@ public class GamePlayUI extends Application implements Serializable{
 						Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
 						Grid[x][y+1].setOwner(PlayerID);
 						Board[x][y+1].Owner = PlayerID;
-						Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
+						Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();*/
 
 						ObservableList<Node> children = Board[x][y].getChildren();
 						Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
@@ -871,6 +958,22 @@ public class GamePlayUI extends Application implements Serializable{
         				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3, tt4);
         				transition.play();
         				transition.setOnFinished(event -> {
+        					Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
+							Grid[x+1][y].setOwner(PlayerID);
+							Board[x+1][y].Owner = PlayerID;
+							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
+							Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
+							Grid[x-1][y].setOwner(PlayerID);
+							Board[x-1][y].Owner = PlayerID;
+							Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
+							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
+							Grid[x][y-1].setOwner(PlayerID);
+							Board[x][y-1].Owner = PlayerID;
+							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
+							Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
+							Grid[x][y+1].setOwner(PlayerID);
+							Board[x][y+1].Owner = PlayerID;
+							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
         					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
         					//makeBoardCell(x, y, PlayerID);
             				stabilizeCell(x+1, y, PlayerID);
