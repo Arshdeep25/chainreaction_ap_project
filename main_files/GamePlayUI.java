@@ -294,7 +294,7 @@ public class GamePlayUI extends Application implements Serializable{
         				if(Board[x][y].getChildren().get(i).getClass().toString().equals("class javafx.scene.Group"))
         				{
         					System.out.println(Board[x][y].getChildren().get(i).getClass());
-        					Board[x][y].getChildren().remove(i, i+1);
+        					Board[x][y].getChildren().remove(i);
         				}
         			}
         			for(int i=6; i<Board[x][y].getChildren().size();i++)
