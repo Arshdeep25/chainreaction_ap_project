@@ -285,9 +285,11 @@ public class GamePlayUI extends Application implements Serializable{
 					Board[x][y].NumberOfOrbs = Grid[x][y].getOrbCount();
         			Board[x][y].Owner = Grid[x][y].getOwner();
         			if(Board[x][y].getChildren().size()>1)
-        				Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
+        			{
+        				//Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
+        			}	
                     Group orbGroup = new Group();
-        			for(int i=0;i<Board[x][y].NumberOfOrbs;i++)
+        			for(int i=0;i<Grid[x][y].getOrbCount()&&i<=2;i++)
                 	{
                 		Sphere Shape = new Sphere(10);
                 		if(i==1)
