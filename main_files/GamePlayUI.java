@@ -310,42 +310,45 @@ public class GamePlayUI extends Application implements Serializable{
 				@Override 
 				public void handle(MouseEvent e1) 
 				{
-	                System.out.println(PlayerID);
-	                while(!isInGame(PlayerID))
-	                {
-	                    PlayerID = (PlayerID+1)%TotalPlayers;
-	                }
-	            	if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
-	            	{
-						System.out.println("children.size()");
-	            		movesPlayed++;
-	            		Grid[x][y].setOwner(PlayerID);
-						Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
-						Board[x][y].Owner = PlayerID;
-						makeBoardCell(x, y, PlayerID);
-	            		stabilizeCell(x, y, PlayerID);
-	            		
-	            		System.out.println(PlayerID);
-	                	PlayerID = (PlayerID+1)%TotalPlayers;
-	                	try {
-	                		try {
-	                			if(undo_var==0)
-	                			{
-									GamePlayUI obj = deserialise("in");
-									serialise("in2",obj);
-	                			}
-	                			undo_var = 0;
-	                			MainPage.Undo_button = 0;
-							} catch (Exception e) {
+					if(animationRunningCounter==0)
+					{
+		                System.out.println(PlayerID);
+		                while(!isInGame(PlayerID))
+		                {
+		                    PlayerID = (PlayerID+1)%TotalPlayers;
+		                }
+		            	if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
+		            	{
+							System.out.println("children.size()");
+		            		movesPlayed++;
+		            		Grid[x][y].setOwner(PlayerID);
+							Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
+							Board[x][y].Owner = PlayerID;
+							makeBoardCell(x, y, PlayerID);
+		            		stabilizeCell(x, y, PlayerID);
+		            		
+		            		System.out.println(PlayerID);
+		                	PlayerID = (PlayerID+1)%TotalPlayers;
+		                	try {
+		                		try {
+		                			if(undo_var==0)
+		                			{
+										GamePlayUI obj = deserialise("in");
+										serialise("in2",obj);
+		                			}
+		                			undo_var = 0;
+		                			MainPage.Undo_button = 0;
+								} catch (Exception e) {
+								}
+								serialise("in",null);
+								
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-							serialise("in",null);
-							
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	                   
-	            	}
+		                   
+		            	}
+		            }
 	            	/*if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
 	            	{
 	            		this.takeTurn(PlayerID, x, y);
