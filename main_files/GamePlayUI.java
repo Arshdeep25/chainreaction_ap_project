@@ -287,7 +287,20 @@ public class GamePlayUI extends Application implements Serializable{
         			if(Board[x][y].getChildren().size()>1)
         			{
         				//Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-        			}	
+        			}
+        			System.out.println(Board[x][y].getChildren().size());
+        			for(int i=6; i<Board[x][y].getChildren().size();i++)
+        			{
+        				if(Board[x][y].getChildren().get(i).getClass().toString().equals("class javafx.scene.Group"))
+        				{
+        					System.out.println(Board[x][y].getChildren().get(i).getClass());
+        					Board[x][y].getChildren().remove(i, i+1);
+        				}
+        			}
+        			for(int i=6; i<Board[x][y].getChildren().size();i++)
+        			{
+        				System.out.println(Board[x][y].getChildren().get(i).getClass().toString()+" sdf");
+        			}
                     Group orbGroup = new Group();
         			for(int i=0;i<Grid[x][y].getOrbCount()&&i<=2;i++)
                 	{
@@ -327,7 +340,8 @@ public class GamePlayUI extends Application implements Serializable{
 							Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
 							Board[x][y].Owner = PlayerID;
 							makeBoardCell(x, y, PlayerID);
-		            		stabilizeCell(x, y, PlayerID);
+							if(!Grid[x][y].isStable())
+		            			stabilizeCell(x, y, PlayerID);
 		            		
 		            		System.out.println(PlayerID);
 		                	PlayerID = (PlayerID+1)%TotalPlayers;
