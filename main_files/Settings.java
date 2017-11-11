@@ -11,6 +11,14 @@ public class Settings
 	Settings()
 	{
 		this.playerColors = new Color[8];
+		playerColors[0] = Color.rgb(255, 153, 51);
+		playerColors[1] = Color.rgb(32, 86, 173);
+		playerColors[2] = Color.rgb(31, 130, 42);
+		playerColors[3] = Color.rgb(186, 26, 14);
+		playerColors[4] = Color.rgb(150, 121, 16);
+		playerColors[5] = Color.rgb(16, 129, 150);
+		playerColors[6] = Color.rgb(96, 16, 150);
+		playerColors[7] = Color.rgb(150, 16, 94);
 	}
 	public void setPlayerColor(int i, Color x)
 	{
