@@ -52,9 +52,11 @@ public class GamePlayUI extends Application implements Serializable{
 	public Player[] players;
 	private int movesPlayed;
 	protected int undo_var;
+	private volatile int animationRunningCounter;
 	
 	public GamePlayUI(int Player,int x,int y)
 	{
+		this.animationRunningCounter = 0;
 		this.TotalPlayers = Player;
 		this.GridX = x;
 		this.GridY = y;
@@ -322,56 +324,8 @@ public class GamePlayUI extends Application implements Serializable{
 						Board[x][y].Owner = PlayerID;
 						makeBoardCell(x, y, PlayerID);
 	            		stabilizeCell(x, y, PlayerID);
-	            		/*obj.takeTurn(PlayerID, x, y);
-	            		Cell[][] T = obj.getGrid();
-	                	for(int p = 0 ; p<GridX ; p++)
-	                	{
-	                        for(int q = 0;q<GridY;q++)
-	                		{
-	                            if(Board[p][q].NumberOfOrbs!=T[p][q].getOrbCount()||Board[p][q].Owner!=T[p][q].getOwner())
-	                            {
-	                    			Board[p][q].NumberOfOrbs = T[p][q].getOrbCount();
-	                    			Board[p][q].Owner = T[p][q].getOwner();
-	                    			if(Board[p][q].getChildren().size()>1)
-	                    				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
-	                    			
-	                                Group orbGroup = new Group();
-	                    			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
-	                            	{
-	                            		Sphere Shape = new Sphere(10);
-	                            		if(i==1)
-	                            			Shape.setTranslateX(10);
-	                            		if(i==2)
-	                            			Shape.setTranslateY(10);
-	                        			PhongMaterial material = new PhongMaterial();  
-	                    				material.setDiffuseColor(MainPage.color.getAllColors()[Board[p][q].Owner]); 
-	                    				Shape.setMaterial(material);
-	                    				orbGroup.getChildren().add(Shape);
-	                            	}
-	                                RotateTransition rt = new RotateTransition(Duration.millis(5000), orbGroup);
-	                                rt.setAutoReverse(false);
-	                                rt.setCycleCount(Timeline.INDEFINITE);
-	                                rt.setByAngle(360);
-	                                rt.setInterpolator(Interpolator.LINEAR);
-	                                rt.play();
-	                                Board[p][q].getChildren().add(orbGroup);
-	                            }
-	                		}
-	                	}
-	                	if(obj.isWinner()&&obj.eachPlayerMovedOnce())
-	                	{
-	                		System.out.println("The winner is Player Number " + PlayerID);
-	                		cnt = 1;
-	                		a=1;
-	                		MainPage.getButton().setVisible(false);
-	                		MainPage.var.close();
-	                		
-	                		
-	                	}
-	                	else
-	                	{
-	                		MainPage.getButton().setVisible(true);
-	                	}*/
+	            		
+	            		System.out.println(PlayerID);
 	                	PlayerID = (PlayerID+1)%TotalPlayers;
 	                	try {
 	                		try {
@@ -448,7 +402,9 @@ public class GamePlayUI extends Application implements Serializable{
                 				tt2.setByY(40f);
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
+                				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
+                					animationRunningCounter -= 1;
 									Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 									Grid[x+1][y].setOwner(PlayerID);
 									Board[x+1][y].Owner = PlayerID;
@@ -458,7 +414,7 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y+1].Owner = PlayerID;
 									Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
-                					//makeBoardCell(x, y, PlayerID);
+                					makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x+1, y, PlayerID);
 	                				stabilizeCell(x, y+1, PlayerID);
 
@@ -503,8 +459,9 @@ public class GamePlayUI extends Application implements Serializable{
                 				tt2.setByY(40f);
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
+                				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
-                					
+                					animationRunningCounter -= 1;
 									Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 									Grid[x+1][y].setOwner(PlayerID);
 									Board[x+1][y].Owner = PlayerID;
@@ -514,7 +471,7 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y-1].Owner = PlayerID;
 									Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
-                					//makeBoardCell(x, y, PlayerID);
+                					makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x+1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
 
@@ -560,8 +517,9 @@ public class GamePlayUI extends Application implements Serializable{
                 				tt2.setByY(-40f);
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
+                				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
-                					
+                					animationRunningCounter -= 1;
 									Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 									Grid[x-1][y].setOwner(PlayerID);
 									Board[x-1][y].Owner = PlayerID;
@@ -571,7 +529,7 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y+1].Owner = PlayerID;
 									Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
-                					//makeBoardCell(x, y, PlayerID);
+                					makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y+1, PlayerID);
 
@@ -614,8 +572,9 @@ public class GamePlayUI extends Application implements Serializable{
                 				tt2.setByY(-40f);
                 				ParallelTransition transition = new ParallelTransition(tt1, tt2);
                 				transition.play();
+                				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
-                					
+                					animationRunningCounter -= 1;
 									Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 									Grid[x-1][y].setOwner(PlayerID);
 									Board[x-1][y].Owner = PlayerID;
@@ -625,7 +584,7 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y-1].Owner = PlayerID;
 									Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
-                					//makeBoardCell(x, y, PlayerID);
+                					makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
 
@@ -682,8 +641,9 @@ public class GamePlayUI extends Application implements Serializable{
             				tt3.setByY(40f);
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
+            				animationRunningCounter += 1;
             				transition.setOnFinished(event->{
-            					
+            					animationRunningCounter -= 1;
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
@@ -697,7 +657,7 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].Owner = PlayerID;
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
-            					//makeBoardCell(x, y, PlayerID);
+            					makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
@@ -748,8 +708,9 @@ public class GamePlayUI extends Application implements Serializable{
             				tt3.setByY(40f);
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
+            				animationRunningCounter += 1;
             				transition.setOnFinished(event->{
-            					
+            					animationRunningCounter -= 1;
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
@@ -763,7 +724,7 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y+1].Owner = PlayerID;
 								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
-            					//makeBoardCell(x, y, PlayerID);
+            					makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -814,8 +775,9 @@ public class GamePlayUI extends Application implements Serializable{
             				tt3.setByY(-40f);
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
+            				animationRunningCounter += 1;
             				transition.setOnFinished(event->{
-            					
+            					animationRunningCounter -= 1;
 								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
 								Board[x-1][y].Owner = PlayerID;
@@ -829,7 +791,7 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].Owner = PlayerID;
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
-            					//makeBoardCell(x, y, PlayerID);
+            					makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
@@ -879,8 +841,9 @@ public class GamePlayUI extends Application implements Serializable{
             				tt3.setByY(40f);
             				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3);
             				transition.play();
+            				animationRunningCounter += 1;
             				transition.setOnFinished(event->{
-            					
+            					animationRunningCounter -= 1;
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
 								Board[x+1][y].Owner = PlayerID;
@@ -894,7 +857,7 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].Owner = PlayerID;
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-            					//makeBoardCell(x, y, PlayerID);
+            					makeBoardCell(x, y, PlayerID);
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -957,7 +920,9 @@ public class GamePlayUI extends Application implements Serializable{
         				tt4.setByX(40f);
         				ParallelTransition transition = new ParallelTransition(tt1, tt2, tt3, tt4);
         				transition.play();
+        				animationRunningCounter += 1;
         				transition.setOnFinished(event -> {
+        					animationRunningCounter -= 1;
         					Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
 							Board[x+1][y].Owner = PlayerID;
@@ -975,7 +940,7 @@ public class GamePlayUI extends Application implements Serializable{
 							Board[x][y+1].Owner = PlayerID;
 							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
         					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
-        					//makeBoardCell(x, y, PlayerID);
+        					makeBoardCell(x, y, PlayerID);
             				stabilizeCell(x+1, y, PlayerID);
             				stabilizeCell(x, y+1, PlayerID);
             				stabilizeCell(x-1, y, PlayerID);
