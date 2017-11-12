@@ -549,6 +549,8 @@ public class GamePlayUI extends Application implements Serializable{
             		{
             			makeBoardCell(x, y, PlayerID);
             			System.out.println("Stable "+x+" "+y+" - "+PlayerID);
+            			if(!winnerFound)
+	            			isWinner();
             			return;
             		}
             		else if(Grid[x][y].getCriticalMass()==2)
