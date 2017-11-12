@@ -63,7 +63,7 @@ public class GamePlayUI extends Application implements Serializable{
 	public GamePlayUI(int Player,int x,int y)
 	{
 		winnerFound = false;
-		this.animationRunningCounter = 0;
+		//this.animationRunningCounter = 0;
 		this.TotalPlayers = Player;
 		this.GridX = x;
 		this.GridY = y;
@@ -98,6 +98,7 @@ public class GamePlayUI extends Application implements Serializable{
 	}
 	private Parent createContent(Stage primaryStage) 
 	{
+		this.animationRunningCounter = 0;
 		this.GameplayStage = primaryStage;
 		Pane root = new Pane();
 		root.getStyleClass().add("UI");
@@ -506,6 +507,10 @@ public class GamePlayUI extends Application implements Serializable{
 								e.printStackTrace();
 							}
 		            	}
+		            }
+		            else
+		            {
+		            	System.out.println("ee hai locha!!");
 		            }
 	            	/*if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
 	            	{

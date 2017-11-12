@@ -252,7 +252,7 @@ public class MainPage extends Application{
 		GamePlayUI gameStart = null;
 		try {
 			 gameStart = GamePlayUI.deserialise("in");
-		} catch (ClassNotFoundException | IOException e1) {
+		} catch (Exception e1) {
 			Resume_btn.setVisible(false);
 		}
 		if(gameStart!=null && gameStart.winnerFound)
