@@ -227,8 +227,7 @@ public class MainPage extends Application{
 				       public void run() {             
 				           try {
 							RenderGUISettings Settings = new RenderGUISettings();
-							color = new Settings();
-							color = Settings.render(stage);
+							Settings.render(stage);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.getMessage();

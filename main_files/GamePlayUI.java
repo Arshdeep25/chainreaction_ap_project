@@ -190,6 +190,21 @@ public class GamePlayUI extends Application implements Serializable{
 							Grid[i][j].setOwner(resumeGrid.getBack_Grid()[i][j].getOwner());
 						}
 					}
+                	int futureCorrectTurn = resumeGrid.nextTurnPlayer(PlayerID);
+                	for(int i=0;i<GridX;i++)
+					{
+						for(int j=0;j<GridY;j++)
+						{
+							Rectangle Border = (Rectangle) Board[i][j].getChildren().get(0);
+							Border.setStroke(MainPage.color.getAllColors()[futureCorrectTurn]);
+							Board[i][j].getChildren().remove(0);
+							Board[i][j].getChildren().add(0, Border);
+							Border = (Rectangle) Board[i][j].getChildren().get(1);
+							Border.setStroke(MainPage.color.getAllColors()[futureCorrectTurn]);
+							Board[i][j].getChildren().remove(1);
+							Board[i][j].getChildren().add(1, Border);
+						}
+					}
 					System.out.println("for one last time");
 					for(int i=0;i<GridX;i++)
 					{
@@ -207,8 +222,8 @@ public class GamePlayUI extends Application implements Serializable{
 //			                {
 			        			Board[p][q].NumberOfOrbs = Grid[p][q].getOrbCount();
 			        			Board[p][q].Owner = Grid[p][q].getOwner();
-			        			if(Board[p][q].getChildren().size()>1)
-			        				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
+			        			
+			        			Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
 			                    Group orbGroup = new Group();
 			        			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
 			                	{

@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 public class Settings
 {
 	private Color[] playerColors;
+	private Color[] playerColorsTemp;
 	Settings()
 	{
 		this.playerColors = new Color[8];
@@ -19,6 +20,7 @@ public class Settings
 		playerColors[5] = Color.rgb(16, 129, 150);
 		playerColors[6] = Color.rgb(96, 16, 150);
 		playerColors[7] = Color.rgb(150, 16, 94);
+		this.playerColorsTemp = this.playerColors;
 	}
 	public void setPlayerColor(int i, Color x)
 	{
@@ -32,45 +34,25 @@ public class Settings
 	{
 		return this.playerColors;
 	}
-	public void setOthers(Color[] orbColors)
+	public Settings setOthers(Color[] orbColors)
 	{
 		boolean[] sel = new boolean[8];
 		for(int i=0; i<8; i++)
 		{
-			if(playerColors[i]!=null)
+			if(!playerColors[i].equals(orbColors[i]))
 			{
+				System.out.println(i+" not equal");
 				for(int j=0; j<8; j++)
 				{
 					if(playerColors[i].equals(orbColors[j]))
 					{
-						sel[j] = true;
-					}
-				}
-			}
-			else
-			{
-//				System.out.println(i);
-			}
-		}
-		for(int i=0; i<8; i++)
-		{
-			if(playerColors[i]==null)
-			{
-				for(int j=0; j<8; j++)
-				{
-					if(sel[j]!=true)
-					{
-						playerColors[i] = orbColors[j];
-//						System.out.println("j "+j);
-						sel[j] = true;
+						System.out.println(j+" replaced "+i);
+						playerColors[j] = orbColors[i];
 						break;
 					}
 				}
 			}
-			else
-			{
-//				System.out.println(i);
-			}
 		}
+		return this;
 	}
 }

@@ -101,7 +101,7 @@ public class RenderGUISettings extends Application{
 		primaryStage.show();
 	}
 
-	public Settings render(Stage stage)
+	public void render(Stage stage)
 	{
 		try {
 			this.start(stage);
@@ -109,8 +109,8 @@ public class RenderGUISettings extends Application{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.setting.setOthers(orbColors);
-		return this.setting;
+		//this.setting.setOthers(orbColors);
+		//return this.setting;
 	}
 	
 }
@@ -183,6 +183,7 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	    
 	    MainPage obj = new MainPage();
 	    try {
+	    	obj.color = setting.setOthers(orbColors);
 			obj.start(MainPage.var);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
