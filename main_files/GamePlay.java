@@ -4,17 +4,20 @@ import java.io.*;
 public class GamePlay implements Serializable
 {
 	
-	private Cell[][] Grid;
+	private Cell[][] Back_Grid;
 	private Player[] players;
 	private int playerCount;
 	private int gridX, gridY;
 	private int movesPlayed;
 	
-	public Cell[][] getGrid()
+	public Cell[][] getBack_Grid()
 	{
-		return this.Grid;
+		return this.Back_Grid;
 	}
-	
+	GamePlay()
+	{
+		
+	}
 	GamePlay(int gridX, int gridY, int playerCount)
 	{
 		this.gridX = gridX;
@@ -26,22 +29,22 @@ public class GamePlay implements Serializable
 		{
 			getPlayers()[i] = new Player("Player "+(i+1), i+1, "color"+i);
 		}
-		Grid = new Cell[gridX][gridY];
+		Back_Grid = new Cell[gridX][gridY];
 		for(int i=0; i<gridX; i++)
 		{
 			for(int j=0; j<gridY; j++)
 			{
 				if((i==0&&j==0)||(i==0&&j==gridY-1)||(i==gridX-1&&j==0)||(i==gridX-1&&j==gridY-1))
 				{
-					Grid[i][j] = new Cell(0, -1, 2);
+					Back_Grid[i][j] = new Cell(0, -1, 2);
 				}
 				else if(i==0||i==gridX-1||j==0||j==gridY-1)
 				{
-					Grid[i][j] = new Cell(0, -1, 3);
+					Back_Grid[i][j] = new Cell(0, -1, 3);
 				}
 				else
 				{
-					Grid[i][j] = new Cell(0, -1, 4);
+					Back_Grid[i][j] = new Cell(0, -1, 4);
 				}
 			}
 		}
@@ -53,22 +56,22 @@ public class GamePlay implements Serializable
 		{
 			if(y==0)
 			{
-				Grid[x][y].setOrbCount(0);
-				Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-				Grid[x+1][y].setOwner(PlayerID);
-				Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-				Grid[x][y+1].setOwner(PlayerID);
+				Back_Grid[x][y].setOrbCount(0);
+				Back_Grid[x+1][y].setOrbCount(Back_Grid[x+1][y].getOrbCount()+1);
+				Back_Grid[x+1][y].setOwner(PlayerID);
+				Back_Grid[x][y+1].setOrbCount(Back_Grid[x][y+1].getOrbCount()+1);
+				Back_Grid[x][y+1].setOwner(PlayerID);
 				checkStabilityAndStabilize(x+1, y, PlayerID);
 				checkStabilityAndStabilize(x, y+1, PlayerID);
 				return ;
 			}
 			else
 			{
-				Grid[x][y].setOrbCount(0);
-				Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-				Grid[x+1][y].setOwner(PlayerID);
-				Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-				Grid[x][y-1].setOwner(PlayerID);
+				Back_Grid[x][y].setOrbCount(0);
+				Back_Grid[x+1][y].setOrbCount(Back_Grid[x+1][y].getOrbCount()+1);
+				Back_Grid[x+1][y].setOwner(PlayerID);
+				Back_Grid[x][y-1].setOrbCount(Back_Grid[x][y-1].getOrbCount()+1);
+				Back_Grid[x][y-1].setOwner(PlayerID);
 				checkStabilityAndStabilize(x+1, y, PlayerID);
 				checkStabilityAndStabilize(x, y-1, PlayerID);
 				return ;
@@ -78,22 +81,22 @@ public class GamePlay implements Serializable
 		{
 			if(y==0)
 			{
-				Grid[x][y].setOrbCount(0);
-				Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-				Grid[x-1][y].setOwner(PlayerID);
-				Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-				Grid[x][y+1].setOwner(PlayerID);
+				Back_Grid[x][y].setOrbCount(0);
+				Back_Grid[x-1][y].setOrbCount(Back_Grid[x-1][y].getOrbCount()+1);
+				Back_Grid[x-1][y].setOwner(PlayerID);
+				Back_Grid[x][y+1].setOrbCount(Back_Grid[x][y+1].getOrbCount()+1);
+				Back_Grid[x][y+1].setOwner(PlayerID);
 				checkStabilityAndStabilize(x-1, y, PlayerID);
 				checkStabilityAndStabilize(x, y+1, PlayerID);
 				return ;
 			}
 			else
 			{
-				Grid[x][y].setOrbCount(0);
-				Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-				Grid[x-1][y].setOwner(PlayerID);
-				Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-				Grid[x][y-1].setOwner(PlayerID);
+				Back_Grid[x][y].setOrbCount(0);
+				Back_Grid[x-1][y].setOrbCount(Back_Grid[x-1][y].getOrbCount()+1);
+				Back_Grid[x-1][y].setOwner(PlayerID);
+				Back_Grid[x][y-1].setOrbCount(Back_Grid[x][y-1].getOrbCount()+1);
+				Back_Grid[x][y-1].setOwner(PlayerID);
 				checkStabilityAndStabilize(x-1, y, PlayerID);
 				checkStabilityAndStabilize(x, y-1, PlayerID);
 				return ;
@@ -104,13 +107,13 @@ public class GamePlay implements Serializable
 	{
 		if(y==0)
 		{
-			Grid[x][y].setOrbCount(0);
-			Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-			Grid[x+1][y].setOwner(PlayerID);
-			Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-			Grid[x-1][y].setOwner(PlayerID);
-			Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-			Grid[x][y+1].setOwner(PlayerID);
+			Back_Grid[x][y].setOrbCount(0);
+			Back_Grid[x+1][y].setOrbCount(Back_Grid[x+1][y].getOrbCount()+1);
+			Back_Grid[x+1][y].setOwner(PlayerID);
+			Back_Grid[x-1][y].setOrbCount(Back_Grid[x-1][y].getOrbCount()+1);
+			Back_Grid[x-1][y].setOwner(PlayerID);
+			Back_Grid[x][y+1].setOrbCount(Back_Grid[x][y+1].getOrbCount()+1);
+			Back_Grid[x][y+1].setOwner(PlayerID);
 			checkStabilityAndStabilize(x+1, y, PlayerID);
 			checkStabilityAndStabilize(x-1, y, PlayerID);
 			checkStabilityAndStabilize(x, y+1, PlayerID);
@@ -118,13 +121,13 @@ public class GamePlay implements Serializable
 		}
 		else if(x==0)
 		{
-			Grid[x][y].setOrbCount(0);
-			Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-			Grid[x+1][y].setOwner(PlayerID);
-			Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-			Grid[x][y+1].setOwner(PlayerID);
-			Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-			Grid[x][y-1].setOwner(PlayerID);
+			Back_Grid[x][y].setOrbCount(0);
+			Back_Grid[x+1][y].setOrbCount(Back_Grid[x+1][y].getOrbCount()+1);
+			Back_Grid[x+1][y].setOwner(PlayerID);
+			Back_Grid[x][y+1].setOrbCount(Back_Grid[x][y+1].getOrbCount()+1);
+			Back_Grid[x][y+1].setOwner(PlayerID);
+			Back_Grid[x][y-1].setOrbCount(Back_Grid[x][y-1].getOrbCount()+1);
+			Back_Grid[x][y-1].setOwner(PlayerID);
 			checkStabilityAndStabilize(x+1, y, PlayerID);
 			checkStabilityAndStabilize(x, y+1, PlayerID);
 			checkStabilityAndStabilize(x, y-1, PlayerID);
@@ -132,13 +135,13 @@ public class GamePlay implements Serializable
 		}
 		else if(y==gridY-1)
 		{
-			Grid[x][y].setOrbCount(0);
-			Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-			Grid[x+1][y].setOwner(PlayerID);
-			Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-			Grid[x-1][y].setOwner(PlayerID);
-			Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-			Grid[x][y-1].setOwner(PlayerID);
+			Back_Grid[x][y].setOrbCount(0);
+			Back_Grid[x+1][y].setOrbCount(Back_Grid[x+1][y].getOrbCount()+1);
+			Back_Grid[x+1][y].setOwner(PlayerID);
+			Back_Grid[x-1][y].setOrbCount(Back_Grid[x-1][y].getOrbCount()+1);
+			Back_Grid[x-1][y].setOwner(PlayerID);
+			Back_Grid[x][y-1].setOrbCount(Back_Grid[x][y-1].getOrbCount()+1);
+			Back_Grid[x][y-1].setOwner(PlayerID);
 			checkStabilityAndStabilize(x+1, y, PlayerID);
 			checkStabilityAndStabilize(x-1, y, PlayerID);
 			checkStabilityAndStabilize(x, y-1, PlayerID);
@@ -146,13 +149,13 @@ public class GamePlay implements Serializable
 		}
 		else if(x==gridX-1)
 		{
-			Grid[x][y].setOrbCount(0);
-			Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-			Grid[x-1][y].setOwner(PlayerID);
-			Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-			Grid[x][y+1].setOwner(PlayerID);
-			Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-			Grid[x][y-1].setOwner(PlayerID);
+			Back_Grid[x][y].setOrbCount(0);
+			Back_Grid[x-1][y].setOrbCount(Back_Grid[x-1][y].getOrbCount()+1);
+			Back_Grid[x-1][y].setOwner(PlayerID);
+			Back_Grid[x][y+1].setOrbCount(Back_Grid[x][y+1].getOrbCount()+1);
+			Back_Grid[x][y+1].setOwner(PlayerID);
+			Back_Grid[x][y-1].setOrbCount(Back_Grid[x][y-1].getOrbCount()+1);
+			Back_Grid[x][y-1].setOwner(PlayerID);
 			checkStabilityAndStabilize(x-1, y, PlayerID);
 			checkStabilityAndStabilize(x, y+1, PlayerID);
 			checkStabilityAndStabilize(x, y-1, PlayerID);
@@ -161,15 +164,15 @@ public class GamePlay implements Serializable
 	}
 	private void stabilizeCell4(int x, int y, int PlayerID)
 	{
-		Grid[x][y].setOrbCount(0);
-		Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-		Grid[x+1][y].setOwner(PlayerID);
-		Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-		Grid[x-1][y].setOwner(PlayerID);
-		Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-		Grid[x][y+1].setOwner(PlayerID);
-		Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-		Grid[x][y-1].setOwner(PlayerID);
+		Back_Grid[x][y].setOrbCount(0);
+		Back_Grid[x+1][y].setOrbCount(Back_Grid[x+1][y].getOrbCount()+1);
+		Back_Grid[x+1][y].setOwner(PlayerID);
+		Back_Grid[x-1][y].setOrbCount(Back_Grid[x-1][y].getOrbCount()+1);
+		Back_Grid[x-1][y].setOwner(PlayerID);
+		Back_Grid[x][y+1].setOrbCount(Back_Grid[x][y+1].getOrbCount()+1);
+		Back_Grid[x][y+1].setOwner(PlayerID);
+		Back_Grid[x][y-1].setOrbCount(Back_Grid[x][y-1].getOrbCount()+1);
+		Back_Grid[x][y-1].setOwner(PlayerID);
 		checkStabilityAndStabilize(x+1, y, PlayerID);
 		checkStabilityAndStabilize(x-1, y, PlayerID);
 		checkStabilityAndStabilize(x, y+1, PlayerID);
@@ -179,20 +182,20 @@ public class GamePlay implements Serializable
 
 	private void checkStabilityAndStabilize(int x, int y, int PlayerID)
 	{
-		if(Grid[x][y].isStable())
+		if(Back_Grid[x][y].isStable())
 		{
 			return ;
 		}
-		Grid[x][y].setOwner(-1);
-		if(Grid[x][y].getCriticalMass()==2)
+		Back_Grid[x][y].setOwner(-1);
+		if(Back_Grid[x][y].getCriticalMass()==2)
 		{
 			stabilizeCell2(x,y, PlayerID);
 		}
-		if(Grid[x][y].getCriticalMass()==3)
+		if(Back_Grid[x][y].getCriticalMass()==3)
 		{
 			stabilizeCell3(x,y, PlayerID);
 		}
-		if(Grid[x][y].getCriticalMass()==4)
+		if(Back_Grid[x][y].getCriticalMass()==4)
 		{
 			stabilizeCell4(x,y, PlayerID);
 		}
@@ -200,14 +203,14 @@ public class GamePlay implements Serializable
 
 	public void takeTurn(int PlayerID, int x, int y)
 	{
-		if(Grid[x][y].getOwner()!=-1 && Grid[x][y].getOwner()!=PlayerID)
+		if(Back_Grid[x][y].getOwner()!=-1 && Back_Grid[x][y].getOwner()!=PlayerID)
 		{
 			System.out.println("Please Enter Again");
 		}
 		else
 		{
-			Grid[x][y].setOwner(PlayerID);
-			Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
+			Back_Grid[x][y].setOwner(PlayerID);
+			Back_Grid[x][y].setOrbCount(Back_Grid[x][y].getOrbCount()+1);
 			checkStabilityAndStabilize(x, y, PlayerID);
 		}
 		this.movesPlayed++;
@@ -239,9 +242,9 @@ public class GamePlay implements Serializable
 		{
 			for(int j=0; j<gridY; j++)
 			{
-				if(Grid[i][j].getOwner()==PlayerID)
+				if(Back_Grid[i][j].getOwner()==PlayerID)
 				{
-					count += Grid[i][j].getOrbCount();
+					count += Back_Grid[i][j].getOrbCount();
 				}
 			}
 		}
@@ -256,14 +259,14 @@ public class GamePlay implements Serializable
 		{
 			for(int j=0; j<gridY; j++)
 			{
-				if(Grid[i][j].getOwner()!=-1)
+				if(Back_Grid[i][j].getOwner()!=-1)
 				{
 					if(isAssigned==0)
 					{
-						prevOwner = Grid[i][j].getOwner();
+						prevOwner = Back_Grid[i][j].getOwner();
 						isAssigned = 1;
 					}
-					if(prevOwner!=Grid[i][j].getOwner())
+					if(prevOwner!=Back_Grid[i][j].getOwner())
 					{
 						return false;
 					}
@@ -278,9 +281,9 @@ public class GamePlay implements Serializable
 		{
 			for(int j=0; j<gridY; j++)
 			{
-				if(Grid[i][j].getOwner()!=-1)
+				if(Back_Grid[i][j].getOwner()!=-1)
 				{
-					return Grid[i][j].getOwner();
+					return Back_Grid[i][j].getOwner();
 				}
 			}
 		}

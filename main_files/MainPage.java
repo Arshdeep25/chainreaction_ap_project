@@ -31,15 +31,12 @@ public class MainPage extends Application{
 	private Pane root = new Pane(); 
 	private static Button Resume_btn;
 	public static Stage var;
-	public static Settings color;
+	public static Settings color = new Settings();
 	public static int Undo_button = 0;
-	
-	
 	public static Button getButton()
 	{
 		return Resume_btn;
 	}
-	
 	private Parent CreateContent()
 	{
 		root.setPrefSize(600, 600);
@@ -233,10 +230,13 @@ public class MainPage extends Application{
 				       public void run() {             
 				           try {
 					        	GamePlayUI gameStart;
-				        	   if(Undo_button == 0)
+				        	if(Undo_button == 0)
 				   				gameStart = GamePlayUI.deserialise("in");
 				   			else
+				   			{
 				   				gameStart = GamePlayUI.deserialise("in2");
+				   				System.out.println("babu mushao kaisse ho");
+				   			}
 				        	var = new Stage();
 							gameStart.start(var);
 						} catch (Exception e) {
@@ -250,8 +250,6 @@ public class MainPage extends Application{
 			}
 		});
 		root.getChildren().add(Resume_btn);
-		
-		
 		return root;
 	}
 	@Override
