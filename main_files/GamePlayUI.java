@@ -40,6 +40,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.Node;
 import javafx.collections.ObservableList;
 import java.util.EventListener;
+import javafx.scene.text.*;
+import javafx.scene.image.*;
 
 public class GamePlayUI extends Application implements Serializable{
 
@@ -55,9 +57,12 @@ public class GamePlayUI extends Application implements Serializable{
 	protected int undo_var;
 	private volatile int animationRunningCounter;
 	public GamePlay resumeGrid;
+	private transient Stage GameplayStage;
+	public boolean winnerFound;
 	
 	public GamePlayUI(int Player,int x,int y)
 	{
+		winnerFound = false;
 		this.animationRunningCounter = 0;
 		this.TotalPlayers = Player;
 		this.GridX = x;
@@ -93,18 +98,21 @@ public class GamePlayUI extends Application implements Serializable{
 	}
 	private Parent createContent(Stage primaryStage) 
 	{
+		this.GameplayStage = primaryStage;
 		Pane root = new Pane();
+		root.getStyleClass().add("UI");
+		root.getStylesheets().add("style/Settings.css");
         root.setPrefSize(GridY*50+10, GridX*60+10);
-        for (int p = 0; p < GridX; p++) 
+        for (int p = 1; p <= GridX; p++) 
         {
             for (int q = 0; q < GridY; q++) 
             {
             		
-    			Tile tile = new Tile(p,q);
+    			Tile tile = new Tile(p-1,q);
                 tile.setTranslateX(q * 50);
                 tile.setTranslateY(p * 50);
                 root.getChildren().add(tile);
-                Board[p][q] = tile; 
+                Board[p-1][q] = tile; 
             }     
      
         }
@@ -144,109 +152,122 @@ public class GamePlayUI extends Application implements Serializable{
     		}
         }
     	Button Undo = new Button();
-    	if(GridX==9)
-    	{
+//    	if(GridX==9)
+//    	{
     		Undo.setLayoutX(GridX*5);
-        	Undo.setLayoutY(GridY*80);
-    	}
-    	else
-    	{
-    		Undo.setLayoutX(GridX*20);
-        	Undo.setLayoutY(GridY*35);
-    	}
+        	Undo.setLayoutY(GridY*1.2);
+//    	}
+//    	else
+//    	{
+//    		Undo.setLayoutX(GridX*20);
+//        	Undo.setLayoutY(GridY*35);
+//    	}
     	Undo.setText("Undo");
+    	Undo.getStyleClass().add("MenuButton");
     	Undo.setOnAction(new EventHandler<ActionEvent>()
 		{
     		
 			@Override
 			public void handle(ActionEvent event) {
 				
-				System.out.println("animation wala bakwaas"+ animationRunningCounter);
-				GamePlayUI des = null;
-				try {
-					des = deserialise("in2");
-				} catch (Exception e) {}
-				MainPage.Undo_button = 1;
-				undo_var = 1;
-				PlayerID = des.PlayerID;
-				resumeGrid = des.resumeGrid;
-				for(int i=0;i<GridX;i++)
+				if(!winnerFound)
 				{
-					for(int j=0;j<GridY;j++)
+					System.out.println("animation wala bakwaas"+ animationRunningCounter);
+					GamePlayUI des = null;
+					try {
+						des = deserialise("in2");
+					} catch (Exception e) {}
+					MainPage.Undo_button = 1;
+					undo_var = 1;
+					PlayerID = des.PlayerID;
+					resumeGrid = des.resumeGrid;
+					for(int i=0;i<GridX;i++)
 					{
-						Grid[i][j].setOrbCount(resumeGrid.getBack_Grid()[i][j].getOrbCount());
-						Grid[i][j].setOwner(resumeGrid.getBack_Grid()[i][j].getOwner());
+						for(int j=0;j<GridY;j++)
+						{
+							Grid[i][j].setOrbCount(resumeGrid.getBack_Grid()[i][j].getOrbCount());
+							Grid[i][j].setOwner(resumeGrid.getBack_Grid()[i][j].getOwner());
+						}
 					}
+					System.out.println("for one last time");
+					for(int i=0;i<GridX;i++)
+					{
+						for(int j=0;j<GridY;j++)
+						{
+							System.out.print(Grid[i][j].getOrbCount() +" ");
+						}
+						System.out.println();
+					}
+					for(int p = 0 ; p<GridX ; p++)
+			    	{
+			            for(int q = 0;q<GridY;q++)
+			    		{
+//			                if(Board[p][q].NumberOfOrbs!=Grid[p][q].getOrbCount()||Board[p][q].Owner!=Grid[p][q].getOwner())
+//			                {
+			        			Board[p][q].NumberOfOrbs = Grid[p][q].getOrbCount();
+			        			Board[p][q].Owner = Grid[p][q].getOwner();
+			        			if(Board[p][q].getChildren().size()>1)
+			        				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
+			                    Group orbGroup = new Group();
+			        			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
+			                	{
+			                		Sphere Shape = new Sphere(10);
+			                		if(i==1)
+			                			Shape.setTranslateX(10);
+			                		if(i==2)
+			                			Shape.setTranslateY(10);
+			                		
+			            			PhongMaterial material = new PhongMaterial();  
+			        				material.setDiffuseColor(MainPage.color.getAllColors()[Board[p][q].Owner]); 
+			        				Shape.setMaterial(material);
+			        				orbGroup.getChildren().add(Shape);
+			                	}
+			                    RotateTransition rt = new RotateTransition(Duration.millis(5000), orbGroup);
+			                    rt.setAutoReverse(false);
+			                    rt.setCycleCount(Timeline.INDEFINITE);
+			                    rt.setByAngle(360);
+			                    rt.setInterpolator(Interpolator.LINEAR);
+			                    rt.play();
+			                    Board[p][q].getChildren().add(orbGroup);
+			                
+			    		}
+			        }
+					System.out.println("bloodychaljaa");
+					System.out.println("for one second time");
+					for(int i=0;i<GridX;i++)
+					{
+						for(int j=0;j<GridY;j++)
+						{
+							System.out.print(Grid[i][j].getOrbCount() +" ");
+						}
+						System.out.println();
+					}
+					
 				}
-				System.out.println("for one last time");
-				for(int i=0;i<GridX;i++)
-				{
-					for(int j=0;j<GridY;j++)
-					{
-						System.out.print(Grid[i][j].getOrbCount() +" ");
-					}
-					System.out.println();
-				}
-				for(int p = 0 ; p<GridX ; p++)
-		    	{
-		            for(int q = 0;q<GridY;q++)
-		    		{
-//		                if(Board[p][q].NumberOfOrbs!=Grid[p][q].getOrbCount()||Board[p][q].Owner!=Grid[p][q].getOwner())
-//		                {
-		        			Board[p][q].NumberOfOrbs = Grid[p][q].getOrbCount();
-		        			Board[p][q].Owner = Grid[p][q].getOwner();
-		        			if(Board[p][q].getChildren().size()>1)
-		        				Board[p][q].getChildren().remove(6, Board[p][q].getChildren().size());
-		                    Group orbGroup = new Group();
-		        			for(int i=0;i<Board[p][q].NumberOfOrbs;i++)
-		                	{
-		                		Sphere Shape = new Sphere(10);
-		                		if(i==1)
-		                			Shape.setTranslateX(10);
-		                		if(i==2)
-		                			Shape.setTranslateY(10);
-		                		
-		            			PhongMaterial material = new PhongMaterial();  
-		        				material.setDiffuseColor(MainPage.color.getAllColors()[Board[p][q].Owner]); 
-		        				Shape.setMaterial(material);
-		        				orbGroup.getChildren().add(Shape);
-		                	}
-		                    RotateTransition rt = new RotateTransition(Duration.millis(5000), orbGroup);
-		                    rt.setAutoReverse(false);
-		                    rt.setCycleCount(Timeline.INDEFINITE);
-		                    rt.setByAngle(360);
-		                    rt.setInterpolator(Interpolator.LINEAR);
-		                    rt.play();
-		                    Board[p][q].getChildren().add(orbGroup);
-		                
-		    		}
-		        }
-				System.out.println("bloodychaljaa");
-				System.out.println("for one second time");
-				for(int i=0;i<GridX;i++)
-				{
-					for(int j=0;j<GridY;j++)
-					{
-						System.out.print(Grid[i][j].getOrbCount() +" ");
-					}
-					System.out.println();
 				}
 				
-			}
 	
 		});
     	root.getChildren().add(Undo);
     	MenuButton menubutton = new MenuButton("Options");
-    	Button Back = new Button("Exit");
-    	Button StartAgain = new Button("StartAgain");
-    	MenuItem Exit = new MenuItem("",Back);
-    	MenuItem Again = new MenuItem("",StartAgain);
+    	menubutton.getStyleClass().add("MenuButton");
+    	MenuItem Exit = new MenuItem("Back");
+    	Exit.getStyleClass().add("MenuButton");
+    	MenuItem Again = new MenuItem("StartAgain");
+    	Exit.getStyleClass().add("MenuButton");
     	Exit.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
 			public void handle(ActionEvent event)
 			{
-				primaryStage.close();
+				System.out.println("yoyo"+winnerFound);
+				MainPage obj = new MainPage();
+				try {
+					obj.start(MainPage.var);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
     	Again.setOnAction(new EventHandler<ActionEvent>()
@@ -254,21 +275,27 @@ public class GamePlayUI extends Application implements Serializable{
 
 			@Override
 			public void handle(ActionEvent event) {
-				
+				try {
+					GamePlayUI obj = new GamePlayUI(TotalPlayers,GridX,GridY);
+					obj.start(primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
     		
    		});
     	menubutton.getItems().addAll(Exit,Again);
-    	if(GridX==9)
-    	{
+//    	if(GridX==9)
+//    	{
         	menubutton.setLayoutX(GridX*20);
-        	menubutton.setLayoutY(GridY*80);
-    	}
-    	else
-    	{
-    		menubutton.setLayoutX(GridX*45);
-        	menubutton.setLayoutY(GridY*35);
-    	}
+        	menubutton.setLayoutY(GridY*1.2);
+//    	}
+//    	else
+//    	{
+//    		menubutton.setLayoutX(GridX*45);
+//        	menubutton.setLayoutY(GridY*35);
+//    	}
     	root.getChildren().add(menubutton);
         return root;
 	}
@@ -443,20 +470,17 @@ public class GamePlayUI extends Application implements Serializable{
 		            			stabilizeCell(x, y, PlayerID);
 							
 		                	PlayerID = (PlayerID+1)%TotalPlayers;
-		                	while(!isInGame(PlayerID))
-				            {
-				                    PlayerID = (PlayerID+1)%TotalPlayers;
-				            }
+		                	int futureCorrectTurn = resumeGrid.nextTurnPlayer(PlayerID);
 		                	for(int i=0;i<GridX;i++)
 							{
 								for(int j=0;j<GridY;j++)
 								{
 									Rectangle Border = (Rectangle) Board[i][j].getChildren().get(0);
-									Border.setStroke(MainPage.color.getAllColors()[PlayerID]);
+									Border.setStroke(MainPage.color.getAllColors()[futureCorrectTurn]);
 									Board[i][j].getChildren().remove(0);
 									Board[i][j].getChildren().add(0, Border);
 									Border = (Rectangle) Board[i][j].getChildren().get(1);
-									Border.setStroke(MainPage.color.getAllColors()[PlayerID]);
+									Border.setStroke(MainPage.color.getAllColors()[futureCorrectTurn]);
 									Board[i][j].getChildren().remove(1);
 									Board[i][j].getChildren().add(1, Border);
 								}
@@ -488,12 +512,79 @@ public class GamePlayUI extends Application implements Serializable{
 	            		this.takeTurn(PlayerID, x, y);
 	            	}*/
 	            }
+
+	            public void isWinner()
+				{
+					int prevOwner = -1, isAssigned=0;
+
+					for(int i=0; i<GridX; i++)
+					{
+						for(int j=0; j<GridY; j++)
+						{
+							if(Grid[i][j].getOwner()!=-1)
+							{
+								if(isAssigned==0)
+								{
+									prevOwner = Grid[i][j].getOwner();
+									isAssigned = 1;
+								}
+								if(prevOwner!=Grid[i][j].getOwner())
+								{
+									return ;
+								}
+							}
+						}
+					}
+					winnerFound = true;
+					for(int i=0;i<GridX;i++)
+					{
+						for(int j=0;j<GridY;j++)
+						{
+							Board[i][j].setOnMouseClicked(null);
+							
+						}
+					}
+					try {
+						serialise("in",null);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Stage WinnerStage = new Stage();
+					Pane winnerPane = new Pane();
+					winnerPane.setPrefSize(300, 200);
+
+					Image winnerImage = new Image("winnerDeclared.jpg");
+					ImageView winnerImageView = new ImageView();
+					winnerImageView.setTranslateX(50);
+					winnerImageView.setImage(winnerImage);
+					winnerImageView.setFitWidth(200);
+					winnerImageView.setPreserveRatio(true);
+					winnerImageView.setSmooth(true);
+					winnerImageView.setCache(true);
+					winnerPane.getChildren().add(winnerImageView);
+
+					Text winnerDeclaration = new Text();
+					winnerDeclaration.setTranslateY(150);
+					winnerDeclaration.setFont(Font.font ("Verdana, cursive", 20));
+					winnerDeclaration.setWrappingWidth(300);
+					winnerDeclaration.setTextAlignment(TextAlignment.CENTER);
+					winnerDeclaration.setText("Congratulations! Player "+(prevOwner+1)+" won the game.");
+					winnerPane.getChildren().add(winnerDeclaration);
+
+					Scene winnerScene = new Scene(winnerPane);
+					WinnerStage.setScene(winnerScene);
+					WinnerStage.show();
+				}
+
 	            public void stabilizeCell(int x, int y, int PlayerID)
 	            {
 	            	if(Grid[x][y].isStable())
             		{
             			makeBoardCell(x, y, PlayerID);
             			System.out.println("Stable "+x+" "+y+" - "+PlayerID);
+            			if(!winnerFound)
+	            			isWinner();
             			return;
             		}
             		else if(Grid[x][y].getCriticalMass()==2)
@@ -541,6 +632,7 @@ public class GamePlayUI extends Application implements Serializable{
                 				transition.play();
                 				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
+                		
                 					animationRunningCounter -= 1;
 									Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 									Grid[x+1][y].setOwner(PlayerID);
@@ -560,6 +652,8 @@ public class GamePlayUI extends Application implements Serializable{
                 						stabilizeCell(x, y+1, PlayerID);
                 					else
                 						makeBoardCell(x, y+1, PlayerID);
+                					if(!winnerFound)
+	            						isWinner();
 
                 				});
 
@@ -604,6 +698,7 @@ public class GamePlayUI extends Application implements Serializable{
                 				transition.play();
                 				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
+                					
                 					animationRunningCounter -= 1;
 									Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 									Grid[x+1][y].setOwner(PlayerID);
@@ -617,6 +712,8 @@ public class GamePlayUI extends Application implements Serializable{
                 					makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x+1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
+	                				if(!winnerFound)
+	            						isWinner();
 
                 				});
             				}
@@ -662,6 +759,7 @@ public class GamePlayUI extends Application implements Serializable{
                 				transition.play();
                 				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
+                					
                 					animationRunningCounter -= 1;
 									Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 									Grid[x-1][y].setOwner(PlayerID);
@@ -675,7 +773,8 @@ public class GamePlayUI extends Application implements Serializable{
                 					makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y+1, PlayerID);
-
+	                				if(!winnerFound)
+	            						isWinner();
                 				});
             				}
             				else
@@ -717,6 +816,7 @@ public class GamePlayUI extends Application implements Serializable{
                 				transition.play();
                 				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
+                					
                 					animationRunningCounter -= 1;
 									Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 									Grid[x-1][y].setOwner(PlayerID);
@@ -730,6 +830,8 @@ public class GamePlayUI extends Application implements Serializable{
                 					makeBoardCell(x, y, PlayerID);
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
+	                				if(!winnerFound)
+	            						isWinner();
 
                 				});	
             				}
@@ -786,6 +888,7 @@ public class GamePlayUI extends Application implements Serializable{
             				transition.play();
             				animationRunningCounter += 1;
             				transition.setOnFinished(event->{
+            					
             					animationRunningCounter -= 1;
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
@@ -804,6 +907,8 @@ public class GamePlayUI extends Application implements Serializable{
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
+                				if(!winnerFound)
+	            					isWinner();
             				});
 
             			}
@@ -853,6 +958,7 @@ public class GamePlayUI extends Application implements Serializable{
             				transition.play();
             				animationRunningCounter += 1;
             				transition.setOnFinished(event->{
+            					
             					animationRunningCounter -= 1;
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
@@ -871,6 +977,8 @@ public class GamePlayUI extends Application implements Serializable{
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
+                				if(!winnerFound)
+	            					isWinner();
             				});
             			}
             			else if(x==GridX-1)
@@ -920,6 +1028,7 @@ public class GamePlayUI extends Application implements Serializable{
             				transition.play();
             				animationRunningCounter += 1;
             				transition.setOnFinished(event->{
+            					
             					animationRunningCounter -= 1;
 								Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
@@ -938,6 +1047,8 @@ public class GamePlayUI extends Application implements Serializable{
                 				stabilizeCell(x-1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
+                				if(!winnerFound)
+	            					isWinner();
             				});
             			}
             			else if(y==GridY-1)
@@ -986,6 +1097,7 @@ public class GamePlayUI extends Application implements Serializable{
             				transition.play();
             				animationRunningCounter += 1;
             				transition.setOnFinished(event->{
+            					
             					animationRunningCounter -= 1;
 								Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 								Grid[x+1][y].setOwner(PlayerID);
@@ -1004,6 +1116,8 @@ public class GamePlayUI extends Application implements Serializable{
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
+                				if(!winnerFound)
+	            					isWinner();
             				});
             			}
             		}
@@ -1049,6 +1163,7 @@ public class GamePlayUI extends Application implements Serializable{
         				transition.play();
         				animationRunningCounter += 1;
         				transition.setOnFinished(event -> {
+        					
         					animationRunningCounter -= 1;
         					Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 							Grid[x+1][y].setOwner(PlayerID);
@@ -1072,6 +1187,8 @@ public class GamePlayUI extends Application implements Serializable{
             				stabilizeCell(x, y+1, PlayerID);
             				stabilizeCell(x-1, y, PlayerID);
             				stabilizeCell(x, y-1, PlayerID);
+            				if(!winnerFound)
+	            				isWinner();
         				});
             		}
 	            }
