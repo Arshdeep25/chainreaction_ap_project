@@ -34,25 +34,40 @@ public class Settings
 	{
 		return this.playerColors;
 	}
-	public Settings setOthers(Color[] orbColors)
+	public Settings setOthers(Color[] orbColors, boolean[] selected)
 	{
 		boolean[] sel = new boolean[8];
+		Color[] getColor = new Color[8];
 		for(int i=0; i<8; i++)
 		{
-			if(!playerColors[i].equals(orbColors[i]))
+			if(selected[i])
 			{
-				System.out.println(i+" not equal");
 				for(int j=0; j<8; j++)
 				{
 					if(playerColors[i].equals(orbColors[j]))
 					{
-						System.out.println(j+" replaced "+i);
-						playerColors[j] = orbColors[i];
+						sel[j] = true;
 						break;
 					}
 				}
 			}
 		}
+		for(int i=0; i<8; i++)
+		{
+			if(!selected[i])
+			{
+				for(int j=0; j<8; j++)
+				{
+					if(!sel[j])
+					{
+						playerColors[i] = orbColors[j];
+						sel[j] = true;
+						break;
+					}
+				}
+			}
+		}
+		
 		return this;
 	}
 }
