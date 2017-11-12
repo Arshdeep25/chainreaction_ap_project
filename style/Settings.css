@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
+/* @import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great');
 @import url('https://fonts.googleapis.com/css?family=Poiret+One');
-
-.text {
+*/
+/* .text {
 	-fx-font-family: 'Fredericka the Great', cursive;
 	-fx-font-size: 30px;
 	-fx-fill: rgb(255, 255, 255);
@@ -22,4 +22,28 @@
 .donebtn {
 	-fx-background-color: rgb(46, 192, 209, 0.8);
 	-fx-font: 25px 'Poiret One', cursive;
+}*/
+.Start_btn {
+	-fx-background-color: #F1C40F;
+}
+.Start_btn:hover{
+	-fx-background-color: #9A7D0A;
+}
+
+.Back {
+	-fx-background-color: #BDC3C7;
+}
+.Toggle:selected
+{
+	-fx-background-color: #F1C40F;
+	-fx-focus-color: transparent;
+}
+.UI
+{
+	-fx-background-color: #E5E7E9;
+}
+.MenuButton
+{
+	-fx-font-family: 'Verdana', bold;
+	-fx-font-size: 15px;
 }

@@ -6,6 +6,11 @@ import java.io.*;
 import java.util.*;
 import javafx.application.Application;
 import javafx.event.*;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
@@ -29,13 +34,14 @@ public class RenderGUISettings extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Group root = new Group();
-		Text mainHeading = new Text("SETTINGS");
-		mainHeading.setX(20); 
-		mainHeading.setY(40);
+//		Text mainHeading = new Text("SETTINGS");
+//		mainHeading.setX(20); 
+//		mainHeading.setY(40);
 //		mainHeading.getStyleClass().add("text");
-		root.getChildren().add(mainHeading);
-		Text subHeading = new Text("Please select color of the respective players.");
-		subHeading.setX(20); 
+//		root.getChildren().add(mainHeading);
+		Text subHeading = new Text("Please select color of the respective players");
+		subHeading.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+		subHeading.setX(13); 
 		subHeading.setY(70);
 //		subHeading.getStyleClass().add("subText");
 		root.getChildren().add(subHeading);
@@ -43,10 +49,10 @@ public class RenderGUISettings extends Application{
 		GridPane orbPane = new GridPane();
 		orbPane.setMinSize(400, 400);
 		orbPane.setPadding(new Insets(20));
-		orbPane.setHgap(20);
+		orbPane.setHgap(12);
 		orbPane.setVgap(20);
 		orbPane.setAlignment(Pos.CENTER);
-		orbPane.setTranslateX(50);
+		orbPane.setTranslateX(0);
 		orbPane.setTranslateY(150);
 
 		orbColors[0] = Color.rgb(255, 153, 51);
@@ -61,12 +67,12 @@ public class RenderGUISettings extends Application{
 		for(int i=0; i<8; i++)
 		{
 			Text playerName = new Text("Player "+(i+1));
-			playerName.getStyleClass().add("playername");
+//			playerName.getStyleClass().add("playername");
 			orbPane.add(playerName, 0, i);
 			for(int j=0; j<8; j++)
 			{
 				Sphere orb = new Sphere();
-				orb.setRadius(10);
+				orb.setRadius(9);
 				PhongMaterial material = new PhongMaterial();  
 				material.setDiffuseColor(orbColors[j]); 
 				orb.setMaterial(material);
@@ -80,20 +86,22 @@ public class RenderGUISettings extends Application{
 		}
 		root.getChildren().add(orbPane);
 		Button doneButton = new Button("DONE");
-		doneButton.getStyleClass().add("donebtn");
-		doneButton.setTranslateX(400);
-		doneButton.setTranslateY(600);
+		doneButton.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+		doneButton.getStyleClass().add("Start_btn");
+		doneButton.setTranslateX(175);
+		doneButton.setTranslateY(550);
+		doneButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		doneButton.setOnAction(new doneButtonEvent(orbPane, orbColors, primaryStage, setting));
 		root.getChildren().add(doneButton);
-		Scene scene = new Scene(root, 700, 700);
-//		scene.getStylesheets().add("style/Settings.css");
-		scene.setFill(Color.rgb(178, 255, 102, 0.99));
+		Scene scene = new Scene(root, 400, 600);
+		scene.getStylesheets().add("style/Settings.css");
+		scene.setFill(Color.rgb(208, 211, 212, 0.99));
 		primaryStage.setTitle("Settings");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
-	public Settings render(Stage stage)
+	public void render(Stage stage)
 	{
 		try {
 			this.start(stage);
@@ -101,8 +109,8 @@ public class RenderGUISettings extends Application{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.setting.setOthers(orbColors);
-		return this.setting;
+		//this.setting.setOthers(orbColors);
+		//return this.setting;
 	}
 	
 }
@@ -173,7 +181,14 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	    	}
 	    }
 	    
-	    this.stage.close();
+	    MainPage obj = new MainPage();
+	    try {
+	    	obj.color = setting.setOthers(orbColors);
+			obj.start(MainPage.var);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 

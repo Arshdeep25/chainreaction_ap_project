@@ -15,10 +15,6 @@ public class GamePlay implements Serializable
 	{
 		return this.Back_Grid;
 	}
-	GamePlay()
-	{
-		
-	}
 	GamePlay(int gridX, int gridY, int playerCount)
 	{
 		this.gridX = gridX;
