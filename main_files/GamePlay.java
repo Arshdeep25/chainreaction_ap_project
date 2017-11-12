@@ -9,6 +9,7 @@ public class GamePlay implements Serializable
 	private int playerCount;
 	private int gridX, gridY;
 	private int movesPlayed;
+	private int lastPlayed;
 	
 	public Cell[][] getBack_Grid()
 	{
@@ -24,6 +25,7 @@ public class GamePlay implements Serializable
 		this.gridY = gridY;
 		this.setPlayerCount(playerCount);
 		this.movesPlayed = 0;
+		this.lastPlayed = 0;
 		setPlayers(new Player[playerCount]);
 		for(int i=0; i<playerCount; i++)
 		{
@@ -209,11 +211,21 @@ public class GamePlay implements Serializable
 		}
 		else
 		{
+			this.lastPlayed = PlayerID;
 			Back_Grid[x][y].setOwner(PlayerID);
 			Back_Grid[x][y].setOrbCount(Back_Grid[x][y].getOrbCount()+1);
 			checkStabilityAndStabilize(x, y, PlayerID);
 		}
 		this.movesPlayed++;
+	}
+	public int nextTurnPlayer(int PlayerID)
+	{
+		int playerTurn = PlayerID;
+		while(!isInGame(playerTurn))
+		{
+			playerTurn = (playerTurn+1)%playerCount;
+		}
+		return playerTurn;
 	}
 	public boolean isInGame(int PlayerID)
 	{
