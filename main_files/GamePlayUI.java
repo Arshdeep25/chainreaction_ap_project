@@ -59,6 +59,7 @@ public class GamePlayUI extends Application implements Serializable{
 	public GamePlay resumeGrid;
 	private transient Stage GameplayStage;
 	public boolean winnerFound;
+	public boolean winnerFoundAndOneRecursion;
 	
 	public GamePlayUI(int Player,int x,int y)
 	{
@@ -716,8 +717,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            					}
                 					if(!winnerFound)
 	            						isWinner(); 
-	            						else
-	            							return;               					
+	            					else if(winnerFoundAndOneRecursion)
+	            						return;
+	            					else
+	            					{
+	            						winnerFoundAndOneRecursion = true;
+	            					}
                 					stabilizeCell(x+1, y, PlayerID);
                 					stabilizeCell(x, y+1, PlayerID);
 
@@ -787,8 +792,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else if(winnerFoundAndOneRecursion)
+	            						return;
 	            					else
-	            							return;
+	            					{
+	            						winnerFoundAndOneRecursion = true;
+	            					}
 	                				stabilizeCell(x+1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
 
@@ -860,8 +869,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else if(winnerFoundAndOneRecursion)
+	            						return;
 	            					else
-	            							return;
+	            					{
+	            						winnerFoundAndOneRecursion = true;
+	            					}
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y+1, PlayerID);
 
@@ -929,8 +942,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else if(winnerFoundAndOneRecursion)
+	            						return;
 	            					else
-	            							return;
+	            					{
+	            						winnerFoundAndOneRecursion = true;
+	            					}
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
 
@@ -1017,8 +1034,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            				}
                 				if(!winnerFound)
 	            					isWinner();
+	            				else if(winnerFoundAndOneRecursion)
+	            					return;
 	            				else
-	            						return;
+	            				{
+	            					winnerFoundAndOneRecursion = true;
+	            				}
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
@@ -1099,8 +1120,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            				}
                 				if(!winnerFound)
 	            					isWinner();
+	            				else if(winnerFoundAndOneRecursion)
+	            					return;
 	            				else
-	            						return;
+	            				{
+	            					winnerFoundAndOneRecursion = true;
+	            				}
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -1181,8 +1206,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            				}
                 				if(!winnerFound)
 	            					isWinner();
+	            				else if(winnerFoundAndOneRecursion)
+	            					return;
 	            				else
-	            						return;
+	            				{
+	            					winnerFoundAndOneRecursion = true;
+	            				}
                 				stabilizeCell(x-1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
@@ -1262,8 +1291,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            				}
                 				if(!winnerFound)
 	            					isWinner();
+	            				else if(winnerFoundAndOneRecursion)
+	            					return;
 	            				else
-	            						return;
+	            				{
+	            					winnerFoundAndOneRecursion = true;
+	            				}
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -1344,8 +1377,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            			}
             				if(!winnerFound)
 	            				isWinner();
+	            			else if(winnerFoundAndOneRecursion)
+	            				return;
 	            			else
-	            					return;
+	            			{
+	            				winnerFoundAndOneRecursion = true;
+	            			}
             				stabilizeCell(x+1, y, PlayerID);
             				stabilizeCell(x, y+1, PlayerID);
             				stabilizeCell(x-1, y, PlayerID);
