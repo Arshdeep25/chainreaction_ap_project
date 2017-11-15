@@ -31,6 +31,7 @@ public class RenderGUISettings extends Application{
 	private Settings setting = new Settings();
 	private Color[] orbColors = new Color[8];
 	private boolean[] selectedPlayers = new boolean[8];
+	public int a,x;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -92,7 +93,7 @@ public class RenderGUISettings extends Application{
 		doneButton.setTranslateX(175);
 		doneButton.setTranslateY(550);
 		doneButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		doneButton.setOnAction(new doneButtonEvent(orbPane, orbColors, primaryStage, setting, selectedPlayers));
+		doneButton.setOnAction(new doneButtonEvent(orbPane, orbColors, primaryStage, setting, selectedPlayers,a,x));
 		root.getChildren().add(doneButton);
 		Scene scene = new Scene(root, 400, 600);
 		scene.getStylesheets().add("style/Settings.css");
@@ -102,8 +103,10 @@ public class RenderGUISettings extends Application{
 		primaryStage.show();
 	}
 
-	public void render(Stage stage)
+	public void render(Stage stage,int a,int x)
 	{
+		this.a = a;
+		this.x = x;
 		try {
 			this.start(stage);
 		} catch (Exception e) {
@@ -124,7 +127,8 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	private Stage stage;
 	private Settings setting;
 	private boolean[] selectedPlayers;
-	public doneButtonEvent(GridPane orbPane, Color[] orbColors, Stage stage, Settings setting, boolean[] selectedPlayers)
+	int a,x;
+	public doneButtonEvent(GridPane orbPane, Color[] orbColors, Stage stage, Settings setting, boolean[] selectedPlayers,int a,int x)
 	{
 		this.orbPane = orbPane;
 		this.selectedColors = new Color[8];
@@ -132,6 +136,8 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 		this.stage = stage;
 		this.setting = setting;
 		this.selectedPlayers = selectedPlayers;
+		this.a = a;
+		this.x = x;
 	}
 	@Override
 	public void handle(ActionEvent event)
@@ -139,6 +145,8 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	    MainPage obj = new MainPage();
 	    try {
 	    	obj.color = setting.setOthers(orbColors, selectedPlayers);
+	    	obj.a1 = a;
+	    	obj.x1 = x;
 			obj.start(MainPage.var);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

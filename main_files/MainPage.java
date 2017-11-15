@@ -39,6 +39,7 @@ public class MainPage extends Application{
 	public static Settings color = new Settings();
 	public static int Undo_button = 0;
 	public static boolean Winner = false;
+	public int a1=-1,x1=-1;
 	public static Button getButton()
 	{
 		return Resume_btn;
@@ -161,8 +162,35 @@ public class MainPage extends Application{
 		
 		root.getChildren().addAll(G1,G2);
 		
-		group.selectToggle(P2);
-		G.selectToggle(G1);
+		if(a1==-1)
+		{
+			group.selectToggle(P2);
+			G.selectToggle(G1);
+		}
+		else
+		{
+			if(a1==2)
+				group.selectToggle(P2);
+			else if(a1==3)
+				group.selectToggle(P3);
+			else if(a1==4)
+				group.selectToggle(P4);
+			else if(a1==5)
+				group.selectToggle(P5);
+			else if(a1==6)
+				group.selectToggle(P6);
+			else if(a1==7)
+				group.selectToggle(P7);
+			else
+				group.selectToggle(P8);
+			
+			if(x1==9)
+				G.selectToggle(G1);
+			else
+				G.selectToggle(G2);
+		}
+			
+		
 		
 		Button Start_btn = new Button();
 		Start_btn.setText("START GAME");
@@ -173,7 +201,6 @@ public class MainPage extends Application{
 		Start_btn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 //		Start_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 		Start_btn.getStyleClass().add("Start_btn");
-		
 		Start_btn.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
@@ -197,8 +224,21 @@ public class MainPage extends Application{
 				 Platform.runLater(new Runnable() {
 				       public void run() {             
 				           try {
-							GamePlayUI gameStart = new GamePlayUI(a,x,y);
-							gameStart.start(stage);
+				        	   GamePlayUI gamestart = null;
+				        	if(a1==-1)
+				        	{
+				        		gamestart = new GamePlayUI(a,x,y);
+				        	}
+				        	else
+				        	{
+				        		int y1;
+				        		if(x1 == 15)
+				        			y1 = 10;
+				        		else
+				        			y1 = 6;
+				        		gamestart = new GamePlayUI(a1,x1,y1);
+				        	}
+							gamestart.start(stage);
 						} catch (Exception e) {
 							e.getMessage();
 							e.printStackTrace();
@@ -226,8 +266,23 @@ public class MainPage extends Application{
 				 Platform.runLater(new Runnable() {
 				       public void run() {             
 				           try {
+				        	   String s = group.getSelectedToggle().toString();
+								String s1 = G.getSelectedToggle().toString();
+								int a = Character.getNumericValue(s.charAt(s.length()-2));
+								int b = Character.getNumericValue(s1.charAt(s1.length()-2));
+								int x,y;
+								if(b==0)
+								 {
+									 x = 15;
+									 y = 10;
+								 }
+								 else
+								 {
+									 x = 9;
+									 y = 6;
+								 }
 							RenderGUISettings Settings = new RenderGUISettings();
-							Settings.render(stage);
+							Settings.render(stage,a,x);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.getMessage();
