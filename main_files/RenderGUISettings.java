@@ -30,6 +30,8 @@ public class RenderGUISettings extends Application{
 	private Color[] playerColors = new Color[8];
 	private Settings setting = new Settings();
 	private Color[] orbColors = new Color[8];
+	private boolean[] selectedPlayers = new boolean[8];
+	public int a,x;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -76,7 +78,7 @@ public class RenderGUISettings extends Application{
 				PhongMaterial material = new PhongMaterial();  
 				material.setDiffuseColor(orbColors[j]); 
 				orb.setMaterial(material);
-				orb.setOnMousePressed(new orbColorChangeEvent(orb, orbPane, orbColors, setting));
+				orb.setOnMousePressed(new orbColorChangeEvent(orb, orbPane, orbColors, setting, selectedPlayers));
 				orbPane.add(orb, 2+j, i);
 			}
 			Text colorText = new Text("N/A");
@@ -91,7 +93,7 @@ public class RenderGUISettings extends Application{
 		doneButton.setTranslateX(175);
 		doneButton.setTranslateY(550);
 		doneButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-		doneButton.setOnAction(new doneButtonEvent(orbPane, orbColors, primaryStage, setting));
+		doneButton.setOnAction(new doneButtonEvent(orbPane, orbColors, primaryStage, setting, selectedPlayers,a,x));
 		root.getChildren().add(doneButton);
 		Scene scene = new Scene(root, 400, 600);
 		scene.getStylesheets().add("style/Settings.css");
@@ -101,8 +103,10 @@ public class RenderGUISettings extends Application{
 		primaryStage.show();
 	}
 
-	public void render(Stage stage)
+	public void render(Stage stage,int a,int x)
 	{
+		this.a = a;
+		this.x = x;
 		try {
 			this.start(stage);
 		} catch (Exception e) {
@@ -122,68 +126,27 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	private Color[] orbColors;
 	private Stage stage;
 	private Settings setting;
-	public doneButtonEvent(GridPane orbPane, Color[] orbColors, Stage stage, Settings setting)
+	private boolean[] selectedPlayers;
+	int a,x;
+	public doneButtonEvent(GridPane orbPane, Color[] orbColors, Stage stage, Settings setting, boolean[] selectedPlayers,int a,int x)
 	{
 		this.orbPane = orbPane;
 		this.selectedColors = new Color[8];
 		this.orbColors = orbColors;
 		this.stage = stage;
 		this.setting = setting;
+		this.selectedPlayers = selectedPlayers;
+		this.a = a;
+		this.x = x;
 	}
 	@Override
 	public void handle(ActionEvent event)
 	{
-	    int cntr = 0;
-	    boolean[] selected = new boolean[8];
-	    for(int i=0; i<8; i++)
-	    {
-	    	selected[i] = false;
-	    }
-	    int j=0, i=0;
-	    for(Node orbs: orbPane.getChildren())
-	    {
-	    	if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere"))
-	    	{
-    			Sphere orbs_s = (Sphere)orbs;
-    			PhongMaterial x = (PhongMaterial)orbs_s.getMaterial();
-				if(x.getDiffuseColor().equals(Color.rgb(180, 180, 180)))
-				{
-					selected[i] = true;
-					selectedColors[j] = x.getDiffuseColor();
-				}
-	    		i++;
-	    		if(i==8)
-	    		{
-	    			j++;
-	    		}
-	    		i%=8;
-	    	}
-	    	else
-	    	{
-	    		if(orbs.getClass().getName().equals("javafx.scene.text.Text"))
-	    		{
-
-	    		}
-	    	}
-	    }
-	    for(i=0; i<8; i++)
-	    {
-	    	if(selectedColors[i]==null)
-	    	{
-	    		for(j=0; j<8; j++)
-	    		{
-	    			if(selected[j]!=true)
-	    			{
-	    				selectedColors[i] = orbColors[j];
-	    				selected[j] = true;
-	    			}
-	    		}
-	    	}
-	    }
-	    
 	    MainPage obj = new MainPage();
 	    try {
-	    	obj.color = setting.setOthers(orbColors);
+	    	obj.color = setting.setOthers(orbColors, selectedPlayers);
+	    	obj.a1 = a;
+	    	obj.x1 = x;
 			obj.start(MainPage.var);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -198,12 +161,14 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 	private GridPane orbPane;
 	private Color[] orbColors;
 	private Settings setting;
-	public orbColorChangeEvent(Sphere orb, GridPane orbPane, Color[] orbColors, Settings setting)
+	private boolean[] selectedPlayers;
+	public orbColorChangeEvent(Sphere orb, GridPane orbPane, Color[] orbColors, Settings setting, boolean[] selectedPlayers)
 	{
 		this.orb = orb;
 		this.orbPane = orbPane;
 		this.orbColors = orbColors;
 		this.setting = setting;
+		this.selectedPlayers = selectedPlayers;
 	}
 
 	@Override 
@@ -249,6 +214,7 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 		material.setDiffuseColor(Color.rgb(180, 180, 180));
 		orb.setMaterial(material);
 //		System.out.println("lala "+orbPane.getRowIndex(orb)+(orbColors[orbPane.getColumnIndex(orb)-2].getRed()*256));
+		selectedPlayers[orbPane.getRowIndex(orb)] = true;
 		setting.setPlayerColor(orbPane.getRowIndex(orb), orbColors[orbPane.getColumnIndex(orb)-2]);
 	} 
 }

@@ -47,7 +47,7 @@ public class GamePlayUI extends Application implements Serializable{
 
 
 	public Tile[][] Board;
-	public Cell[][] Grid;
+	public volatile Cell[][] Grid;
 	public int PlayerID;
 	private int cnt = 0;
 	public int TotalPlayers;
@@ -59,6 +59,7 @@ public class GamePlayUI extends Application implements Serializable{
 	public GamePlay resumeGrid;
 	private transient Stage GameplayStage;
 	public boolean winnerFound;
+	public boolean winnerFoundAndOneRecursion;
 	
 	public GamePlayUI(int Player,int x,int y)
 	{
@@ -181,6 +182,7 @@ public class GamePlayUI extends Application implements Serializable{
 					MainPage.Undo_button = 1;
 					undo_var = 1;
 					PlayerID = des.PlayerID;
+					movesPlayed = des.movesPlayed;
 					resumeGrid = des.resumeGrid;
 					for(int i=0;i<GridX;i++)
 					{
@@ -368,7 +370,7 @@ public class GamePlayUI extends Application implements Serializable{
 				{
 					if(eachPlayerMovedOnce())
 					{
-						if(orbCountPlayer(PlayerID)==0 && undo_var==0)
+						if(orbCountPlayer(PlayerID)==0)
 						{
 							return false;
 						}
@@ -456,7 +458,14 @@ public class GamePlayUI extends Application implements Serializable{
 		                }
 		            	if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
 		            	{
-		            		resumeGrid.takeTurn(PlayerID, x, y);
+		            		System.out.println();
+		            		try{
+		            			resumeGrid.takeTurn(PlayerID, x, y);
+		            		}
+		            		catch(StackOverflowError e)
+		            		{
+		            			System.out.println(e.getMessage());
+		            		}
 		            		for(int i=0;i<GridX;i++)
 							{
 								for(int j=0;j<GridY;j++)
@@ -469,6 +478,14 @@ public class GamePlayUI extends Application implements Serializable{
 		            		movesPlayed++;
 		            		Grid[x][y].setOwner(PlayerID);
 		            		System.out.println("for one last time");
+		            		for(int i=0; i<GridX; i++)
+							{
+								for(int j=0; j<GridY; j++)
+								{
+									System.out.print(Grid[i][j].getOwner()+" ");
+								}
+								System.out.println();
+							}
 		    				for(int i=0;i<GridX;i++)
 		    				{
 		    					for(int j=0;j<GridY;j++)
@@ -537,6 +554,15 @@ public class GamePlayUI extends Application implements Serializable{
 				{
 					int prevOwner = -1, isAssigned=0;
 
+					System.out.println("The grid inside is winner");
+	            	for(int i=0; i<GridX; i++)
+					{
+						for(int j=0; j<GridY; j++)
+						{
+							System.out.print(Grid[i][j].getOwner()+" ");
+						}
+						System.out.println();
+					}
 					for(int i=0; i<GridX; i++)
 					{
 						for(int j=0; j<GridY; j++)
@@ -546,15 +572,27 @@ public class GamePlayUI extends Application implements Serializable{
 								if(isAssigned==0)
 								{
 									prevOwner = Grid[i][j].getOwner();
+									System.out.println("prevOwner set "+prevOwner+" at "+i+" "+j);
 									isAssigned = 1;
 								}
-								if(prevOwner!=Grid[i][j].getOwner())
+								else if(prevOwner!=Grid[i][j].getOwner())
 								{
 									return ;
 								}
+								System.out.println("prevOwner "+i+" "+j+" "+prevOwner);
 							}
 						}
 					}
+					for(int i=0; i<GridX; i++)
+					{
+						for(int j=0; j<GridY; j++)
+						{
+							System.out.print(Grid[i][j].getOwner()+" ");
+						}
+						System.out.println();
+					}
+
+					System.out.println("prevOwner "+prevOwner+"\n\n\n\n\n\n");
 					winnerFound = true;
 					for(int i=0;i<GridX;i++)
 					{
@@ -595,10 +633,20 @@ public class GamePlayUI extends Application implements Serializable{
 					Scene winnerScene = new Scene(winnerPane);
 					WinnerStage.setScene(winnerScene);
 					WinnerStage.show();
+					
 				}
 
 	            public void stabilizeCell(int x, int y, int PlayerID)
 	            {
+	            	System.out.println("asadfgaoowqueytriuytqwe");
+	            	for(int i=0; i<GridX; i++)
+					{
+						for(int j=0; j<GridY; j++)
+						{
+							System.out.print(Grid[i][j].getOwner()+" ");
+						}
+						System.out.println();
+					}
 	            	if(Grid[x][y].isStable())
             		{
             			makeBoardCell(x, y, PlayerID);
@@ -652,7 +700,7 @@ public class GamePlayUI extends Application implements Serializable{
                 				transition.play();
                 				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
-                		
+                					System.out.println("ye set ho rha hai player id \n\n\n\n"+PlayerID);
                 					animationRunningCounter -= 1;
 									Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 									Grid[x+1][y].setOwner(PlayerID);
@@ -664,16 +712,26 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
-                					if(!Grid[x+1][y].isStable())
-                						stabilizeCell(x+1, y, PlayerID);
-                					else
-                						makeBoardCell(x+1, y, PlayerID);
-                					if(!Grid[x][y+1].isStable())
-                						stabilizeCell(x, y+1, PlayerID);
-                					else
-                						makeBoardCell(x, y+1, PlayerID);
+
+                					System.out.println("Grid dekh lo");
+	            					for(int i=0; i<GridX; i++)
+	            					{
+	            						for(int j=0; j<GridY; j++)
+	            						{
+	            							System.out.print(Grid[i][j].getOwner()+" ");
+	            						}
+	            						System.out.println();
+	            					}
                 					if(!winnerFound)
-	            						isWinner();
+	            						isWinner(); 
+	            					else if(winnerFoundAndOneRecursion)
+	            						return;
+	            					else
+	            					{
+	            						winnerFoundAndOneRecursion = true;
+	            					}
+                					stabilizeCell(x+1, y, PlayerID);
+                					stabilizeCell(x, y+1, PlayerID);
 
                 				});
 
@@ -730,10 +788,26 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
-	                				stabilizeCell(x+1, y, PlayerID);
-	                				stabilizeCell(x, y-1, PlayerID);
+	            					System.out.println("Grid dekh lo");
+	            					for(int i=0; i<GridX; i++)
+	            					{
+	            						for(int j=0; j<GridY; j++)
+	            						{
+	            							System.out.print(Grid[i][j].getOwner()+" ");
+	            						}
+	            						System.out.println();
+	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else if(winnerFoundAndOneRecursion)
+	            						return;
+	            					else
+	            					{
+	            						winnerFoundAndOneRecursion = true;
+	            					}
+	                				stabilizeCell(x+1, y, PlayerID);
+	                				stabilizeCell(x, y-1, PlayerID);
+
 
                 				});
             				}
@@ -791,10 +865,26 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
-	                				stabilizeCell(x-1, y, PlayerID);
-	                				stabilizeCell(x, y+1, PlayerID);
+	            					System.out.println("Grid dekh lo");
+	            					for(int i=0; i<GridX; i++)
+	            					{
+	            						for(int j=0; j<GridY; j++)
+	            						{
+	            							System.out.print(Grid[i][j].getOwner()+" ");
+	            						}
+	            						System.out.println();
+	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else if(winnerFoundAndOneRecursion)
+	            						return;
+	            					else
+	            					{
+	            						winnerFoundAndOneRecursion = true;
+	            					}
+	                				stabilizeCell(x-1, y, PlayerID);
+	                				stabilizeCell(x, y+1, PlayerID);
+
                 				});
             				}
             				else
@@ -848,10 +938,26 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
-	                				stabilizeCell(x-1, y, PlayerID);
-	                				stabilizeCell(x, y-1, PlayerID);
+	            					System.out.println("Grid dekh lo");
+	            					for(int i=0; i<GridX; i++)
+	            					{
+	            						for(int j=0; j<GridY; j++)
+	            						{
+	            							System.out.print(Grid[i][j].getOwner()+" ");
+	            						}
+	            						System.out.println();
+	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else if(winnerFoundAndOneRecursion)
+	            						return;
+	            					else
+	            					{
+	            						winnerFoundAndOneRecursion = true;
+	            					}
+	                				stabilizeCell(x-1, y, PlayerID);
+	                				stabilizeCell(x, y-1, PlayerID);
+
 
                 				});	
             				}
@@ -924,11 +1030,27 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					makeBoardCell(x, y, PlayerID);
+	            				System.out.println("Grid dekh lo");
+	            				for(int i=0; i<GridX; i++)
+	            				{
+	            					for(int j=0; j<GridY; j++)
+	            					{
+	            						System.out.print(Grid[i][j].getOwner()+" ");
+	            					}
+	            					System.out.println();
+	            				}
+                				if(!winnerFound)
+	            					isWinner();
+	            				else if(winnerFoundAndOneRecursion)
+	            					return;
+	            				else
+	            				{
+	            					winnerFoundAndOneRecursion = true;
+	            				}
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
-                				if(!winnerFound)
-	            					isWinner();
+
             				});
 
             			}
@@ -994,11 +1116,27 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					makeBoardCell(x, y, PlayerID);
+	            				System.out.println("Grid dekh lo");
+	            				for(int i=0; i<GridX; i++)
+	            				{
+	            					for(int j=0; j<GridY; j++)
+	            					{
+	            						System.out.print(Grid[i][j].getOwner()+" ");
+	            					}
+	            					System.out.println();
+	            				}
+                				if(!winnerFound)
+	            					isWinner();
+	            				else if(winnerFoundAndOneRecursion)
+	            					return;
+	            				else
+	            				{
+	            					winnerFoundAndOneRecursion = true;
+	            				}
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
-                				if(!winnerFound)
-	            					isWinner();
+
             				});
             			}
             			else if(x==GridX-1)
@@ -1064,11 +1202,27 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					makeBoardCell(x, y, PlayerID);
+	            				System.out.println("Grid dekh lo");
+	            				for(int i=0; i<GridX; i++)
+	            				{
+	            					for(int j=0; j<GridY; j++)
+	            					{
+	            						System.out.print(Grid[i][j].getOwner()+" ");
+	            					}
+	            					System.out.println();
+	            				}
+                				if(!winnerFound)
+	            					isWinner();
+	            				else if(winnerFoundAndOneRecursion)
+	            					return;
+	            				else
+	            				{
+	            					winnerFoundAndOneRecursion = true;
+	            				}
                 				stabilizeCell(x-1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
-                				if(!winnerFound)
-	            					isWinner();
+
             				});
             			}
             			else if(y==GridY-1)
@@ -1133,11 +1287,27 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
             					makeBoardCell(x, y, PlayerID);
+	            				System.out.println("Grid dekh lo");
+	            				for(int i=0; i<GridX; i++)
+	            				{
+	            					for(int j=0; j<GridY; j++)
+	            					{
+	            						System.out.print(Grid[i][j].getOwner()+" ");
+	            					}
+	            					System.out.println();
+	            				}
+                				if(!winnerFound)
+	            					isWinner();
+	            				else if(winnerFoundAndOneRecursion)
+	            					return;
+	            				else
+	            				{
+	            					winnerFoundAndOneRecursion = true;
+	            				}
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
-                				if(!winnerFound)
-	            					isWinner();
+
             				});
             			}
             		}
@@ -1203,12 +1373,28 @@ public class GamePlayUI extends Application implements Serializable{
 							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
         					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
         					makeBoardCell(x, y, PlayerID);
+	            			System.out.println("Grid dekh lo");
+	            			for(int i=0; i<GridX; i++)
+	            			{
+	            				for(int j=0; j<GridY; j++)
+	            				{
+	            					System.out.print(Grid[i][j].getOwner()+" ");
+	            				}
+	            				System.out.println();
+	            			}
+            				if(!winnerFound)
+	            				isWinner();
+	            			else if(winnerFoundAndOneRecursion)
+	            				return;
+	            			else
+	            			{
+	            				winnerFoundAndOneRecursion = true;
+	            			}
             				stabilizeCell(x+1, y, PlayerID);
             				stabilizeCell(x, y+1, PlayerID);
             				stabilizeCell(x-1, y, PlayerID);
             				stabilizeCell(x, y-1, PlayerID);
-            				if(!winnerFound)
-	            				isWinner();
+
         				});
             		}
 	            }
