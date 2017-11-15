@@ -704,7 +704,7 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
-                					
+
                 					System.out.println("Grid dekh lo");
 	            					for(int i=0; i<GridX; i++)
 	            					{
@@ -715,7 +715,9 @@ public class GamePlayUI extends Application implements Serializable{
 	            						System.out.println();
 	            					}
                 					if(!winnerFound)
-	            						isWinner();                					
+	            						isWinner(); 
+	            						else
+	            							return;               					
                 					stabilizeCell(x+1, y, PlayerID);
                 					stabilizeCell(x, y+1, PlayerID);
 
@@ -785,6 +787,8 @@ public class GamePlayUI extends Application implements Serializable{
 	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else
+	            							return;
 	                				stabilizeCell(x+1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
 
@@ -856,6 +860,8 @@ public class GamePlayUI extends Application implements Serializable{
 	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else
+	            							return;
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y+1, PlayerID);
 
@@ -923,6 +929,8 @@ public class GamePlayUI extends Application implements Serializable{
 	            					}
 	                				if(!winnerFound)
 	            						isWinner();
+	            					else
+	            							return;
 	                				stabilizeCell(x-1, y, PlayerID);
 	                				stabilizeCell(x, y-1, PlayerID);
 
@@ -1009,6 +1017,8 @@ public class GamePlayUI extends Application implements Serializable{
 	            				}
                 				if(!winnerFound)
 	            					isWinner();
+	            				else
+	            						return;
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
@@ -1089,6 +1099,8 @@ public class GamePlayUI extends Application implements Serializable{
 	            				}
                 				if(!winnerFound)
 	            					isWinner();
+	            				else
+	            						return;
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -1169,6 +1181,8 @@ public class GamePlayUI extends Application implements Serializable{
 	            				}
                 				if(!winnerFound)
 	            					isWinner();
+	            				else
+	            						return;
                 				stabilizeCell(x-1, y, PlayerID);
                 				stabilizeCell(x, y+1, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
@@ -1248,6 +1262,8 @@ public class GamePlayUI extends Application implements Serializable{
 	            				}
                 				if(!winnerFound)
 	            					isWinner();
+	            				else
+	            						return;
                 				stabilizeCell(x+1, y, PlayerID);
                 				stabilizeCell(x, y-1, PlayerID);
                 				stabilizeCell(x-1, y, PlayerID);
@@ -1328,6 +1344,8 @@ public class GamePlayUI extends Application implements Serializable{
 	            			}
             				if(!winnerFound)
 	            				isWinner();
+	            			else
+	            					return;
             				stabilizeCell(x+1, y, PlayerID);
             				stabilizeCell(x, y+1, PlayerID);
             				stabilizeCell(x-1, y, PlayerID);
