@@ -458,7 +458,14 @@ public class GamePlayUI extends Application implements Serializable{
 		                }
 		            	if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
 		            	{
-		            		resumeGrid.takeTurn(PlayerID, x, y);
+		            		System.out.println();
+		            		try{
+		            			resumeGrid.takeTurn(PlayerID, x, y);
+		            		}
+		            		catch(StackOverflowError e)
+		            		{
+		            			System.out.println(e.getMessage());
+		            		}
 		            		for(int i=0;i<GridX;i++)
 							{
 								for(int j=0;j<GridY;j++)
