@@ -352,6 +352,8 @@ public class GamePlayUI extends Application implements Serializable{
 			public void handle(ActionEvent event) {
 				try {
 					GamePlayUI obj = new GamePlayUI(TotalPlayers,GridX,GridY);
+					serialise("in",obj);
+					serialise("in2",obj);
 					obj.start(primaryStage);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
