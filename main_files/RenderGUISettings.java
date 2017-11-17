@@ -24,6 +24,15 @@ import javafx.scene.effect.*;
 import javafx.geometry.*;
 
 
+/**
+* This class implents a GUI interface for the Settings page. It gives the 
+* user to select the color of their orbs and ensures no clash in the colors.
+*
+*
+* @author Anubhav Jaiswal and Arshdeep Singh Chugh
+* @version 1.0
+* @since 17 November 2017
+*/
 
 public class RenderGUISettings extends Application{
 
@@ -32,6 +41,11 @@ public class RenderGUISettings extends Application{
 	private Color[] orbColors = new Color[8];
 	private boolean[] selectedPlayers = new boolean[8];
 	public int a,x;
+	/**
+	* This is the main start function called to initiate the GUI making process.
+	* @param primaryStage: the stage on which the game is running.
+	* @exception Exception is put to cater all the exceptions.
+	*/
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -102,7 +116,15 @@ public class RenderGUISettings extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-
+	/**
+	* This function is used to intiate the varibles and class the start funciton 
+	* to initiate the GUI making process. 
+	*
+	*
+	* @param stage : the stage on which the game is running.
+	* @param a : The value varibles from the MainPage.
+	* @param x : The value varibles from the MainPage.
+	*/
 	public void render(Stage stage,int a,int x)
 	{
 		this.a = a;
@@ -119,6 +141,15 @@ public class RenderGUISettings extends Application{
 	
 }
 
+/**
+* This class is an event handler for the click on The Done button
+*
+*
+* @author Anubhav Jaiswal and Arshdeep Singh Chugh
+* @version 1.0
+* @since 17 November 2017
+*/
+
 class doneButtonEvent implements EventHandler<ActionEvent>
 {
 	private GridPane orbPane;
@@ -128,6 +159,19 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	private Settings setting;
 	private boolean[] selectedPlayers;
 	int a,x;
+
+	/**
+	* The constructor of the class
+	*
+	*
+	* @param orbPane : The Pane with all the orbs and the text.
+	* @param orbColors : The original and default colors.
+	* @param stage: the stage on which the game is running.
+	* @param setting : The Settings class variable
+	* @param selectedPlayers: boolean array of which players colors have been selected.
+	* @param a and x : The value varibles from the MainPage.
+	*/
+
 	public doneButtonEvent(GridPane orbPane, Color[] orbColors, Stage stage, Settings setting, boolean[] selectedPlayers,int a,int x)
 	{
 		this.orbPane = orbPane;
@@ -139,6 +183,13 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 		this.a = a;
 		this.x = x;
 	}
+
+	/**
+	* This the main handle function of the ActionEvent class for handling of the mouseclick.
+	*
+	* @param event : The mouse event
+	*/
+
 	@Override
 	public void handle(ActionEvent event)
 	{
@@ -155,6 +206,15 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	}
 }
 
+/**
+* This class handles th click of a specific color of orbs.
+*
+*
+* @author Anubhav Jaiswal and Arshdeep Singh Chugh
+* @version 1.0
+* @since 17 November 2017
+*/
+
 class orbColorChangeEvent implements EventHandler<MouseEvent>
 {
 	private Sphere orb;
@@ -162,6 +222,18 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 	private Color[] orbColors;
 	private Settings setting;
 	private boolean[] selectedPlayers;
+
+	/**
+	* The constructor of the class
+	*
+	*
+	* @param orb : the refrence if the orb clicked.
+	* @param orbPane : The Pane with all the orbs and the text.
+	* @param orbColors : The original and default colors.
+	* @param setting : The Settings class variable
+	* @param selectedPlayers: boolean array of which players colors have been selected.
+	*/
+
 	public orbColorChangeEvent(Sphere orb, GridPane orbPane, Color[] orbColors, Settings setting, boolean[] selectedPlayers)
 	{
 		this.orb = orb;
@@ -170,6 +242,13 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 		this.setting = setting;
 		this.selectedPlayers = selectedPlayers;
 	}
+
+	/**
+	* This the main handle function of the ActionEvent class for handling of the mouseclick.
+	* It checks if the color is slected for any other player. If not, then it selects the color for the player and sets the color of the orb to grey.
+	*
+	* @param event : The mouse event
+	*/
 
 	@Override 
 	public void handle(MouseEvent e) 

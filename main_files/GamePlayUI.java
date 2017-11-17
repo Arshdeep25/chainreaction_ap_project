@@ -43,24 +43,73 @@ import java.util.EventListener;
 import javafx.scene.text.*;
 import javafx.scene.image.*;
 
+/**
+* <h2>Chain Reaction Game</h2>
+* The following class implements the total gameplay happening after a new game starts.
+* <b> The class is the total implementation of all the processes in the game. </b>
+*
+*
+* @author Anubhav Jaiswal and Arshdeep Singh Chugh
+* @version 1.0
+* @since 17 November 2017
+*/
+
 public class GamePlayUI extends Application implements Serializable{
 
-
+	/**
+	* 2-d array of tiles for the grid.
+	*/
 	public Tile[][] Board;
+	/**
+	* 2-d rray of Cell class for the backend functioning of Grid.
+	*/
 	public volatile Cell[][] Grid;
+	/**
+	* Keeping the Player Id of the player in move.
+	*/
 	public int PlayerID;
 	private int cnt = 0;
+	/**
+	* Total number of players.
+	*/
 	public int TotalPlayers;
-	public int GridX,GridY;
+	/**
+	* The X length of the Grid
+	*/
+	public int GridX;
+	/**
+	* The Y length of the Grid. 
+	*/
+	public int GridY;
+	/**
+	* The array of Players playing. 
+	*/
 	public Player[] players;
 	private int movesPlayed;
 	protected int undo_var;
 	private volatile int animationRunningCounter;
+	/**
+	* To keep current state of grid. Used in saving the game. 
+	*/
 	public GamePlay resumeGrid;
 	private transient Stage GameplayStage;
+	/**
+	* To notify that a winne is found. 
+	*/
 	public boolean winnerFound;
+	/**
+	* For stopping the code after several recursions. 
+	*/
 	public int winnerFoundAndOneRecursion = 0;
 	
+	/**
+	* This is the constructor of the class. It accepts 3 parameters:
+	*
+	* @param Player : The total player of playing the game.
+	* @param x : The X axis length of grid
+	* @param y : The Y axis length of grid
+	*/
+
 	public GamePlayUI(int Player,int x,int y)
 	{
 		winnerFound = false;
@@ -97,6 +146,14 @@ public class GamePlayUI extends Application implements Serializable{
 			}
 		}
 	}
+	/**
+	* The methods creates the whole Game page including the Grid and its contents, 
+	* Undo button and the dropdown with <i>Start Again</i> and <i>Back</i> buttons.
+	*
+	*
+	* @param primaryStage : this the refrence to the stage variable of javafx class
+	* @return return the Parent variable <i>root</i>, contaning everything displayed in the Game.
+	*/
 	private Parent createContent(Stage primaryStage) 
 	{
 		this.animationRunningCounter = 0;
@@ -318,20 +375,64 @@ public class GamePlayUI extends Application implements Serializable{
         return root;
 	}
 	public int a = 0;
+	/**
+	* This the function to call for the creation of the whole page.
+	*
+	* @param primaryStage : The stage of the game.
+	* @exception Exception is put to cater all the exceptions.
+	*/
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		 primaryStage.setScene(new Scene(createContent(primaryStage)));
 	     primaryStage.show();
 	    
 	}
-	public static void main(String[] args)
-	{
-		launch(args);
-	}
+
+	/**
+	* <b>The Tile Class</b>
+	* The class creates and implents every function happening inside a single tile of the grid.
+	* The class only has constructor that creates a tiel and all its borders. It also imoplements
+	* the method to be followed when a player clicks a specific tile in the grid.<br>
+	* It has 4 basic feilds.<br>
+	* 1. The Owner of the tile. (-1 if none)
+	* 2. The Number of Orbs in the tile.
+	* 3. The x position of tile in the grid
+	* 4. The y position of tile in the grid
+	*
+	*
+	*
+	*
+	* @author Anubhav Jaiswal and Arshdeep Singh Chugh
+	* @version 1.0
+	* @since 17 November 2017
+	*/
+
 	public class Tile extends StackPane implements Serializable
 	{
-		public int Owner=-1, NumberOfOrbs=0, x, y;
+		/**
+		* The owber of the tile
+		*/
+		public int Owner = -1;
+		/**
+		* Number of orbs in the tile.
+		*/
+		public int NumberOfOrbs = 0;
+		/**
+		* the x and y coordinates of the tile.
+		*/
+		public int x, y;
+		/**
+		* The animation time of an orb.
+		*/
 		public int transistionTime = 400;
+
+		/**
+		* This is the constructor of the class. It accepts 3 parameters:
+		*
+		* @param x : The X axis postion of the tile in the grid
+		* @param y : The Y axis postion of the tile in the grid
+		*/
+
 		public Tile(int x,int y)
 		{
 			Rectangle border = new Rectangle(50, 50);
@@ -366,6 +467,12 @@ public class GamePlayUI extends Application implements Serializable{
            
             
         	this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        		/**
+        		* The function checks if the player is still in the game or not.
+        		*
+        		* @param PlayerID : the id of the player to be checked.
+        		* @return boolean value true if the player is in the game or vide-versa.
+        		*/
         		public boolean isInGame(int PlayerID)
 				{
 					if(eachPlayerMovedOnce())
@@ -378,6 +485,12 @@ public class GamePlayUI extends Application implements Serializable{
 					}
 					return true;
 				}
+				/**
+        		* The function checks if each player has atleast moved once.
+        		*
+        		* 
+        		* @return boolean value true if the each player has moved once or vide-versa.
+        		*/
 				public boolean eachPlayerMovedOnce()
 				{
 					if(movesPlayed>=TotalPlayers)
@@ -386,6 +499,14 @@ public class GamePlayUI extends Application implements Serializable{
 					}
 					return false;
 				}
+
+				/**
+        		* The function counts the number of the player.
+        		*
+        		* @param PlayerID : the id of the player for which the number of orbs are needed.
+        		* @return boolean value true if the player is in the game or vide-versa.
+        		*/
+
 				public int orbCountPlayer(int PlayerID)
 				{
 					int count = 0;
@@ -401,6 +522,16 @@ public class GamePlayUI extends Application implements Serializable{
 					}
 					return count;
 				}
+				/**
+        		* The function makes the cell with the Number of orbs its has and with the color of its owner.
+        		* Making a cell means it places a group of Spheres equal to the number of orbs it contains with
+        		* the color of the owner of the orb
+        		*
+        		* @param x : The x coordinate of the tile.
+        		* @param y : The y coordinate of the tile.
+        		* @param PlayerID : the id of the player to be checked.
+        		* @return Nothing.
+        		*/
 				public void makeBoardCell(int x, int y, int PlayerID)
 				{
 					Board[x][y].NumberOfOrbs = Grid[x][y].getOrbCount();
@@ -444,6 +575,12 @@ public class GamePlayUI extends Application implements Serializable{
                     rt.play();
                     Board[x][y].getChildren().add(orbGroup);
 				}
+				/**
+        		* This the main handle function of the ActionEvent class for handling of the mouseclick.
+        		*
+        		* @param e1 : The mouse event
+        		* @return Nothing.
+        		*/
 				@Override 
 				public void handle(MouseEvent e1) 
 				{
@@ -549,7 +686,12 @@ public class GamePlayUI extends Application implements Serializable{
 	            		this.takeTurn(PlayerID, x, y);
 	            	}*/
 	            }
-
+	            /**
+        		* Checks if there is a winner in the game or not.
+        		* If a winner is found a new stage is opened and a banner is displayed.
+        		*
+        		* @return Nothing.
+        		*/
 	            public void isWinner()
 				{
 					int prevOwner = -1, isAssigned=0;
@@ -635,7 +777,17 @@ public class GamePlayUI extends Application implements Serializable{
 					WinnerStage.show();
 					
 				}
-
+				/**
+        		* The function stabilizes a cell. It checks if a cell/tile contains more orbs than its critical mass.
+        		* If it does, it bursts it in its respective way and launches an animation for transition of orbs 
+        		* from the cell to side ones. On the end of the animation it checks for a winner makes the cell and then
+        		* launches a recursive action for the side cells.
+        		*
+        		* @param x : The x coordinate of the tile.
+        		* @param y : The y coordinate of the tile.
+        		* @param PlayerID : the id of the player to be checked.
+        		* @return Nothing.
+        		*/
 	            public void stabilizeCell(int x, int y, int PlayerID)
 	            {
 	            	System.out.println("asadfgaoowqueytriuytqwe");
