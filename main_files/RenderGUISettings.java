@@ -50,16 +50,10 @@ public class RenderGUISettings extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Group root = new Group();
-//		Text mainHeading = new Text("SETTINGS");
-//		mainHeading.setX(20); 
-//		mainHeading.setY(40);
-//		mainHeading.getStyleClass().add("text");
-//		root.getChildren().add(mainHeading);
 		Text subHeading = new Text("Please select color of the respective players");
 		subHeading.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
 		subHeading.setX(13); 
 		subHeading.setY(70);
-//		subHeading.getStyleClass().add("subText");
 		root.getChildren().add(subHeading);
 
 		GridPane orbPane = new GridPane();
@@ -83,7 +77,6 @@ public class RenderGUISettings extends Application{
 		for(int i=0; i<8; i++)
 		{
 			Text playerName = new Text("Player "+(i+1));
-//			playerName.getStyleClass().add("playername");
 			orbPane.add(playerName, 0, i);
 			for(int j=0; j<8; j++)
 			{
@@ -96,7 +89,6 @@ public class RenderGUISettings extends Application{
 				orbPane.add(orb, 2+j, i);
 			}
 			Text colorText = new Text("N/A");
-//			colorText.getStyleClass().add("playername");
 			orbPane.add(colorText, 10, i);
 
 		}
@@ -122,8 +114,8 @@ public class RenderGUISettings extends Application{
 	*
 	*
 	* @param stage : the stage on which the game is running.
-	* @param a : The value varibles from the MainPage.
-	* @param x : The value varibles from the MainPage.
+	* @param a : The Number of Players Selected from the MainPage.
+	* @param x : The Grid Size selected from the MainPage.
 	*/
 	public void render(Stage stage,int a,int x)
 	{
@@ -132,11 +124,8 @@ public class RenderGUISettings extends Application{
 		try {
 			this.start(stage);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//this.setting.setOthers(orbColors);
-		//return this.setting;
 	}
 	
 }
@@ -169,7 +158,7 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	* @param stage: the stage on which the game is running.
 	* @param setting : The Settings class variable
 	* @param selectedPlayers: boolean array of which players colors have been selected.
-	* @param a and x : The value varibles from the MainPage.
+	* @param a and x : The Players Selected and the grid size respectively from the MainPage.
 	*/
 
 	public doneButtonEvent(GridPane orbPane, Color[] orbColors, Stage stage, Settings setting, boolean[] selectedPlayers,int a,int x)
@@ -196,8 +185,8 @@ class doneButtonEvent implements EventHandler<ActionEvent>
 	    MainPage obj = new MainPage();
 	    try {
 	    	obj.color = setting.setOthers(orbColors, selectedPlayers);
-	    	obj.a1 = a;
-	    	obj.x1 = x;
+	    	obj.PlayerSelected = a;
+	    	obj.SizeSelected = x;
 			obj.start(MainPage.var);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -253,7 +242,6 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 	@Override 
 	public void handle(MouseEvent e) 
 	{ 
-		//System.out.println("Selected");
 		for(Node orbs: orbPane.getChildren())
 		{
 			if(orbs.getClass().getName().equals("javafx.scene.shape.Sphere") && orbPane.getColumnIndex(orbs)==orbPane.getColumnIndex(orb))
@@ -262,7 +250,6 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 				PhongMaterial x = (PhongMaterial)orbs_s.getMaterial();
 				if(x.getDiffuseColor().equals(Color.rgb(180, 180, 180)))
 				{
-//					System.out.println("nahi ho paega");
 					return;
 				}
 				
@@ -278,7 +265,6 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 					PhongMaterial setOrigMat = new PhongMaterial();
 					setOrigMat.setDiffuseColor(orbColors[orbPane.getColumnIndex(orbs_s)-2]); 
 					orbs_s.setMaterial(setOrigMat);
-					//System.out.println(orbs_s.getClass().getName().equals("javafx.scene.text.Text"));
 				}
 				if(orbs.getClass().getName().equals("javafx.scene.text.Text")&&orbPane.getColumnIndex(orbs)>1)
 				{
@@ -292,7 +278,6 @@ class orbColorChangeEvent implements EventHandler<MouseEvent>
 		PhongMaterial material = new PhongMaterial();
 		material.setDiffuseColor(Color.rgb(180, 180, 180));
 		orb.setMaterial(material);
-//		System.out.println("lala "+orbPane.getRowIndex(orb)+(orbColors[orbPane.getColumnIndex(orb)-2].getRed()*256));
 		selectedPlayers[orbPane.getRowIndex(orb)] = true;
 		setting.setPlayerColor(orbPane.getRowIndex(orb), orbColors[orbPane.getColumnIndex(orb)-2]);
 	} 

@@ -2,19 +2,66 @@ package main_files;
 import java.io.*;
 
 
+/**
+* <h2>Back End of the game</h2>
+* The following class implements the backend of the game.
+*
+*
+* @author Anubhav Jaiswal and Arshdeep Singh Chugh
+* @version 1.0
+* @since 17 November 2017
+*/
+
 public class GamePlay implements Serializable
 {
+	/**
+	* 2-d rray of Cell class for the backend functioning of Grid.
+	*/
 	private Cell[][] Back_Grid;
-	private Player[] players;
+	
+	/**
+	 * Array for the Players
+	 */
+//	private Player[] players;
+	
+	/**
+	 * It specifies the chance of the Player by keeping track of PlayerId
+	 */
 	private int playerCount;
-	private int gridX, gridY;
+	
+	/**
+	 * Grid size : x coordinate
+	 */
+	private int gridX;
+	
+	/**
+	 * Grid size : y coordinate
+	 */
+	private int gridY;
+	
+	/**
+	 * It is used to check if everyone has had atleast a single turn
+	 */
 	private int movesPlayed;
 	private int lastPlayed;
 	
+	/**
+	 * 
+	 * @return the refernce of the 2-D Cell type Grid
+	 */
 	public Cell[][] getBack_Grid()
 	{
 		return this.Back_Grid;
 	}
+	
+	
+	/**
+	 * 
+	 * Constructor used to initialise Back_Grid, grid size and player count
+	 * @param gridX : x coordinate
+	 * @param gridY : y coordinate
+	 * @param playerCount : Number of Players
+	 */
 	GamePlay(int gridX, int gridY, int playerCount)
 	{
 		this.gridX = gridX;
@@ -22,11 +69,6 @@ public class GamePlay implements Serializable
 		this.setPlayerCount(playerCount);
 		this.movesPlayed = 0;
 		this.lastPlayed = 0;
-		setPlayers(new Player[playerCount]);
-		for(int i=0; i<playerCount; i++)
-		{
-			getPlayers()[i] = new Player("Player "+(i+1), i+1, "color"+i);
-		}
 		Back_Grid = new Cell[gridX][gridY];
 		for(int i=0; i<gridX; i++)
 		{
@@ -47,7 +89,13 @@ public class GamePlay implements Serializable
 			}
 		}
 	}
-
+	
+	/**
+	 * This method is used to stabilize the cells which have critical mass 2
+	 * @param x : Grid Coordinate
+	 * @param y : Grid Coordinate
+	 * @param PlayerID : The Id of the player whose turn is currently going on
+	 */
 	private void stabilizeCell2(int x, int y, int PlayerID)
 	{
 		if(x==0)
@@ -101,6 +149,13 @@ public class GamePlay implements Serializable
 			}
 		}
 	}
+	
+	/**
+	 * This method is used to stabilize the cells which have critical mass 3
+	 * @param x : Grid Coordinate
+	 * @param y : Grid Coordinate
+	 * @param PlayerID : The Id of the player whose turn is currently going on
+	 */
 	private void stabilizeCell3(int x, int y, int PlayerID)
 	{
 		if(y==0)
@@ -160,6 +215,13 @@ public class GamePlay implements Serializable
 			return ;
 		}
 	}
+	
+	/**
+	 * This method is used to stabilize the cells which have critical mass = 4
+	 * @param x : Grid Coordinate
+	 * @param y : Grid Coordinate
+	 * @param PlayerID : The Id of the player whose turn is currently going on
+	 */
 	private void stabilizeCell4(int x, int y, int PlayerID)
 	{
 		Back_Grid[x][y].setOrbCount(0);
@@ -178,6 +240,12 @@ public class GamePlay implements Serializable
 		return ;
 	}
 
+	/**
+	 * This method is used to check whether there is a need to stabilize the cell
+	 * @param x : Grid Coordinate
+	 * @param y : Grid Coordinate
+	 * @param PlayerID : The Id of the player whose turn is currently going on
+	 */
 	private void checkStabilityAndStabilize(int x, int y, int PlayerID)
 	{
 		if(Back_Grid[x][y].isStable())
@@ -199,6 +267,13 @@ public class GamePlay implements Serializable
 		}
 	}
 
+	/**
+	 * This method is used to check the validity of the move and call for checkStabilityAndStabilize
+	 * method for that particular cell
+	 * @param PlayerID : Id of player to be checked
+	 * @param x : x coordinate
+	 * @param y : y coordinate
+	 */
 	public void takeTurn(int PlayerID, int x, int y)
 	{
 		if(Back_Grid[x][y].getOwner()!=-1 && Back_Grid[x][y].getOwner()!=PlayerID)
@@ -214,6 +289,13 @@ public class GamePlay implements Serializable
 		}
 		this.movesPlayed++;
 	}
+	
+	/***
+	 * 
+	 * It Checks whether the next player is currently in the game. it not it moves to the next player and so on.
+	 * @param PlayerID : The player to be checked
+	 * @return : returns the playerId of a valid player 
+	 */
 	public int nextTurnPlayer(int PlayerID)
 	{
 		int playerTurn = PlayerID;
@@ -223,6 +305,12 @@ public class GamePlay implements Serializable
 		}
 		return playerTurn;
 	}
+	
+	/**
+	 * It is used to check whether the current player is in game or not
+	 * @param PlayerID : The player to be checked
+	 * @return  : true if player is in game otherwise false
+	 */
 	public boolean isInGame(int PlayerID)
 	{
 		if(this.eachPlayerMovedOnce())
@@ -235,6 +323,11 @@ public class GamePlay implements Serializable
 		}
 		return true;
 	}
+	
+	/**
+	 * This method verifies if each player has moved atleast once
+	 * @return : true if they have, false otherwise
+	 */
 	public boolean eachPlayerMovedOnce()
 	{
 		if(this.movesPlayed>=this.playerCount)
@@ -243,6 +336,12 @@ public class GamePlay implements Serializable
 		}
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @param PlayerID : The player to be checked
+	 * @return Returns the number of orbs associated with a particular PlayerID
+	 */
 	public int orbCountPlayer(int PlayerID)
 	{
 		int count = 0;
@@ -259,6 +358,11 @@ public class GamePlay implements Serializable
 		return count;
 	}
 
+	/**
+	 * 
+	 * Checks if there is a winner or not
+	 * @return : Return true of there is a winner ; otherwise false
+	 */
 	public boolean isWinner()
 	{
 		int prevOwner = -1, isAssigned=0;
@@ -283,6 +387,11 @@ public class GamePlay implements Serializable
 		}
 		return true;
 	}
+	
+	/**
+	 * 
+	 * @return The id of the player who is the winner
+	 */
 	public int nameWinner()
 	{
 		for(int i=0; i<gridX; i++)
@@ -308,13 +417,5 @@ public class GamePlay implements Serializable
 
 	public void setPlayerCount(int playerCount) {
 		this.playerCount = playerCount;
-	}
-
-	public Player[] getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(Player[] players) {
-		this.players = players;
 	}
 }

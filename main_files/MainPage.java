@@ -30,20 +30,61 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/***
+*  <h2>Menu Page</h2>
+* The following class implements the Main menu page of the chain reaction game gameplay.
+* <b>It contains the implementation of Start Button, Resume Button, Settings Button. It 
+* also contains the Toggle Buttons for selecting number of players and grid size </b>
+*
+*
+* @author Anubhav Jaiswal and Arshdeep Singh Chugh
+* @version 1.0
+* @since 17 November 2017
+ *
+ */
+
 public class MainPage extends Application{
 
 	
+	/***
+	 *  It contain the toggleButtons and Buttons on the main Page
+	 */
 	private Pane root = new Pane(); 
-	private static Button Resume_btn;
+	
+	/***
+	 * It is the main Stage on which different scenes are being created
+	 */
 	public static Stage var;
+	
+	/**
+	 * This contains the Color of all the Players
+	 */
 	public static Settings color = new Settings();
+			
+	/***
+	 * It is used to check whether the undo button was pressed or not
+	 * undo button not presses = 0 It helps to undo if we are resuming the game
+	 */
 	public static int Undo_button = 0;
-	public static boolean Winner = false;
-	public int a1=-1,x1=-1;
-	public static Button getButton()
-	{
-		return Resume_btn;
-	}
+	
+	/**
+	 * It checks if the toggle button for player was pressed
+	 */
+	public int PlayerSelected=-1;
+	
+	/**
+	 * It checks if the toggle buttonfor grid size was pressed 
+	 */
+	public int SizeSelected=-1;
+
+	
+	
+	/**
+	 * The methods create the Main page with the functionality of Start Button, 
+	 * Settings Button, Resume Button, Option to Select Number of players, Grid Size
+	 * @param stage : This is the reference to the primary stage variable
+	 * @return return the Parent variable <i>root</i>, contaning everything displayed in the MainPage. 
+	 */
 	private Parent CreateContent(Stage stage)
 	{
 		root.setPrefSize(400, 600);
@@ -52,7 +93,6 @@ public class MainPage extends Application{
 		
 		root.getStyleClass().add("Back");
 		
-//		root.setBackground(new Background(new BackgroundFill(Color.LIGHTCORAL, CornerRadii.EMPTY, Insets.EMPTY)));
 		
 		Text Heading = new Text();
 		Heading.setText("Chain Reaction");
@@ -138,7 +178,6 @@ public class MainPage extends Application{
 		Size.setX(125);
 		Size.setY(220);
 		Size.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
-//		Size.setFill(Color.WHITE);
 		root.getChildren().add(Size);
 		
 		ToggleGroup G = new ToggleGroup();
@@ -162,29 +201,29 @@ public class MainPage extends Application{
 		
 		root.getChildren().addAll(G1,G2);
 		
-		if(a1==-1)
+		if(PlayerSelected==-1)
 		{
 			group.selectToggle(P2);
 			G.selectToggle(G1);
 		}
 		else
 		{
-			if(a1==2)
+			if(PlayerSelected==2)
 				group.selectToggle(P2);
-			else if(a1==3)
+			else if(PlayerSelected==3)
 				group.selectToggle(P3);
-			else if(a1==4)
+			else if(PlayerSelected==4)
 				group.selectToggle(P4);
-			else if(a1==5)
+			else if(PlayerSelected==5)
 				group.selectToggle(P5);
-			else if(a1==6)
+			else if(PlayerSelected==6)
 				group.selectToggle(P6);
-			else if(a1==7)
+			else if(PlayerSelected==7)
 				group.selectToggle(P7);
 			else
 				group.selectToggle(P8);
 			
-			if(x1==9)
+			if(SizeSelected==9)
 				G.selectToggle(G1);
 			else
 				G.selectToggle(G2);
@@ -199,7 +238,6 @@ public class MainPage extends Application{
 		Start_btn.setLayoutY(300);
 		Start_btn.setPrefSize(200, 50);
 		Start_btn.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-//		Start_btn.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 		Start_btn.getStyleClass().add("Start_btn");
 		Start_btn.setOnAction(new EventHandler<ActionEvent>()
 		{
@@ -225,24 +263,23 @@ public class MainPage extends Application{
 				       public void run() {             
 				           try {
 				        	   GamePlayUI gamestart = null;
-				        	if(a1==-1)
+				        	if(PlayerSelected==-1)
 				        	{
 				        		gamestart = new GamePlayUI(a,x,y);
 				        	}
 				        	else
 				        	{
 				        		int y1;
-				        		if(x1 == 15)
+				        		if(SizeSelected == 15)
 				        			y1 = 10;
 				        		else
 				        			y1 = 6;
-				        		gamestart = new GamePlayUI(a1,x1,y1);
+				        		gamestart = new GamePlayUI(PlayerSelected,SizeSelected,y1);
 				        	}
 							gamestart.start(stage);
 						} catch (Exception e) {
 							e.getMessage();
 							e.printStackTrace();
-							System.out.println("dsfgsdfg");
 						}
 				       }
 				    });
@@ -295,7 +332,7 @@ public class MainPage extends Application{
 		});
 		root.getChildren().add(Setting_btn);
 		
-		Resume_btn = new Button();
+		Button Resume_btn = new Button();
 		Resume_btn.setText("RESUME GAME");
 		Resume_btn.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 		Resume_btn.setLayoutX(100);
@@ -305,14 +342,16 @@ public class MainPage extends Application{
 		Resume_btn.getStyleClass().add("Start_btn");
 		GamePlayUI gameStart = null;
 		try {
-			 gameStart = GamePlayUI.deserialise("in");
+			 gameStart = GamePlayUI.deserialise("Resume");
 		} catch (Exception e1) {
+
 			Resume_btn.setVisible(false);
 		}
 		if(gameStart!=null && gameStart.winnerFound)
 		{
 			Resume_btn.setVisible(false);
 		}
+
 		
 		
 		
@@ -326,11 +365,10 @@ public class MainPage extends Application{
 				           try {
 					        	GamePlayUI gameStart;
 				        	if(Undo_button == 0)
-				   				gameStart = GamePlayUI.deserialise("in");
+				   				gameStart = GamePlayUI.deserialise("Resume");
 				   			else
 				   			{
-				   				gameStart = GamePlayUI.deserialise("in2");
-				   				System.out.println("babu mushao kaisse ho");
+				   				gameStart = GamePlayUI.deserialise("Undo");
 				   			}
 							gameStart.start(var);
 						} catch (Exception e) {
@@ -347,6 +385,12 @@ public class MainPage extends Application{
 		root.getChildren().add(Resume_btn);
 		return root;
 	}
+	/**
+	* This the function to call for the creation of the whole page.
+	*
+	* @param primaryStage : The stage of the game.
+	* @exception Exception is put to cater all the exceptions.
+	*/
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("CHAIN REACTION");

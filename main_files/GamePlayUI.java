@@ -84,7 +84,7 @@ public class GamePlayUI extends Application implements Serializable{
 	/**
 	* The array of Players playing. 
 	*/
-	public Player[] players;
+//	public Player[] players;
 	private int movesPlayed;
 	protected int undo_var;
 	private volatile int animationRunningCounter;
@@ -120,11 +120,11 @@ public class GamePlayUI extends Application implements Serializable{
 		if(Board==null)
 			this.Board = new Tile[x][y];
 		PlayerID = 0;
-		players = new Player[Player];
-		for(int i=0; i<Player; i++)
-		{
-			players[i] = new Player("Player "+(i+1), i+1, "color"+i);
-		}
+//		players = new Player[Player];
+//		for(int i=0; i<Player; i++)
+//		{
+//			players[i] = new Player("Player "+(i+1), i+1, "color"+i);
+//		}
 		resumeGrid = new GamePlay(GridX,GridY,TotalPlayers);
 		Grid = new Cell[GridX][GridY];
 		for(int i=0; i<GridX; i++)
@@ -234,7 +234,7 @@ public class GamePlayUI extends Application implements Serializable{
 					System.out.println("animation wala bakwaas"+ animationRunningCounter);
 					GamePlayUI des = null;
 					try {
-						des = deserialise("in2");
+						des = deserialise("Undo");
 					} catch (Exception e) {}
 					MainPage.Undo_button = 1;
 					undo_var = 1;
@@ -352,8 +352,8 @@ public class GamePlayUI extends Application implements Serializable{
 			public void handle(ActionEvent event) {
 				try {
 					GamePlayUI obj = new GamePlayUI(TotalPlayers,GridX,GridY);
-					serialise("in",obj);
-					serialise("in2",obj);
+					serialise("Resume",obj);
+					serialise("Undo",obj);
 					obj.start(primaryStage);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -542,21 +542,14 @@ public class GamePlayUI extends Application implements Serializable{
         			{
         				//Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
         			}
-        			System.out.println(Board[x][y].getChildren().size());
         			for(int i=6; i<Board[x][y].getChildren().size();i++)
         			{
         				if(Board[x][y].getChildren().get(i).getClass().toString().equals("class javafx.scene.Group"))
         				{
-        					System.out.println(Board[x][y].getChildren().get(i).getClass());
         					Board[x][y].getChildren().remove(i);
         				}
         			}
-        			for(int i=6; i<Board[x][y].getChildren().size();i++)
-        			{
-        				System.out.println(Board[x][y].getChildren().get(i).getClass().toString()+" sdf");
-        			}
                     Group orbGroup = new Group();
-                    System.out.println("Grid ki aisi ki taisi"+ Grid[x][y].getOrbCount() + " " + x + " "+ y);
         			for(int i=0;i<Grid[x][y].getOrbCount();i++)
                 	{
                 		Sphere Shape = new Sphere(10);
@@ -590,14 +583,12 @@ public class GamePlayUI extends Application implements Serializable{
 					if(animationRunningCounter==0)
 					{
 						
-		                System.out.println(PlayerID);
 		                while(!isInGame(PlayerID))
 		                {
 		                    PlayerID = (PlayerID+1)%TotalPlayers;
 		                }
 		            	if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
 		            	{
-		            		System.out.println();
 		            		try{
 		            			resumeGrid.takeTurn(PlayerID, x, y);
 		            		}
@@ -605,36 +596,10 @@ public class GamePlayUI extends Application implements Serializable{
 		            		{
 		            			System.out.println(e.getMessage());
 		            		}
-		            		for(int i=0;i<GridX;i++)
-							{
-								for(int j=0;j<GridY;j++)
-								{
-									System.out.print(resumeGrid.getBack_Grid()[i][j].getOrbCount()+" ");
-								}
-								System.out.println();
-							}
-							System.out.println("children.size()");
+		            		
 		            		movesPlayed++;
 		            		Grid[x][y].setOwner(PlayerID);
-		            		System.out.println("for one last time");
-		            		for(int i=0; i<GridX; i++)
-							{
-								for(int j=0; j<GridY; j++)
-								{
-									System.out.print(Grid[i][j].getOwner()+" ");
-								}
-								System.out.println();
-							}
-		    				for(int i=0;i<GridX;i++)
-		    				{
-		    					for(int j=0;j<GridY;j++)
-		    					{
-		    						System.out.print(Grid[i][j].getOrbCount() +" ");
-		    					}
-		    					System.out.println();
-		    				}
-		            		System.out.println("chudil");
-		            		System.out.println(Grid[x][y].getOrbCount() + " " + x + " "+y);
+		            		
 							Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()+1);
 							Board[x][y].Owner = PlayerID;
 							makeBoardCell(x, y, PlayerID);
@@ -662,16 +627,15 @@ public class GamePlayUI extends Application implements Serializable{
 		                		try {
 		                			if(undo_var==0)
 		                			{
-										GamePlayUI obj1 = deserialise("in");
-										serialise("in2",obj1);
+										GamePlayUI obj1 = deserialise("Resume");
+										serialise("Undo",obj1);
 		                			}
 		                			undo_var = 0;
 		                			MainPage.Undo_button = 0;
 								} catch (Exception e) {
 								}
-		                		System.out.println("hallejuab" + Grid[0][0].getOrbCount() + " " +Grid[0][1].getOrbCount() + " "+ Grid[1][0].getOrbCount() );
-								System.out.println(animationRunningCounter);
-		                		serialise("in",null);
+		                		
+		                		serialise("Resume",null);
 								
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
@@ -681,7 +645,7 @@ public class GamePlayUI extends Application implements Serializable{
 		            }
 		            else
 		            {
-		            	System.out.println("ee hai locha!!");
+		            	System.out.println("");
 		            }
 	            	/*if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
 	            	{
@@ -698,15 +662,8 @@ public class GamePlayUI extends Application implements Serializable{
 				{
 					int prevOwner = -1, isAssigned=0;
 
-					System.out.println("The grid inside is winner");
-	            	for(int i=0; i<GridX; i++)
-					{
-						for(int j=0; j<GridY; j++)
-						{
-							System.out.print(Grid[i][j].getOwner()+" ");
-						}
-						System.out.println();
-					}
+					
+	            	
 					for(int i=0; i<GridX; i++)
 					{
 						for(int j=0; j<GridY; j++)
@@ -716,27 +673,17 @@ public class GamePlayUI extends Application implements Serializable{
 								if(isAssigned==0)
 								{
 									prevOwner = Grid[i][j].getOwner();
-									System.out.println("prevOwner set "+prevOwner+" at "+i+" "+j);
+									
 									isAssigned = 1;
 								}
 								else if(prevOwner!=Grid[i][j].getOwner())
 								{
 									return ;
 								}
-								System.out.println("prevOwner "+i+" "+j+" "+prevOwner);
+								
 							}
 						}
 					}
-					for(int i=0; i<GridX; i++)
-					{
-						for(int j=0; j<GridY; j++)
-						{
-							System.out.print(Grid[i][j].getOwner()+" ");
-						}
-						System.out.println();
-					}
-
-					System.out.println("prevOwner "+prevOwner+"\n\n\n\n\n\n");
 					winnerFound = true;
 					for(int i=0;i<GridX;i++)
 					{
@@ -747,7 +694,7 @@ public class GamePlayUI extends Application implements Serializable{
 						}
 					}
 					try {
-						serialise("in",null);
+						serialise("Resume",null);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -792,26 +739,19 @@ public class GamePlayUI extends Application implements Serializable{
         		*/
 	            public void stabilizeCell(int x, int y, int PlayerID)
 	            {
-	            	System.out.println("asadfgaoowqueytriuytqwe");
-	            	for(int i=0; i<GridX; i++)
-					{
-						for(int j=0; j<GridY; j++)
-						{
-							System.out.print(Grid[i][j].getOwner()+" ");
-						}
-						System.out.println();
-					}
+	            	
+	            	
 	            	if(Grid[x][y].isStable())
             		{
             			makeBoardCell(x, y, PlayerID);
-            			System.out.println("Stable "+x+" "+y+" - "+PlayerID);
+            			
             			if(!winnerFound)
 	            			isWinner();
             			return;
             		}
             		else if(Grid[x][y].getCriticalMass()==2)
             		{
-            			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
+            			
             			//makeBoardCell(x, y, PlayerID);
             			if(x==0)
             			{
@@ -819,28 +759,17 @@ public class GamePlayUI extends Application implements Serializable{
             				{
             					int playerIndex = Board[x][y].Owner;
             					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-            					System.out.println("orbsleft "+orbsleft);
             					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             					{
             						Grid[x][y].setOwner(-1);
             						Board[x][y].Owner = -1;
             					}
-            					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-								/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-								Grid[x+1][y].setOwner(PlayerID);
-								Board[x+1][y].Owner = PlayerID;
-								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
-								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-								Grid[x][y+1].setOwner(PlayerID);
-								Board[x][y+1].Owner = PlayerID;
-								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();*/
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
 								Sphere Shape1 = new Sphere(10);
                     			PhongMaterial material = new PhongMaterial();  
-                    			System.out.println("sdfsdf "+playerIndex);
                 				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
                 				Shape1.setMaterial(material);
                 				Sphere Shape2 = new Sphere(10);
@@ -854,7 +783,6 @@ public class GamePlayUI extends Application implements Serializable{
                 				transition.play();
                 				animationRunningCounter += 1;
                 				transition.setOnFinished(event->{
-                					System.out.println("ye set ho rha hai player id \n\n\n\n"+PlayerID);
                 					animationRunningCounter -= 1;
 									Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
 									Grid[x+1][y].setOwner(PlayerID);
@@ -867,15 +795,7 @@ public class GamePlayUI extends Application implements Serializable{
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
 
-                					System.out.println("Grid dekh lo");
-	            					for(int i=0; i<GridX; i++)
-	            					{
-	            						for(int j=0; j<GridY; j++)
-	            						{
-	            							System.out.print(Grid[i][j].getOwner()+" ");
-	            						}
-	            						System.out.println();
-	            					}
+	            					
                 					if(!winnerFound)
 	            						isWinner(); 
 	            					else if(winnerFoundAndOneRecursion>64)
@@ -895,28 +815,17 @@ public class GamePlayUI extends Application implements Serializable{
             				{
             					int playerIndex = Board[x][y].Owner;
             					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-            					System.out.println("orbsleft "+orbsleft);
             					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             					{
             						Grid[x][y].setOwner(-1);
             						Board[x][y].Owner = -1;
             					}
-            					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-								/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-								Grid[x+1][y].setOwner(PlayerID);
-								Board[x+1][y].Owner = PlayerID;
-								Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
-								Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-								Grid[x][y-1].setOwner(PlayerID);
-								Board[x][y-1].Owner = PlayerID;
-								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 								Sphere Shape1 = new Sphere(10);
                     			PhongMaterial material = new PhongMaterial();  
-                    			System.out.println("sdfsdf "+playerIndex);
                 				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
                 				Shape1.setMaterial(material);
                 				Sphere Shape2 = new Sphere(10);
@@ -942,15 +851,7 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
-	            					System.out.println("Grid dekh lo");
-	            					for(int i=0; i<GridX; i++)
-	            					{
-	            						for(int j=0; j<GridY; j++)
-	            						{
-	            							System.out.print(Grid[i][j].getOwner()+" ");
-	            						}
-	            						System.out.println();
-	            					}
+	            				
 	                				if(!winnerFound)
 	            						isWinner();
 	            					else if(winnerFoundAndOneRecursion>64)
@@ -972,28 +873,17 @@ public class GamePlayUI extends Application implements Serializable{
             				{
             					int playerIndex = Board[x][y].Owner;
             					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-            					System.out.println("orbsleft "+orbsleft);
             					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             					{	
             						Grid[x][y].setOwner(-1);
             						Board[x][y].Owner = -1;
             					}
-            					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-								/*Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-								Grid[x-1][y].setOwner(PlayerID);
-								Board[x-1][y].Owner = PlayerID;
-								Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
-								Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-								Grid[x][y+1].setOwner(PlayerID);
-								Board[x][y+1].Owner = PlayerID;
-								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();*/
 
 								ObservableList<Node> children = Board[x][y].getChildren();
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 								Sphere Shape1 = new Sphere(10);
-                    			PhongMaterial material = new PhongMaterial();  
-                    			System.out.println("sdfsdf "+playerIndex);
+                    			PhongMaterial material = new PhongMaterial(); 
                 				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
                 				Shape1.setMaterial(material);
                 				Sphere Shape2 = new Sphere(10);
@@ -1019,15 +909,7 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
-	            					System.out.println("Grid dekh lo");
-	            					for(int i=0; i<GridX; i++)
-	            					{
-	            						for(int j=0; j<GridY; j++)
-	            						{
-	            							System.out.print(Grid[i][j].getOwner()+" ");
-	            						}
-	            						System.out.println();
-	            					}
+	            					
 	                				if(!winnerFound)
 	            						isWinner();
 	            					else if(winnerFoundAndOneRecursion>64)
@@ -1045,13 +927,11 @@ public class GamePlayUI extends Application implements Serializable{
             				{
             					int playerIndex = Board[x][y].Owner;
             					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-            					System.out.println("orbsleft "+orbsleft);
             					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             					{	
             						Grid[x][y].setOwner(-1);
             						Board[x][y].Owner = -1;
             					}
-            					System.out.println("Player2 - "+playerIndex);
             					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 								/*Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
 								Grid[x-1][y].setOwner(PlayerID);
@@ -1066,7 +946,6 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 								Sphere Shape1 = new Sphere(10);
                     			PhongMaterial material = new PhongMaterial();  
-                    			System.out.println("sdfsdf "+playerIndex);
                 				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
                 				Shape1.setMaterial(material);
                 				Sphere Shape2 = new Sphere(10);
@@ -1092,15 +971,7 @@ public class GamePlayUI extends Application implements Serializable{
 									Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
                 					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
                 					makeBoardCell(x, y, PlayerID);
-	            					System.out.println("Grid dekh lo");
-	            					for(int i=0; i<GridX; i++)
-	            					{
-	            						for(int j=0; j<GridY; j++)
-	            						{
-	            							System.out.print(Grid[i][j].getOwner()+" ");
-	            						}
-	            						System.out.println();
-	            					}
+	            				
 	                				if(!winnerFound)
 	            						isWinner();
 	            					else if(winnerFoundAndOneRecursion>64)
@@ -1120,32 +991,17 @@ public class GamePlayUI extends Application implements Serializable{
             		}
             		else if(Grid[x][y].getCriticalMass()==3)
             		{
-            			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
             			//makeBoardCell(x, y, PlayerID);
             			if(x==0)
             			{
         					int playerIndex = Board[x][y].Owner;
         					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-        					System.out.println("orbsleft "+orbsleft);
         					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
         					{	
         						Grid[x][y].setOwner(-1);
     							Board[x][y].Owner = -1;
     						}
-    						System.out.println("Player3 - "+playerIndex);
         					Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-							/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-							Grid[x+1][y].setOwner(PlayerID);
-							Board[x+1][y].Owner = PlayerID;
-							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
-							Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-							Grid[x][y+1].setOwner(PlayerID);
-							Board[x][y+1].Owner = PlayerID;
-							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
-							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-							Grid[x][y-1].setOwner(PlayerID);
-							Board[x][y-1].Owner = PlayerID;
-							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
 
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
@@ -1184,15 +1040,7 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					makeBoardCell(x, y, PlayerID);
-	            				System.out.println("Grid dekh lo");
-	            				for(int i=0; i<GridX; i++)
-	            				{
-	            					for(int j=0; j<GridY; j++)
-	            					{
-	            						System.out.print(Grid[i][j].getOwner()+" ");
-	            					}
-	            					System.out.println();
-	            				}
+	            			
                 				if(!winnerFound)
 	            					isWinner();
 	            				else if(winnerFoundAndOneRecursion>64)
@@ -1212,26 +1060,14 @@ public class GamePlayUI extends Application implements Serializable{
             			{
             				int playerIndex = Board[x][y].Owner;
             				int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-            				System.out.println("orbsleft "+orbsleft);
+            				
             				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             				{	
             					Grid[x][y].setOwner(-1);
             					Board[x][y].Owner = -1;
             				}
-            				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-							/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-							Grid[x+1][y].setOwner(PlayerID);
-							Board[x+1][y].Owner = PlayerID;
-							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
-							Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-							Grid[x-1][y].setOwner(PlayerID);
-							Board[x-1][y].Owner = PlayerID;
-							Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
-							Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-							Grid[x][y+1].setOwner(PlayerID);
-							Board[x][y+1].Owner = PlayerID;
-							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();*/
+						
 
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
@@ -1270,15 +1106,7 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					makeBoardCell(x, y, PlayerID);
-	            				System.out.println("Grid dekh lo");
-	            				for(int i=0; i<GridX; i++)
-	            				{
-	            					for(int j=0; j<GridY; j++)
-	            					{
-	            						System.out.print(Grid[i][j].getOwner()+" ");
-	            					}
-	            					System.out.println();
-	            				}
+	            			
                 				if(!winnerFound)
 	            					isWinner();
 	            				else if(winnerFoundAndOneRecursion>64)
@@ -1297,28 +1125,15 @@ public class GamePlayUI extends Application implements Serializable{
             			{
         					int playerIndex = Board[x][y].Owner;
         					int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-        					System.out.println("orbsleft "+orbsleft);
+        					
         					if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             				{	
             					Grid[x][y].setOwner(-1);
         						Board[x][y].Owner = -1;
             				}
-            				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-							/*Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-							Grid[x-1][y].setOwner(PlayerID);
-							Board[x-1][y].Owner = PlayerID;
-							Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
-							Grid[x][y+1].setOrbCount(Grid[x][y+1].getOrbCount()+1);
-							Grid[x][y+1].setOwner(PlayerID);
-							Board[x][y+1].Owner = PlayerID;
-							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
-							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-							Grid[x][y-1].setOwner(PlayerID);
-							Board[x][y-1].Owner = PlayerID;
-							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
+					
 
-            				System.out.println("vbvbvnbn "+playerIndex+" "+x);
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
 							Sphere Shape1 = new Sphere(10);
@@ -1356,15 +1171,7 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
             					makeBoardCell(x, y, PlayerID);
-	            				System.out.println("Grid dekh lo");
-	            				for(int i=0; i<GridX; i++)
-	            				{
-	            					for(int j=0; j<GridY; j++)
-	            					{
-	            						System.out.print(Grid[i][j].getOwner()+" ");
-	            					}
-	            					System.out.println();
-	            				}
+	            			
                 				if(!winnerFound)
 	            					isWinner();
 	            				else if(winnerFoundAndOneRecursion>64)
@@ -1383,26 +1190,13 @@ public class GamePlayUI extends Application implements Serializable{
             			{
             				int playerIndex = Board[x][y].Owner;
             				int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-            				System.out.println("orbsleft "+orbsleft);
             				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             				{
             					Grid[x][y].setOwner(-1);
             					Board[x][y].Owner = -1;
             				}
-            				System.out.println("Player3 - "+playerIndex);
             				Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
-							/*Grid[x+1][y].setOrbCount(Grid[x+1][y].getOrbCount()+1);
-							Grid[x+1][y].setOwner(PlayerID);
-							Board[x+1][y].Owner = PlayerID;
-							Board[x+1][y].NumberOfOrbs = Grid[x+1][y].getOrbCount();
-							Grid[x-1][y].setOrbCount(Grid[x-1][y].getOrbCount()+1);
-							Grid[x-1][y].setOwner(PlayerID);
-							Board[x-1][y].Owner = PlayerID;
-							Board[x-1][y].NumberOfOrbs = Grid[x-1][y].getOrbCount();
-							Grid[x][y-1].setOrbCount(Grid[x][y-1].getOrbCount()+1);
-							Grid[x][y-1].setOwner(PlayerID);
-							Board[x][y-1].Owner = PlayerID;
-							Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();*/
+						
 
 							ObservableList<Node> children = Board[x][y].getChildren();
 							Board[x][y].getChildren().remove(6+orbsleft, Board[x][y].getChildren().size());
@@ -1441,15 +1235,7 @@ public class GamePlayUI extends Application implements Serializable{
 								Board[x][y-1].NumberOfOrbs = Grid[x][y-1].getOrbCount();
             					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
             					makeBoardCell(x, y, PlayerID);
-	            				System.out.println("Grid dekh lo");
-	            				for(int i=0; i<GridX; i++)
-	            				{
-	            					for(int j=0; j<GridY; j++)
-	            					{
-	            						System.out.print(Grid[i][j].getOwner()+" ");
-	            					}
-	            					System.out.println();
-	            				}
+	            			
                 				if(!winnerFound)
 	            					isWinner();
 	            				else if(winnerFoundAndOneRecursion>64)
@@ -1467,17 +1253,13 @@ public class GamePlayUI extends Application implements Serializable{
             		}
             		else if(Grid[x][y].getCriticalMass()==4)
             		{
-            			System.out.println("Unstable "+x+" "+y+" - "+PlayerID);
             			//makeBoardCell(x, y, PlayerID);
         				int playerIndex = Board[x][y].Owner;
-        				System.out.println("owner4-  "+playerIndex);
         				int orbsleft = Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass();
-        				System.out.println("orbsleft "+orbsleft);
         				if(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass()==0)
             			{	
             				Grid[x][y].setOwner(-1);
         					Board[x][y].Owner = -1;
-        					System.out.println("kjhasdfiouy  "+playerIndex);
         				}
             			Grid[x][y].setOrbCount(Grid[x][y].getOrbCount()-Grid[x][y].getCriticalMass());
 
@@ -1486,7 +1268,6 @@ public class GamePlayUI extends Application implements Serializable{
 						Sphere Shape1 = new Sphere(10);
             			PhongMaterial material = new PhongMaterial();  
         				material.setDiffuseColor(MainPage.color.getAllColors()[PlayerID]); 
-        				System.out.println("Player4 - "+playerIndex);
         				Shape1.setMaterial(material);
         				Sphere Shape2 = new Sphere(10);
         				Shape2.setMaterial(material);
@@ -1527,15 +1308,7 @@ public class GamePlayUI extends Application implements Serializable{
 							Board[x][y+1].NumberOfOrbs = Grid[x][y+1].getOrbCount();
         					Board[x][y].getChildren().remove(6, Board[x][y].getChildren().size());
         					makeBoardCell(x, y, PlayerID);
-	            			System.out.println("Grid dekh lo");
-	            			for(int i=0; i<GridX; i++)
-	            			{
-	            				for(int j=0; j<GridY; j++)
-	            				{
-	            					System.out.print(Grid[i][j].getOwner()+" ");
-	            				}
-	            				System.out.println();
-	            			}
+	            		
             				if(!winnerFound)
 	            				isWinner();
 	            			else if(winnerFoundAndOneRecursion>64)
