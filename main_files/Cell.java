@@ -4,7 +4,7 @@ import java.io.*;
 
 
 /**
-* <h2The Cell of each Grid</h2>
+* <h2>The Cell of each Grid</h2>
 * The following class takes into account the owner, orbcount and critical mass of a cell
 *
 *
@@ -31,9 +31,9 @@ public class Cell implements Serializable
 
 	/**
 	 * The constructor is used to initialize the Parameters of the cell
-	 * @param orbCount
-	 * @param owner
-	 * @param criticalMass
+	 * @param orbCount The number of orbs in the cell
+	 * @param owner The owner of the cell
+	 * @param criticalMass The critical mass of the cell
 	 */
 	public Cell(int orbCount, int owner, int criticalMass)
 	{

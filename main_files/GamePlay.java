@@ -292,7 +292,8 @@ public class GamePlay implements Serializable
 	
 	/***
 	 * 
-	 * It Checks whether the next player is currently in the game. it not it moves to the next player and so on.
+	 * It returns the player id of the next player.
+	 *
 	 * @param PlayerID : The player to be checked
 	 * @return : returns the playerId of a valid player 
 	 */

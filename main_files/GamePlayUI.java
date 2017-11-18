@@ -231,7 +231,6 @@ public class GamePlayUI extends Application implements Serializable{
 				
 				if(!winnerFound)
 				{
-					System.out.println("animation wala bakwaas"+ animationRunningCounter);
 					GamePlayUI des = null;
 					try {
 						des = deserialise("Undo");
@@ -263,15 +262,6 @@ public class GamePlayUI extends Application implements Serializable{
 							Board[i][j].getChildren().remove(1);
 							Board[i][j].getChildren().add(1, Border);
 						}
-					}
-					System.out.println("for one last time");
-					for(int i=0;i<GridX;i++)
-					{
-						for(int j=0;j<GridY;j++)
-						{
-							System.out.print(Grid[i][j].getOrbCount() +" ");
-						}
-						System.out.println();
 					}
 					for(int p = 0 ; p<GridX ; p++)
 			    	{
@@ -307,16 +297,6 @@ public class GamePlayUI extends Application implements Serializable{
 			                
 			    		}
 			        }
-					System.out.println("bloodychaljaa");
-					System.out.println("for one second time");
-					for(int i=0;i<GridX;i++)
-					{
-						for(int j=0;j<GridY;j++)
-						{
-							System.out.print(Grid[i][j].getOrbCount() +" ");
-						}
-						System.out.println();
-					}
 					
 				}
 				}
@@ -335,7 +315,6 @@ public class GamePlayUI extends Application implements Serializable{
 			@Override
 			public void handle(ActionEvent event)
 			{
-				System.out.println("yoyo"+winnerFound);
 				MainPage obj = new MainPage();
 				try {
 					obj.start(MainPage.var);
@@ -647,10 +626,7 @@ public class GamePlayUI extends Application implements Serializable{
 		            {
 		            	System.out.println("");
 		            }
-	            	/*if(Board[x][y].Owner==-1||PlayerID==Board[x][y].Owner)
-	            	{
-	            		this.takeTurn(PlayerID, x, y);
-	            	}*/
+	            	
 	            }
 	            /**
         		* Checks if there is a winner in the game or not.
