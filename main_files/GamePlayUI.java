@@ -422,8 +422,8 @@ public class GamePlayUI extends Application implements Serializable{
             border.setFill(null);
             this.getChildren().add(border);
             Rectangle border1 = new Rectangle(50, 50);
-            border.setStroke(MainPage.color.getAllColors()[0]);
-			border1.setStroke(MainPage.color.getAllColors()[0]);
+            border.setStroke(MainPage.color.getAllColors()[PlayerID]);
+			border1.setStroke(MainPage.color.getAllColors()[PlayerID]);
             border1.setFill(null);
             border1.setTranslateX(5);
             border1.setTranslateY(5);
