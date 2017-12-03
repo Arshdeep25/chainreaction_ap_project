@@ -1,0 +1,226 @@
+0
+1 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+children.size()
+for one last time
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+chudil
+0 0 0
+6
+Grid ki aisi ki taisi1 0 0
+hallejuab1 0 0
+0
+1
+1 0 0 0 0 0 
+1 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+children.size()
+for one last time
+1 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+chudil
+0 1 0
+6
+Grid ki aisi ki taisi1 1 0
+hallejuab1 0 1
+0
+2
+1 1 0 0 0 0 
+1 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+children.size()
+for one last time
+1 0 0 0 0 0 
+1 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+chudil
+0 0 1
+6
+Grid ki aisi ki taisi1 0 1
+hallejuab1 1 1
+0
+3
+1 1 0 0 0 0 
+1 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+children.size()
+for one last time
+1 1 0 0 0 0 
+1 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+chudil
+0 1 1
+6
+Grid ki aisi ki taisi1 1 1
+hallejuab1 1 1
+0
+0
+0 2 0 0 0 0 
+2 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+children.size()
+for one last time
+1 1 0 0 0 0 
+1 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+chudil
+1 0 0
+7
+class javafx.scene.Group
+Grid ki aisi ki taisi2 0 0
+Unstable 0 0 - 0
+orbsleft 0
+Player2 - 0
+sdfsdf 0
+hallejuab0 1 1
+1
+6
+Grid ki aisi ki taisi0 0 0
+7
+class javafx.scene.Group
+Grid ki aisi ki taisi2 1 0
+7
+class javafx.scene.Group
+Grid ki aisi ki taisi2 0 1
+1
+1 2 0 0 0 0 
+2 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+children.size()
+for one last time
+0 2 0 0 0 0 
+2 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+chudil
+0 0 0
+7
+class javafx.scene.Group
+Grid ki aisi ki taisi1 0 0
+hallejuab1 2 2
+0
+animation wala bakwaas0
+for one last time
+0 2 0 0 0 0 
+2 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+bloodychaljaa
+for one second time
+0 2 0 0 0 0 
+2 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+1
+1 2 0 0 0 0 
+2 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+children.size()
+for one last time
+0 2 0 0 0 0 
+2 1 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+chudil
+0 0 0
+7
+class javafx.scene.Group
+Grid ki aisi ki taisi1 0 0
+hallejuab1 2 2
+0
